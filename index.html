@@ -493,12 +493,12 @@ input[type="file"] {
 
 <div id="content">
 <h1>Công Tơ Điện Thông Minh</h1>
-<p>Công tơ điện tử là thiết bị đo công suất tiêu thụ điện sử dụng chip điện tử (esp8266 + pzem 004t) để lập trình, đo, tính toán và lưu trữ dữ liệu theo thời gian thực.<br>
+<p>Công tơ điện tử là thiết bị đo công suất tiêu thụ điện sử dụng MCU (esp8266 + pzem 004t) để lập trình, đo, tính toán và lưu trữ dữ liệu theo thời gian thực.<br>
 Bên cạnh đó công tơ điện tử còn có khả năng kết nối truyền thông với các thiết bị khác như điện thoại, máy tính bảng, PC, Laptop thông qua dịch vụ free của bên thứ ba là google sheet.<br>
 Lưu ý công tơ điện tử này chỉ mang tính chất tham khảo, không dùng làm cắn cứ để tranh luận về lượng điện tiêu thụ giữa bạn và EVN.</span><br>
 Sự <span style=color:blue>chênh lệch số điện tiêu thụ phụ thuộc vào ngày chốt số, giờ chốt số giữa công tơ điện thông minh và công tơ điện của EVN</span>.</p>
-<span style=color:red>Đây là dự án miễn phí, được xây dựng và phát triển bởi Nguyễn Vượng, mọi ý kiến đóng góp hoặc cần giải đáp vui lòng liên hệ zalo 0971282336</span>.
-<img width="25%" src="chiso.jpg"></img><img width="25%" src="chiso.png"></img>
+<span style=color:red>Đây là dự án miễn phí, được xây dựng và phát triển bởi Nguyễn Vượng, mọi ý kiến đóng góp hoặc cần giải đáp vui lòng liên hệ zalo 0971282336</span>.<br><br>
+<img width="20%" src="chiso.jpg"></img><img width="20%" src="chiso.PNG"></img><br>
 <h3>Chuẩn Bị Phần Cứng</h3>
 - Bạn cần có máy tính để bàn hoặc laptop.<br>
 - Mạch ESP8266 oled loại đã được hàn sẵn màn hinh( hoặc NodeMCU, D1 mini,D1 mini pro, - là những loại cần mua thêm màn hình và hàn theo sơ đồ dưới...)<br>
@@ -509,9 +509,9 @@ Link mua Pzem 004T trên shopee: <a href="https://shopee.vn/search?keyword=pzem0
 <img width="70%" src="sodo.jpg"></img><br><br>
 <h3>Tạo ID Google Sheet</h3>
 Các bạn bấm vào link này để tạo ID bảng tính của google sheet <a href="https://docs.google.com/spreadsheets/create">https://docs.google.com/spreadsheets/create</a><br>
-Bạn copy nội dùng trong file ==> <a href="https://github.com/npbk21/congtodien/raw/main/App%20Script.txt">App Script.txt</a>
+Bạn copy toàn bộ nội dung trong file ==> <a href="https://github.com/npbk21/congtodien/raw/main/App%20Script.txt">App Script.txt</a>
 <h3>Lệnh Cài Đặt Thiết Bị</h3>
-<p>Sau khi nạp xong phần mềm cho thiết bị (lần sử dụng đầu tiên), bạn thực hiện lần lượt các lệnh dưới.<br>
+<p>Sau khi nạp xong phần mềm cho thiết bị (lần sử dụng đầu tiên), bạn phải thực hiện lần lượt các lệnh dưới để thiết bị có thể hoạt động.<br>
 <br><li>Thay đổi ID google sheet</li>
 <p>- Google sheet là dịch vụ hoàn toàn miễn phí của google, giúp bạn theo dõi qua điện thoại các chỉ số mà thiết bị đo và tính toán được theo thời gian thực.<br>
 - Mỗi một google sheet sẽ có một ID riêng biệt, khi bạn thay đổi App Script thì ID này cũng sẽ thay đổi.<br>
