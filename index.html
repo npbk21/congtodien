@@ -5,7 +5,7 @@
 	<meta name="theme-color" content="#36393E">
 
 	<meta name="description" content="244v234">
-	<title>Trí tuệ AI - 0971282336</title>
+	<title>0971282336</title>
 <style>
 
 /* Global */
@@ -492,30 +492,36 @@ input[type="file"] {
 <body>
 
 <div id="content">
-<h1> Công Tơ Điện Thông Minh</h1>
-<p> Lưu ý công tơ này chỉ mang tính chất tham khảo, không dùng làm chứng cứ để tranh luận về lượng điện tiêu thụ giữa bạn và EVN.</span></p><br>
+<h1>Công Tơ Điện Thông Minh</h1>
+<p>Công tơ điện tử là thiết bị đo công suất tiêu thụ điện sử dụng chip điện tử (esp8266 + pzem 004t) để lập trình, đo, tính toán và lưu trữ dữ liệu theo thời gian thực.<br>
+Bên cạnh đó công tơ điện tử còn có khả năng kết nối truyền thông với các thiết bị khác như điện thoại, máy tính bảng, PC, Laptop thông qua dịch vụ free của bên thứ ba là google sheet.<br>
+Lưu ý công tơ điện tử này chỉ mang tính chất tham khảo, không dùng làm cắn cứ để tranh luận về lượng điện tiêu thụ giữa bạn và EVN.</span><br>
+Sự chênh lệch số điện tiêu thụ phụ thuộc vào ngày chốt số, giờ chốt số giữa thiết bị và công tơ EVN.</p>
+Đây là dự án miễn phí, được xây dựng và phát triển bởi Nguyễn Vượng, mọi ý kiến đóng góp hay thắc mắc vui lòng liên hệ zalo 0971282336.
 <h3>Lệnh Cài Đặt Thiết Bị</h3>
-<p>Để thiết bị có thể hoạt động theo yêu cầu của bạn, hoặc lần đầu sử dụng thiết bị vui lòng thực hiện các lệnh dưới.<br>
+<p>Sau khi nạp xong phần mềm cho thiết bị (lần sử dụng đầu tiên), bạn thực hiện lần lượt các lệnh dưới.<br>
 <br><li>Thay đổi ID google sheet</li>
-<p>- Mỗi một google sheet sẽ có một ID riêng biệt, khi bạn thay đổi app script ID này cũng sẽ thay đổi.<br>
-- Muốn nhập ID cho lần đầu khởi chạy hoặc thay ID mới cho thiết bị, bạn nhập: idmoiCHUỖIIDMỚICỦABẠN<br></p>
+<p>- Google sheet là dịch vụ hoàn toàn miễn phí của google, giúp bạn theo dõi qua điện thoại các chỉ số mà thiết bị đo và tính toán được theo thời gian thực.<br>
+- Mỗi một google sheet sẽ có một ID riêng biệt, khi bạn thay đổi app script ID này cũng sẽ thay đổi.<br>
+- Cách tạo ID google sheet bạn xem hướng dẫn phía dưới.<br>
+- Muốn nhập ID cho lần đầu khởi chạy hoặc thay ID mới cho thiết bị, bạn nhập: <span style=color:red>idmoichuỗiidcủabạn</span><br></p>
 <br><li>Thay đổi theo giá điện mới của EVN</li>
 - Từ 15/5/2024, giá điện sẽ được xét duyệt thay đổi 3 tháng một lần nếu giá đầu vào thay đổi trên 3%.<br>
 - Bạn truy cập link này để trả cứu giá điện mới của EVN: <a href="https://www.evn.com.vn/c3/calc/Cong-cu-tinh-hoa-don-tien-dien-9-172.aspx">https://www.evn.com.vn/c3/calc/Cong-cu-tinh-hoa-don-tien-dien-9-172.aspx</a><br>
-- Để thay đổi giá điện các bậc 1, 2, 3, 4, 5, 6 bạn nhập lần lượt các lệnh sau: bacmotXXXX, bachaiXXXX, bacbaXXXX, bacbonXXXX, bacnamXXXX, bacsauXXXX<br>
+- Để thay đổi giá điện các bậc 1, 2, 3, 4, 5, 6 bạn nhập lần lượt các lệnh sau: <span style=color:red>bacmotXXXX</span>, <span style=color:red>bachaiXXXX</span>, <span style=color:red>bacbaXXXX</span>, <span style=color:red>bacbonXXXX</span>, <span style=color:red>bacnamXXXX</span>, <span style=color:red>bacsauXXXX</span><br>
 - XXXX là giá điện mới của từng bậc.<br>
 <br><li>Thay đổi thành điện một giá</li>
 - Với những bạn kinh doanh nhà trọ, muốn tính tiền điện tất cả các số điện theo cùng một giá.<br>
-- Bạn nhập: dienmotgiaXXXX<br>
+- Bạn nhập: <span style=color:red>dienmotgiaXXXX</span><br>
 - XXXX là giá mà bạn muốn áp dụng<br>
-- Muốn quay lại cách tính điện 6 bậc của EVN, bạn nhập: diensinhhoat<br>
+- Muốn quay lại cách tính điện 6 bậc của EVN, bạn nhập: <span style=color:red>diensinhhoat</span><br>
 <br><li>Thay đổi ngày chốt số</li>
 - Thiết bị sẽ chốt số điện hàng tháng vào 23giờ59 của ngày mà bạn cài đặt.<br>
-- Bạn nhập: ngaychotsoXX<br>
+- Bạn nhập: <span style=color:red>ngaychotsoXX</span><br>
 - XX là ngày bạn muốn chốt số điện.<br>
 <br><li>Thay đổi thời gian truyền dữ liệu</li>
 - Mặc định 7000 (miligiây) thiết bị sẽ chuyển màn hình và truyền dữ liệu lên google sheet một lần.<br>
-- Bạn nhập chuyenmanhinhXXXX<br>
+- Bạn nhập <span style=color:red>chuyenmanhinhXXXX</span><br>
 - Cứ sau XXXX mili giây thiết bị sẽ truyền dữ liệu một lần.<br>
 
 <h3>Nạp Phần Mềm Cho Thiết Bị</h3>
