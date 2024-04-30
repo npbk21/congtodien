@@ -496,53 +496,54 @@ input[type="file"] {
 <p>Công tơ điện tử là thiết bị đo công suất tiêu thụ điện sử dụng chip điện tử (esp8266 + pzem 004t) để lập trình, đo, tính toán và lưu trữ dữ liệu theo thời gian thực.<br>
 Bên cạnh đó công tơ điện tử còn có khả năng kết nối truyền thông với các thiết bị khác như điện thoại, máy tính bảng, PC, Laptop thông qua dịch vụ free của bên thứ ba là google sheet.<br>
 Lưu ý công tơ điện tử này chỉ mang tính chất tham khảo, không dùng làm cắn cứ để tranh luận về lượng điện tiêu thụ giữa bạn và EVN.</span><br>
-Sự chênh lệch số điện tiêu thụ phụ thuộc vào ngày chốt số, giờ chốt số giữa thiết bị và công tơ EVN.</p>
-Đây là dự án miễn phí, được xây dựng và phát triển bởi Nguyễn Vượng, mọi ý kiến đóng góp hay thắc mắc vui lòng liên hệ zalo 0971282336.
+Sự <span style=color:blue>chênh lệch số điện tiêu thụ phụ thuộc vào ngày chốt số, giờ chốt số giữa công tơ điện thông minh và công tơ điện của EVN</span>.</p>
+<span style=color:red>Đây là dự án miễn phí, được xây dựng và phát triển bởi Nguyễn Vượng, mọi ý kiến đóng góp hoặc cần giải đáp vui lòng liên hệ zalo 0971282336</span>.
+<img width="25%" src="chiso.jpg"></img><img width="25%" src="chiso.png"></img>
 <h3>Chuẩn Bị Phần Cứng</h3>
 - Bạn cần có máy tính để bàn hoặc laptop.<br>
 - Mạch ESP8266 oled loại đã được hàn sẵn màn hinh( hoặc NodeMCU, D1 mini,D1 mini pro, - là những loại cần mua thêm màn hình và hàn theo sơ đồ dưới...)<br>
-Link mua ESP8266 trên shopee: <a href="https://shopee.vn/search?keyword=esp8266%20oled">https://shopee.vn/esp8266-20oled</a><br>
+Link mua ESP8266 oled trên shopee: <a href="https://shopee.vn/search?keyword=esp8266%20oled">https://shopee.vn/esp8266-20oled</a><br>
 - Mạch Pzem 004T v3.0 (cảm biến dòng khép kín).<br>
 Link mua Pzem 004T trên shopee: <a href="https://shopee.vn/search?keyword=pzem004t">https://shopee.vn/pzem004t</a><br>
-- Mỏ hàn thiếc hoặc ra quán điện thoại nhờ hàn hộ theo Sơ đồ dưới (phí 30k):<br><br>
+- Mỏ hàn thiếc hoặc ra quán điện thoại nhờ hàn hộ theo Sơ đồ dưới (phí ~ 30k):<br><br>
 <img width="70%" src="sodo.jpg"></img><br><br>
-<h3>Tạo Tài ID Google Sheet</h3>
-Các bạn bấm vào linh này để tạo bảng tính của google sheet <a href="https://docs.google.com/spreadsheets/create">https://docs.google.com/spreadsheets/create</a><br>
-
+<h3>Tạo ID Google Sheet</h3>
+Các bạn bấm vào link này để tạo ID bảng tính của google sheet <a href="https://docs.google.com/spreadsheets/create">https://docs.google.com/spreadsheets/create</a><br>
+Bạn copy nội dùng trong file ==> <a href="https://github.com/npbk21/congtodien/raw/main/App%20Script.txt">App Script.txt</a>
 <h3>Lệnh Cài Đặt Thiết Bị</h3>
 <p>Sau khi nạp xong phần mềm cho thiết bị (lần sử dụng đầu tiên), bạn thực hiện lần lượt các lệnh dưới.<br>
 <br><li>Thay đổi ID google sheet</li>
 <p>- Google sheet là dịch vụ hoàn toàn miễn phí của google, giúp bạn theo dõi qua điện thoại các chỉ số mà thiết bị đo và tính toán được theo thời gian thực.<br>
-- Mỗi một google sheet sẽ có một ID riêng biệt, khi bạn thay đổi app script ID này cũng sẽ thay đổi.<br>
-- Cách tạo ID google sheet bạn xem hướng dẫn phía dưới.<br>
-- Muốn nhập ID cho lần đầu khởi chạy hoặc thay ID mới cho thiết bị, bạn nhập: <span style=color:red>idmoichuỗiidcủabạn</span><br>
+- Mỗi một google sheet sẽ có một ID riêng biệt, khi bạn thay đổi App Script thì ID này cũng sẽ thay đổi.<br>
+- Cách tạo ID google sheet bạn xem hướng dẫn phía trên.<br>
+- Muốn nhập ID cho lần đầu khởi chạy hoặc thay ID mới cho thiết bị, bạn nhập: <span style=color:red>idmoi</span><span style=color:blue>chuỗiIDcủabạn</span><br>
 Ví dụ chuỗi mới là AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u3BNIOxIruRD1cIpQo3LFAGPp8q4ZFIlq<br>
-Thì các bạn nhập idmoiAKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u3BNIOxIruRD1cIpQo3LFAGPp8q4ZFIlq<br></p>
+Thì các bạn nhập <span style=color:red>idmoi</span><span style=color:blue>AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u3BNIOxIruRD1cIpQo3LFAGPp8q4ZFIlq</span><br></p>
 <br><li>Thay đổi theo giá điện mới của EVN</li>
 - Từ 15/5/2024, giá điện sẽ được xét duyệt thay đổi 3 tháng một lần nếu giá đầu vào thay đổi trên 3%.<br>
 - Bạn truy cập link này để trả cứu giá điện mới của EVN: <a href="https://www.evn.com.vn/c3/calc/Cong-cu-tinh-hoa-don-tien-dien-9-172.aspx">https://www.evn.com.vn/c3/calc/Cong-cu-tinh-hoa-don-tien-dien-9-172.aspx</a><br>
-- Để thay đổi giá điện các bậc 1, 2, 3, 4, 5, 6 bạn nhập lần lượt các lệnh sau: <span style=color:red>bacmotXXXX</span>, <span style=color:red>bachaiXXXX</span>, <span style=color:red>bacbaXXXX</span>, <span style=color:red>bacbonXXXX</span>, <span style=color:red>bacnamXXXX</span>, <span style=color:red>bacsauXXXX</span><br>
-- XXXX là giá điện mới của từng bậc.<br>
+- Để thay đổi giá điện các bậc 1, 2, 3, 4, 5, 6 bạn nhập lần lượt các lệnh sau: <span style=color:red>bacmot</span><span style=color:blue>XXXX</span>, <span style=color:red>bachai</span><span style=color:blue>XXXX</span>, <span style=color:red>bacba</span><span style=color:blue>XXXX</span>, <span style=color:red>bacbon</span><span style=color:blue>XXXX</span>, <span style=color:red>bacnam</span><span style=color:blue>XXXX</span>, <span style=color:red>bacsau</span><span style=color:blue>XXXX</span><br>
+- <span style=color:blue>XXXX</span> là giá điện mới của từng bậc.<br>
 <br><li>Thay đổi thành điện một giá</li>
 - Với những bạn kinh doanh nhà trọ, muốn tính tiền điện tất cả các số điện theo cùng một giá.<br>
-- Bạn nhập: <span style=color:red>dienmotgiaXXXX</span><br>
-- XXXX là giá mà bạn muốn áp dụng<br>
+- Bạn nhập: <span style=color:red>dienmotgia</span><span style=color:blue>XXXX</span><br>
+- <span style=color:blue>XXXX</span> là giá mà bạn muốn áp dụng<br>
 - Muốn quay lại cách tính điện 6 bậc của EVN, bạn nhập: <span style=color:red>diensinhhoat</span><br>
 <br><li>Thay đổi ngày chốt số</li>
 - Thiết bị sẽ chốt số điện hàng tháng vào 23giờ59 của ngày mà bạn cài đặt.<br>
-- Bạn nhập: <span style=color:red>ngaychotsoXX</span><br>
-- XX là ngày bạn muốn chốt số điện.<br>
+- Bạn nhập: <span style=color:red>ngaychotso</span><span style=color:blue>XX</span><br>
+- <span style=color:blue>XX</span> là ngày bạn muốn chốt số điện.<br>
 <br><li>Thay đổi thời gian truyền dữ liệu</li>
 - Mặc định 7000 (miligiây) thiết bị sẽ chuyển màn hình và truyền dữ liệu lên google sheet một lần.<br>
-- Bạn nhập <span style=color:red>chuyenmanhinhXXXX</span><br>
-- Cứ sau XXXX mili giây thiết bị sẽ truyền dữ liệu một lần.<br>
+- Bạn nhập <span style=color:red>chuyenmanhinh</span><span style=color:blue>XXXX</span><br>
+- Cứ sau <span style=color:blue>XXXX</span> mili giây thiết bị sẽ truyền dữ liệu một lần.<br>
 
 <h3>Nạp Phần Mềm Cho Thiết Bị</h3>
-<li>Tải Driver, chương trình ESP8266Flasher và phần mềm đăng ký key cho thiết bị:</li> 
+<li>Tải Driver, chương trình ESP8266Flasher và phần mềm congtodien.bin</li> 
 <p> - Driver cho máy tính, tải về <a href="https://github.com/npbk21/congtodien/raw/main/CH34x_Install_Windows_v3_4.EXE">tại đây.</a></p>
 <p> - ESP8266Flasher cho Windows x86 (32 bit), tải về <a href="https://github.com/nodemcu/nodemcu-flasher/raw/master/Win32/Release/ESP8266Flasher.exe">tại đây.</a></p>
 <p> - ESP8266Flasher cho Windows x64 (64 bit), tải về <a href="https://github.com/ngocthuong234/ngocthuong234/raw/main/ESP8266Flasher.exe">tại đây.</a></p>
-<p> - Phần mềm đăng ký key cho thiết bị KeyServerSing.bin, tải về <a href="https://github.com/npbk21/congtodien/raw/main/congtodien.bin">tại đây.</a></p>
+<p> - Phần mềm đăng ký key cho thiết bị contodien.bin, tải về <a href="https://github.com/npbk21/congtodien/raw/main/congtodien.bin">tại đây.</a></p>
 <li>Cài Driver sau đó mở chương trình ESP8266Flasher.exe</li><br>
 <li>Kết nối thiết bị với máy tình bằng dây cáp USB</li><br>
 <img width="40%" src="flash1.jpg"></img><br><br>
@@ -558,7 +559,7 @@ Thì các bạn nhập idmoiAKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u3BNIOxIruRD1
 <img width="20%" src="caidatwifi.jpg"></img><br><br>
 <li>Bạn ghi nhớ địa chỉ MAC được hiển thị trên màn hình, sau đó chọn mạng wifi nhà bạn, nhập chính xác mật khẩu và bấm "Kết Nối" để thiết bị kết nối với wifi nhà bạn.</li><br>
 <li>Bạn dùng điện thoại android vào CHplay cài ứng dụng IP tool để xem địa chỉ IP nội bộ của công tơ điện.</li><br>
-<li>Bạn vào trình duyệt web truy cập vào địa chỉ IP nội bộ để nhập lệnh cho lần đầu sử dụng theo hướng dẫn ở trên.</li><br>
-<img width="20%" src="flash6.jpg"></img><br><br>
+<li>Sau khi đã biết được IP nội bộ của công tơ điện, bạn vào trình duyệt web nhập địa chỉ IP nội bộ để tiến hành cài đặt lệnh cho lần đầu sử dụng theo hướng dẫn ở trên.</li><br>
+<br><br>
 </div>
 </body></html>
