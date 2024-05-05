@@ -19,6 +19,9 @@ function doGet(e) {
       if(param == 'thongkengay'){
         rowData[2] = value; // data in column C
       }
+      if(param == 'tiendienhomqua'){
+        rowData[2] = value; // data in column C
+      }
     }
     Logger.log(JSON.stringify(rowData));
     // Insert new row at the top (after headers)
