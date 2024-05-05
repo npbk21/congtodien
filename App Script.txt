@@ -19,8 +19,14 @@ function doGet(e) {
     if (e.parameter.sodienhomnay) {
       updateRow(sheet, lastRow, 'Số hôm nay', e.parameter.sodienhomnay);
     }
+    if (e.parameter.tiendienhomnay) {
+      updateRow(sheet, lastRow, 'Tiền hôm nay', e.parameter.tiendienhomnay);
+    }
     if (e.parameter.sodienhomqua) {
       updateRow(sheet, lastRow, 'Số hôm qua', e.parameter.sodienhomqua);
+    }
+    if (e.parameter.tiendienhomqua) {
+      updateRow(sheet, lastRow, 'Tiền hôm qua', e.parameter.tiendienhomqua);
     }
     if (e.parameter.sodienthangnay) {
       updateRow(sheet, lastRow, 'Số tháng này', e.parameter.sodienthangnay);
