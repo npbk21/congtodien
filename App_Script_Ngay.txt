@@ -20,7 +20,7 @@ function doGet(e) {
         rowData[2] = value; // data in column C
       }
       if(param == 'tiendienhomqua'){
-        rowData[2] = value; // data in column C
+        rowData[3] = value; // data in column C
       }
     }
     Logger.log(JSON.stringify(rowData));
