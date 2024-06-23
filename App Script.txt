@@ -5,13 +5,16 @@ function doGet(e) {
   if (!e.parameter) {
     result = 'No Parameters';
   } else {
-    var sheet_id = '1tWG6sktzOsAZ4HDm0LjQ9vmPNACuyQFlBodEgx2wqJI'; // ID của bảng tính
+    var sheet_id = '1tWG6sktzOsAZ4HDm0LjQ9mvPNACuyQFlBodEgx2wqJI'; // ID của bảng tính
     var sheet = SpreadsheetApp.openById(sheet_id).getActiveSheet();
     var lastRow = sheet.getLastRow();
     var rowData = [];
 
     if (e.parameter.congsuat) {
       updateRow(sheet, lastRow, 'Đang dùng', e.parameter.congsuat);
+    }
+    if (e.parameter.hoaluoi) {
+      updateRow(sheet, lastRow, 'Hoà lưới', e.parameter.hoaluoi);
     }
     if (e.parameter.tocdo) {
       updateRow(sheet, lastRow, 'Tốc độ đốt tiền', e.parameter.tocdo);
