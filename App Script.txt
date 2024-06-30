@@ -13,9 +13,6 @@ function doGet(e) {
     if (e.parameter.congsuat) {
       updateRow(sheet, lastRow, 'Đang dùng', e.parameter.congsuat);
     }
-    if (e.parameter.hoaluoi) {
-      updateRow(sheet, lastRow, 'Hoà lưới', e.parameter.hoaluoi);
-    }
     if (e.parameter.tocdo) {
       updateRow(sheet, lastRow, 'Tốc độ đốt tiền', e.parameter.tocdo);
     }
