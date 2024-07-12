@@ -502,8 +502,6 @@ Sự <span style=color:blue>chênh lệch số điện tiêu thụ phụ thuộc
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ntSCGgR2e54?si=xraWmoifhzOhXEjf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <h3>Chuẩn Bị Phần Cứng</h3>
 - Bạn cần có máy tính để bàn hoặc laptop.<br>
-- Mạch ESP8266, bạn có thể chọn loại không màn hình hoặc có màn hình(1.3inch).<br>
-Link mua ESP8266 trên shopee: <a href="https://shope.ee/8Umj4UEj0a">https://shopee.vn/esp8266-20oled</a><br><br>
 - Mạch Pzem 004T v3.0 (cảm biến dòng khép kín).<br>
 Link mua Pzem 004T trên shopee: <a href="https://shope.ee/6zxvHcIenP">https://shopee.vn/pzem004t</a><br>
 - Mỏ hàn thiếc hoặc ra quán điện thoại nhờ hàn hộ theo Sơ đồ dưới (phí ~ 30k):<br><br>
@@ -515,7 +513,6 @@ Bạn copy toàn bộ nội dung trong file ==> <a href="https://github.com/npbk
 Với lần sử dụng đầu tiên, bạn cần nhập thêm lệnh: <span style=color:red>chaylandau</span> (để cấu hình tự động các chỉ số cho công tơ điện)<br>
 Nếu đã làm theo hướng dẫn mà vẫn chưa thấy google sheet cập nhật dữ liệu, bạn thay ID của các bạn vào <a href="https://github.com/npbk21/congtodien/raw/main/LinkCheck.txt">LinkCheck.txt</a> này, rồi truy cập thử xem kết quả trả về là gì.<br>
 Nếu hiện: <span style=color:red>"Cần được cho phép để thực hiện hành động đó."</span> thì bạn cấp quyền chưa thành công, bạn cần tạo lại ID.<br><br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Qss_aFsxv24?si=8mRR0QXEAFcTHJsk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <h3>Lệnh Cài Đặt Thiết Bị</h3>
 <li>Thay đổi ID google sheet</li>
 - Google sheet là dịch vụ hoàn toàn miễn phí của google, giúp bạn theo dõi qua điện thoại các chỉ số mà thiết bị đo và tính toán được theo thời gian thực.<br>
@@ -544,28 +541,6 @@ Thì các bạn nhập <span style=color:red>idmoi</span><span style=color:blue>
 - Cứ sau <span style=color:blue>X</span> giây thiết bị sẽ truyền dữ liệu một lần.<br>
 <br><li>Nâng cấp phần mềm</li>
 - Bạn có thể nâng cấp phần mềm cho thiết bị để cập nhật các tính năng mới nhất với lệnh: <span style=color:red>nangcap</span><br>
-<h3>Nạp Phần Mềm Cho Thiết Bị</h3>
-<li>Tải Driver, chương trình ESP8266Flasher và phần mềm congtodien.bin</li> 
-<p> - Driver cho máy tính, tải về <a href="https://github.com/npbk21/congtodien/raw/main/CH34x_Install_Windows_v3_4.EXE">tại đây.</a></p>
-<p> - ESP8266Flasher cho Windows x86 (32 bit), tải về <a href="https://github.com/nodemcu/nodemcu-flasher/raw/master/Win32/Release/ESP8266Flasher.exe">tại đây.</a></p>
-<p> - ESP8266Flasher cho Windows x64 (64 bit), tải về <a href="https://github.com/nodemcu/nodemcu-flasher/raw/master/Win64/Release/ESP8266Flasher.exe">tại đây.</a></p>
-<p> - Phần mềm nạp cho thiết bị CongToDien.bin (Update 4/7/2024), tải về <a href="https://github.com/npbk21/congtodien/raw/main/CongToDien.bin">tại đây.</a></p>
-<li>Cài Driver sau đó mở chương trình ESP8266Flasher.exe</li>
-<li>Kết nối thiết bị với máy tình bằng dây cáp USB</li><br>
-<img width="40%" src="flash1.jpg"></img><br><br>
-<li>Chọn vào "Config" - sau đó bấm vào bánh răng giống như hình dưới. Chọn file KeyServerSing.bin bạn vừa tải về.</li><br>
-<img width="40%" src="flash2.jpg"></img><br><br>
-<li>Chọn vào "Operation" - sau đó bấm vào COM port, chọn COM của bạn.</li><br>
-<li>Bấm vào FLASH giống như hình dưới</li><br>
-<img width="40%" src="flash3.jpg"></img><br><br>
-<li>Chờ chương trình nạp xong và hiển thị dấu tích màu xanh giống như hình dưới là xong.</li><br>
-<img width="40%" src="flash4.jpg"></img><br><br>
-<li>Sau khi nạp xong, bạn cấp nguồn cho thiết bị, và truy cập vào wifi <span style=color:red>CongToDien</span> do thiết bị phát ra.</li><br>
-<li>Bạn mở trình duyệt web rồi truy cập 192.168.4.1</li><br>
-<img width="20%" src="caidatwifi.jpg"></img><br><br>
-<li>Bạn ghi nhớ địa chỉ MAC được hiển thị trên màn hình, sau đó chọn mạng wifi nhà bạn, nhập chính xác mật khẩu và bấm "Kết Nối" để thiết bị kết nối với wifi nhà bạn.</li><br>
-<li>Bạn dùng điện thoại android vào CHplay cài ứng dụng Network Analyzer để xem địa chỉ IP nội bộ của công tơ điện.</li><br>
-<li>Sau khi đã biết được IP nội bộ của công tơ điện, bạn vào trình duyệt web nhập địa chỉ IP nội bộ để tiến hành cài đặt lệnh cho lần đầu sử dụng theo hướng dẫn ở trên.</li><br>
 <br><br>
 </div>
 </body></html>
