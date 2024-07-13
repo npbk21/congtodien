@@ -5,7 +5,7 @@ function doGet(e) {
   if (!e.parameter) {
     result = 'No Parameters';
   } else {
-    var sheet_id = '1tWG6sktzOsAZ4HDm0LjQ9mvPNACuyQFlBodEgx2wqJI'; // ID của bảng tính
+    var sheet_id = '1tWG6sktzOsAZ4HDm0LssavmPNACuyQFlBodEgx2wqJI'; // ID của bảng tính
     var sheet = SpreadsheetApp.openById(sheet_id).getActiveSheet();
     var lastRow = sheet.getLastRow();
     var rowData = [];
@@ -13,35 +13,20 @@ function doGet(e) {
     if (e.parameter.congsuat) {
       updateRow(sheet, lastRow, 'Đang dùng', e.parameter.congsuat);
     }
-    if (e.parameter.tocdo) {
-      updateRow(sheet, lastRow, 'Tốc độ đốt tiền', e.parameter.tocdo);
+    if (e.parameter.hoaluoi) {
+      updateRow(sheet, lastRow, 'Hoà lưới', e.parameter.hoaluoi);
     }
-    if (e.parameter.sodienhomnay) {
-      updateRow(sheet, lastRow, 'Số hôm nay', e.parameter.sodienhomnay);
+    if (e.parameter.sohomnay) {
+      updateRow(sheet, lastRow, 'Số hôm nay', e.parameter.sohomnay);
     }
-    if (e.parameter.tiendienhomnay) {
-      updateRow(sheet, lastRow, 'Tiền hôm nay', e.parameter.tiendienhomnay);
+    if (e.parameter.sohomqua) {
+      updateRow(sheet, lastRow, 'Số hôm qua', e.parameter.sohomqua);
     }
-    if (e.parameter.sodienhomqua) {
-      updateRow(sheet, lastRow, 'Số hôm qua', e.parameter.sodienhomqua);
+    if (e.parameter.sothangnay) {
+      updateRow(sheet, lastRow, 'Số tháng này', e.parameter.sothangnay);
     }
-    if (e.parameter.tiendienhomqua) {
-      updateRow(sheet, lastRow, 'Tiền hôm qua', e.parameter.tiendienhomqua);
-    }
-    if (e.parameter.sodienthangnay) {
-      updateRow(sheet, lastRow, 'Số tháng này', e.parameter.sodienthangnay);
-    }
-    if (e.parameter.tiendienthangnay) {
-      updateRow(sheet, lastRow, 'Tiền tháng này', e.parameter.tiendienthangnay);
-    }
-    if (e.parameter.sodienthangtruoc) {
-      updateRow(sheet, lastRow, 'Số tháng trước', e.parameter.sodienthangtruoc);
-    }
-    if (e.parameter.tiendienthangtruoc) {
-    updateRow(sheet, lastRow, 'Tiền tháng trước', e.parameter.tiendienthangtruoc);
-    }
-    if (e.parameter.bac) {
-      updateRow(sheet, lastRow, 'Giá hiện tại', e.parameter.bac);
+    if (e.parameter.tienthangnay) {
+      updateRow(sheet, lastRow, 'Tiền tháng này', e.parameter.tienthangnay);
     }
     if (e.parameter.dongdien) {
       updateRow(sheet, lastRow, 'Dòng điện', e.parameter.dongdien);
@@ -49,14 +34,11 @@ function doGet(e) {
     if (e.parameter.dienap) {
       updateRow(sheet, lastRow, 'Điện áp', e.parameter.dienap);
     }
-    if (e.parameter.dongdiencaonhat) {
-      updateRow(sheet, lastRow, 'Imax', e.parameter.dongdiencaonhat);
+    if (e.parameter.sohoaluoihomnay) {
+      updateRow(sheet, lastRow, 'Hòa lưới hôm nay', e.parameter.sohoaluoihomnay);
     }
-	if (e.parameter.congsuatcaonhat) {
-      updateRow(sheet, lastRow, 'Pmax', e.parameter.congsuatcaonhat);
-    }
-	if (e.parameter.heso) {
-      updateRow(sheet, lastRow, 'Cosφ', e.parameter.heso);
+    if (e.parameter.sohoaluoithangnay) {
+      updateRow(sheet, lastRow, 'Hòa lưới tháng', e.parameter.sohoaluoithangnay);
     }
   }
 

@@ -493,19 +493,16 @@ input[type="file"] {
 
 <div id="content">
 <h1>Công Tơ Điện Thông Minh</h1>
-<p>Công tơ điện thông minh là thiết bị đo công suất tiêu thụ điện sử dụng esp8266 + pzem 004t v3 để lập trình, đo, tính toán và lưu trữ dữ liệu theo thời gian thực.<br>
+<p>Công tơ điện thông minh là thiết bị đo công suất tiêu thụ điện của gia đình bạn và biến tần hòa lưới trực tiếp (Micro Inverter) để tính toàn lượng điện dư thừa và triệt tiêu chúng, để đảm bảo không bị đẩy ngược ra công tơ của EVN.<br>
 Bạn có thể dùng điện thoại để theo dõi các chỉ số từ xa thông qua dịch vụ miễn phí của google sheet.<br>
-Lưu ý công tơ này chỉ mang tính chất tham khảo, không dùng làm cắn cứ để tranh luận về lượng điện tiêu thụ giữa bạn và EVN.</span><br>
-Sự <span style=color:blue>chênh lệch số điện tiêu thụ phụ thuộc vào ngày chốt số, giờ chốt số giữa công tơ điện thông minh và công tơ điện của EVN</span>.</p>
-<span style=color:red>Đây là dự án miễn phí, được xây dựng và phát triển bởi Nguyễn Vượng, mọi ý kiến đóng góp hoặc cần giải đáp vui lòng liên hệ zalo 0971282336</span>.<br><br>
-<img width="35%" src="chiso.jpg"></img><img width="35%" src="chiso.PNG"></img><br><br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ntSCGgR2e54?si=xraWmoifhzOhXEjf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <h3>Chuẩn Bị Phần Cứng</h3>
-- Bạn cần có máy tính để bàn hoặc laptop.<br>
+Liên hệ Zalo 0971282336 để mua bộ mạch đã nạp sẵn phần mềm có chức năng bám theo biến tần để điều khiển tải đốt lượng điện dư thừa do Micro Inverter sinh ra.<br>
 - Mạch Pzem 004T v3.0 (cảm biến dòng khép kín).<br>
 Link mua Pzem 004T trên shopee: <a href="https://shope.ee/6zxvHcIenP">https://shopee.vn/pzem004t</a><br>
-- Mỏ hàn thiếc hoặc ra quán điện thoại nhờ hàn hộ theo Sơ đồ dưới (phí ~ 30k):<br><br>
-<img width="70%" src="sodo.jpg"></img><br><br><br>
+- Mỏ hàn thiếc hoặc ra quán điện thoại nhờ hàn hộ theo các sơ đồ dưới:<br><br>
+<img width="70%" src="HoaLuoi.jpg"></img><br><br><br>
+<img width="70%" src="Tong.jpg"></img><br><br><br>
+<img width="70%" src="MachDot.jpg"></img><br><br><br>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yPjZJPgqmjs?si=m2LGW3RJnltM-kUp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <h3>Tạo ID Google Sheet</h3>
 Các bạn bấm vào link này để tạo ID bảng tính của google sheet <a href="https://docs.google.com/spreadsheets/create">https://docs.google.com/spreadsheets/create</a><br>
@@ -531,6 +528,7 @@ Thì các bạn nhập <span style=color:red>idmoi</span><span style=color:blue>
 - Bạn nhập: <span style=color:red>dienmotgia</span><span style=color:blue>XXXX</span><br>
 - <span style=color:blue>XXXX</span> là giá mà bạn muốn áp dụng<br>
 - Muốn quay lại cách tính điện 6 bậc của EVN, bạn nhập: <span style=color:red>diensinhhoat</span><br>
+- Bạn có nhiều phòng trọ, và muốn thống kê lượng điện tiêu thụ của tất cả các phòng trong cùng 1 bảng tính vui lòng liên hệ với mình qua zalo 0971282336<br>
 <br><li>Thay đổi ngày chốt số</li>
 - Thiết bị sẽ chốt số điện hàng tháng vào 24h00 của ngày mà bạn cài đặt.<br>
 - Bạn nhập: <span style=color:red>ngaychotso</span><span style=color:blue>XX</span><br>
@@ -539,8 +537,25 @@ Thì các bạn nhập <span style=color:red>idmoi</span><span style=color:blue>
 - Mặc định 5 (giây) thiết bị sẽ chuyển màn hình và truyền dữ liệu lên google sheet một lần.<br>
 - Bạn nhập <span style=color:red>chuyenmanhinh</span><span style=color:blue>X</span><br>
 - Cứ sau <span style=color:blue>X</span> giây thiết bị sẽ truyền dữ liệu một lần.<br>
-<br><li>Nâng cấp phần mềm</li>
-- Bạn có thể nâng cấp phần mềm cho thiết bị để cập nhật các tính năng mới nhất với lệnh: <span style=color:red>nangcap</span><br>
+<br><li> Thống kế số điện đã tiêu thụ hàng tháng</li>
+- Để thông kê lượng điện tiêu thụ hàng tháng và số tiền phải trả của các tháng đó, bạn tạo bảng tính mới giống như cách tạo ID của lần chạy đầu tiên.<br>
+- Tuy nhiên bạn sẽ sử dụng <a href="https://github.com/npbk21/congtodien/raw/main/App_Script_Thang.txt">App_Script_Thang</a><br>
+- Nhập lệnh <span style=color:red>idthang</span><span style=color:blue>chuỗiIDcủabạn</span><br>
+Ví dụ chuỗi mới là <span style=color:blue>AKTTfyxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
+Bạn nhập: <span style=color:red>idthang</span><span style=color:blue>AKTTfyxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
+<br><li> Thống kế số điện đã tiêu thụ theo ngày</li>
+- Để thông kê lượng điện tiêu thụ theo ngày, bạn tạo bảng tính mới giống như cách tạo ID của lần chạy đầu tiên.<br>
+- Tuy nhiên bạn sẽ sử dụng <a href="https://github.com/npbk21/congtodien/raw/main/App_Script_Ngay.txt">App_Script_Ngay</a><br>
+- Nhập lệnh <span style=color:red>idngay</span><span style=color:blue>chuỗiIDcủabạn</span><br>
+Ví dụ chuỗi mới là <span style=color:blue>AKGGcbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
+Bạn nhập: <span style=color:red>idngay</span><span style=color:blue>AKGGcbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
+
+<li>Bạn cấp nguồn cho từng mạcht bị, và truy cập vào từng wifi <span style=color:red>CongToDien</span>, <span style=color:red>HoaLuoi</span>, <span style=color:red>MachDot</span> do từng thiết bị phát ra.</li><br>
+<li>Bạn mở trình duyệt web rồi truy cập 192.168.4.1</li><br>
+<img width="20%" src="caidatwifi.jpg"></img><br><br>
+<li>Bạn ghi nhớ địa chỉ MAC của từng thiết bị được hiển thị trên màn hình ở lần cài đặt wifi đầu tiên, sau đó chọn mạng wifi nhà bạn, nhập chính xác mật khẩu và bấm "Kết Nối" để thiết bị kết nối với wifi nhà bạn.</li><br>
+<li>Bạn dùng điện thoại android vào CHplay cài ứng dụng Network Analyzer để xem địa chỉ IP nội bộ của Mạch Đốt và Hòa Lưới để nhập lệnh vào công tơ Tổng.</li><br>
+<li>Sau khi đã biết được IP nội bộ của công tơ điện, bạn vào trình duyệt web nhập địa chỉ IP nội bộ để tiến hành cài đặt lệnh cho lần đầu sử dụng theo hướng dẫn ở trên.</li><br>
 <br><br>
 </div>
 </body></html>
