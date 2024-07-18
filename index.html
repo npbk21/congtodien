@@ -503,30 +503,25 @@ Link mua Pzem 004T trên shopee: <a href="https://shope.ee/6zxvHcIenP">https://s
 <img width="70%" src="HoaLuoi.jpg"></img><br><br><br>
 <img width="70%" src="Tong.jpg"></img><br><br><br>
 <img width="70%" src="MachDot.jpg"></img><br><br><br>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/whizYDrzPZ0?si=fyMPE3NeAPU_RfDx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><h3>Tạo ID Google Sheet</h3>
-Các bạn bấm vào link này để tạo ID bảng tính của google sheet <a href="https://docs.google.com/spreadsheets/create">https://docs.google.com/spreadsheets/create</a><br>
-Bạn copy toàn bộ nội dung trong file ==> <a href="https://github.com/npbk21/congtodien/raw/main/App%20Script.txt">App Script.txt</a><br>
-Với lần sử dụng đầu tiên, bạn cần nhập thêm lệnh: <span style=color:red>chaylandau</span> (để cấu hình tự động các chỉ số cho công tơ điện)<br>
-Nếu đã làm theo hướng dẫn mà vẫn chưa thấy google sheet cập nhật dữ liệu, bạn thay ID của các bạn vào <a href="https://github.com/npbk21/congtodien/raw/main/LinkCheck.txt">LinkCheck.txt</a> này, rồi truy cập thử xem kết quả trả về là gì.<br>
-Nếu hiện: <span style=color:red>"Cần được cho phép để thực hiện hành động đó."</span> thì bạn cấp quyền chưa thành công, bạn cần tạo lại ID.<br><br>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/whizYDrzPZ0?si=fyMPE3NeAPU_RfDx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<br><br><br><h3>Hướng dẫn lấy địa chỉ IP nội bộ cho 3 mạch xử lý</h3>
+- Bạn cấp nguồn cho mạch <span style=color:red>Tổng</span> rồi kết nối với wifi <span style=color:red>CongToDien</span> do thiết bị phát ra.<br>
+- Bạn mở trình duyệt web rồi truy cập 1.2.3.4<br>
+- Bạn ghi nhớ địa chỉ MAC của thiết bị được hiển thị trên màn hình, sau đó chọn mạng wifi nhà bạn, nhập chính xác mật khẩu và bấm "Kết Nối". Khi thiết bị kết nối thành công với wifi nhà bạn, thì wifi CongToDien sẽ biến mất.<br>
+- Bạn dùng điện thoại android vào CHplay cài ứng dụng Network Analyzer để xem địa chỉ IP nội bộ của mạch Tổng, và thêm địa chỉ IP đó vào IP tĩnh trong modem wifi nhà bạn. (ghi nhớ địa chỉ nội bộ ra giấy nháp để dùng ở bước dưới)<br>
+<br><br>
+<img width="20%" src="wifi.jpg"></img><img width="20%" src="ketnoi.jpg"></img><img width="20%" src="ipnoibo.jpg"></img><br><br>
+- Với mạch <span style=color:red>Hòa Lưới</span> và <span style=color:red>Mạch Đốt</span> bạn cũng làm tương tự như cách làm ở trên.<br>
+
 <h3>Lệnh Cài Đặt Thiết Bị</h3>
-<li>Thay đổi ID google sheet</li>
-- Google sheet là dịch vụ hoàn toàn miễn phí của google, giúp bạn theo dõi qua điện thoại các chỉ số mà thiết bị đo và tính toán được theo thời gian thực.<br>
-- Mỗi một google sheet sẽ có một ID riêng biệt, khi bạn thay đổi App Script thì ID này cũng sẽ thay đổi.<br>
-- Cách tạo ID google sheet bạn xem hướng dẫn ở video trên (phải thao tác trên máy tính, nếu bạn không có máy tính thì có thể liên hệ mình, để mình hỗ trợ).<br>
-- Muốn nhập ID cho lần chạy đầu tiên hoặc thay ID mới cho thiết bị, bạn nhập: <span style=color:red>idmoi</span><span style=color:blue>chuỗiIDcủabạn</span><br>
-Ví dụ chuỗi mới là <span style=color:blue>AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
-Thì các bạn nhập <span style=color:red>idmoi</span><span style=color:blue>AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
-<br><li>Thay đổi theo giá điện mới của EVN</li>
-- Từ 15/5/2024, giá điện sẽ được xét duyệt thay đổi 3 tháng một lần nếu giá đầu vào thay đổi trên 3%.<br>
-- Bạn truy cập link này để trả cứu giá điện mới của EVN: <a href="https://www.evn.com.vn/c3/calc/Cong-cu-tinh-hoa-don-tien-dien-9-172.aspx">https://www.evn.com.vn/c3/calc/Cong-cu-tinh-hoa-don-tien-dien-9-172.aspx</a><br>
-- Để thay đổi giá điện các bậc 1, 2, 3, 4, 5, 6 bạn nhập lần lượt các lệnh sau: <span style=color:red>bacmot</span><span style=color:blue>XXXX</span>, <span style=color:red>bachai</span><span style=color:blue>XXXX</span>, <span style=color:red>bacba</span><span style=color:blue>XXXX</span>, <span style=color:red>bacbon</span><span style=color:blue>XXXX</span>, <span style=color:red>bacnam</span><span style=color:blue>XXXX</span>, <span style=color:red>bacsau</span><span style=color:blue>XXXX</span><br>
-- <span style=color:blue>XXXX</span> là giá điện mới của từng bậc.<br>
+<li>Lưu ý các lệnh dưới đây chỉ dùng để nhập cho mạch công tơ <span style=color:red>Tổng</span>.</li>
+<li>Mạch công tơ tổng sẽ tự gửi lệnh cài đặt cho mạch Hòa Lưới và Mạch Đốt.</li>
+<li> Với lần sử dụng đầu tiên, bạn cần nhập lệnh: <span style=color:red>chaylandau</span> (để cấu hình tự động các chỉ số cho công tơ điện)</li>
 <br><li>Thay đổi IP nội bộ của mạch hòa lưới</li>
-- Khi bạn kết nối mạch hòa lưới với wifi nhà bạn, modem wifi nhà bạn sẽ cấp cho mạch Hòa Lưới địa chỉ IP, bạn nhập IP vào mạch Công tơ tổng theo lệnh dưới.<br>
+- IP nội bộ của mạch Hòa Lưới đã lấy được ở bước trên.<br>
 - Ví dụ IP của mạch Hòa Lưới là 192.168.1.23 bạn nhập: <span style=color:red>iphoaluoi</span><span style=color:blue>192.168.1.23</span>
 <br><br><li>Thay đổi IP nội bộ của mạch điều khiển đốt</li>
-- Khi bạn kết nối mạch điều khiển đốt với wifi nhà bạn, modem wifi nhà bạn sẽ cấp cho mạch Điều khiển đốt địa chỉ IP, bạn nhập IP vào mạch Công tơ tổng theo lệnh dưới.<br>
+- IP nội bộ của mạch Đốt đã lấy được ở bước trên.<br>
 - Ví dụ IP của mạch Điều khiển đốt là 192.168.1.24 bạn nhập: <span style=color:red>ipmachdot</span><span style=color:blue>192.168.1.24</span>
 <br><br><li>Thay đổi ngày chốt số</li>
 - Thiết bị sẽ chốt số điện hàng tháng vào 24h00 của ngày mà bạn cài đặt.<br>
@@ -534,17 +529,30 @@ Thì các bạn nhập <span style=color:red>idmoi</span><span style=color:blue>
 <br><br><li>Thay đổi công suất đốt tối đa</li>
 - Khi bạn đã xác định được công suất tốt tối đa thì bạn nhập theo lệnh dưới, để công tơ tổng điều khiển đốt chính xác lượng điện dư thừa theo thời gian thực.<br>
 - Ví dụ công suất đốt tối đa là 600w bạn nhập: <span style=color:red>congsuatdot</span><span style=color:blue>600</span>
-<br><br><li>Thay đổi thời gian truyền dữ liệu</li>
-- Mặc định 3 (giây) thiết bị sẽ chuyển màn hình và truyền dữ liệu lên google sheet một lần.<br>
+<br><br><li>Bật hoặc tắt đồng bộ dữ liệu lên Google Sheet</li>
+- Google sheet là dịch vụ hoàn toàn miễn phí của google, giúp bạn theo dõi qua điện thoại các chỉ số mà thiết bị đo và tính toán được theo thời gian thực.<br>
+- Bạn nhập lệnh: <span style=color:red>batdongbo</span><br>
+- Không muốn theo dõi trên Google Sheet mà chỉ cần quan tâm tới tính năng đốt bỏ công suất dư thừa.<br>
+- Bạn nhập lệnh: <span style=color:red>tatdongbo</span>. Bạn cũng không cần bận tâm tới các lệnh thiết lập Google Sheet ở dưới nữa.<br>
+<br><li>Thay đổi theo giá điện mới của EVN</li>
+- Từ 15/5/2024, giá điện sẽ được xét duyệt thay đổi 3 tháng một lần nếu giá đầu vào thay đổi trên 3%.<br>
+- Bạn truy cập link này để trả cứu giá điện mới của EVN: <a href="https://www.evn.com.vn/c3/calc/Cong-cu-tinh-hoa-don-tien-dien-9-172.aspx">https://www.evn.com.vn/c3/calc/Cong-cu-tinh-hoa-don-tien-dien-9-172.aspx</a><br>
+- Để thay đổi giá điện các bậc 1, 2, 3, 4, 5, 6 bạn nhập lần lượt các lệnh sau: <span style=color:red>bacmot</span><span style=color:blue>XXXX</span>, <span style=color:red>bachai</span><span style=color:blue>XXXX</span>, <span style=color:red>bacba</span><span style=color:blue>XXXX</span>, <span style=color:red>bacbon</span><span style=color:blue>XXXX</span>, <span style=color:red>bacnam</span><span style=color:blue>XXXX</span>, <span style=color:red>bacsau</span><span style=color:blue>XXXX</span><br>
+- <span style=color:blue>XXXX</span> là giá điện mới của từng bậc.<br>
+<h3>Hướng dẫn đồng bộ dữ liệu lên Google Sheet</h3>
+- Mỗi một bảng tính google sheet sẽ có một ID riêng biệt, hoặc khi bạn thay đổi App Script thì ID này cũng sẽ thay đổi.<br>
+- Cách tạo ID google sheet bạn xem hướng dẫn ở video dưới (phải thao tác trên máy tính, nếu bạn không có máy tính thì trước khi mua hàng liên hệ mình trước, để mình hỗ trợ).<br>
+- Các bạn bấm vào link này để tạo ID bảng tính của google sheet <a href="https://docs.google.com/spreadsheets/create">https://docs.google.com/spreadsheets/create</a><br>
+- Bạn copy toàn bộ nội dung trong file ==> <a href="https://github.com/npbk21/congtodien/raw/main/App%20Script.txt">App Script.txt</a> và làm theo hướng dẫn trong video.<br>
+- Khi đã có được ID google sheet, bạn truy cập vào IP nội bộ của mạch Tổng rồi nhập: <span style=color:red>idmoi</span><span style=color:blue>chuỗiIDcủabạn</span><br>
+Ví dụ chuỗi mới là <span style=color:blue>AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
+Thì bạn nhập <span style=color:red>idmoi</span><span style=color:blue>AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
+- Nếu đã làm theo hướng dẫn mà vẫn chưa thấy Bảng Tính cập nhật dữ liệu, bạn thay ID của các bạn vào <a href="https://github.com/npbk21/congtodien/raw/main/LinkCheck.txt">LinkCheck.txt</a> này, rồi truy cập thử xem kết quả trả về là gì.<br>
+- Nếu hiện: <span style=color:red>"Cần được cho phép để thực hiện hành động đó."</span> thì bạn cấp quyền chưa thành công, bạn cần tạo lại ID.<br><br>
+<li>Thay đổi thời gian truyền dữ liệu</li>
+- Mặc định 3 (giây) thiết bị sẽ truyền dữ liệu lên google sheet một lần.<br>
 - Bạn muốn thay đổi thành 5s, nhập lệnh <span style=color:red>truyendulieu</span><span style=color:blue>5</span><br>
-- Cứ sau <span style=color:blue>5</span> giây thiết bị sẽ truyền dữ liệu một lần.
-<br><br><li>Hướng dẫn lấy địa chỉ IP nội bộ cho 3 mạch xử lý</li>
-- Bạn cấp nguồn cho từng mạch, và truy cập vào từng wifi <span style=color:red>CongToDien</span>, <span style=color:red>HoaLuoi</span>, <span style=color:red>MachDot</span> do từng thiết bị phát ra.<br>
-- Bạn mở trình duyệt web rồi truy cập 1.2.3.4<br>
-<img width="20%" src="wifi.jpg"></img><img width="20%" src="ketnoi.jpg"></img><img width="20%" src="ipnoibo.jpg"></img><br><br>
-- Bạn ghi nhớ địa chỉ MAC của từng thiết bị được hiển thị trên màn hình ở lần cài đặt wifi đầu tiên, sau đó chọn mạng wifi nhà bạn, nhập chính xác mật khẩu và bấm "Kết Nối" để thiết bị kết nối với wifi nhà bạn.<br>
-- Bạn dùng điện thoại android vào CHplay cài ứng dụng Network Analyzer để xem địa chỉ IP nội bộ của Mạch Đốt và Hòa Lưới để nhập lệnh vào công tơ Tổng.<br>
-- Sau khi đã biết được IP nội bộ của công tơ điện tổng, bạn vào trình duyệt web nhập địa chỉ IP nội bộ để tiến hành cài đặt lệnh cho lần đầu sử dụng theo hướng dẫn ở trên.<br>
+- Cứ sau <span style=color:blue>5</span> giây thiết bị sẽ truyền dữ liệu một lần.<br><br>
 <br><br>
 </div>
 </body></html>
