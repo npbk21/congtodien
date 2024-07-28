@@ -500,8 +500,8 @@ Bạn có thể dùng điện thoại để theo dõi các chỉ số từ xa th
 <br><br>Video chạy giả lập khả năng đốt công suất dư thừa.<br>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/o0-XoGQ_z9k?si=IqZ9sia9S0rFijOV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <h3>Chuẩn Bị Phần Cứng</h3>
-Liên hệ Zalo 0971282336 để mua bộ điều khiển (bao gồm 3 mạch) đã nạp sẵn phần mềm giá 400k, có chức năng bám theo biến tần để điều khiển tải đốt lượng điện dư thừa do Micro Inverter sinh ra.<br>
-Hoặc bạn cũng có thể mua phần mềm bên mình giá 250k, và tự nạp phần mềm cho mạch. Hướng dẫn nạp phần mềm ở cuối website này.<br><br>
+Liên hệ Zalo 0971282336 để mua bộ điều khiển (bao gồm 3 mạch với các chức năng: Mạch Công Tơ Tổng, Mạch Hòa Lưới, Mạch Điều Khiển Đốt) đã nạp sẵn phần mềm giá 400k, có chức năng bám theo biến tần để triệt tiêu lượng điện dư thừa do Micro Inverter sinh ra.<br>
+Hoặc bạn cũng có thể mua phần mềm bên mình giá 250k, và tự nạp phần mềm cho mạch để có được các tính năng tương tự. Hướng dẫn nạp phần mềm ở cuối website này.<br><br>
 - Link mua mạch điều khiển (mua 3 mạch) trên shopee: <a href="https://s.shopee.vn/3AnKaa7xTa">https://shopee.vn/machdieukhien</a> (mạch màu xanh loại mới này nhỏ gọn hơn)<br><br>
 - Link mua Pzem 004T (mua 2 mạch) trên shopee: <a href="https://shope.ee/6zxvHcIenP">https://shopee.vn/pzem004t</a><br><br>
 - Link mua mạch đốt công suất dư thừa (mỗi mạch đốt tối đa được 600w) trên shopee: <a href="https://s.shopee.vn/10iq0H2QNB">https://shopee.vn/machdotcongsuatduthua</a><br><br>
@@ -509,27 +509,26 @@ Hoặc bạn cũng có thể mua phần mềm bên mình giá 250k, và tự n�
 <img width="70%" src="HoaLuoi.jpg"></img><br><br><br>
 <img width="70%" src="Tong.jpg"></img><br><br><br>
 <img width="70%" src="MachDot.jpg"></img><br><br><br>
-<br><br><br><h3>Hướng dẫn lấy địa chỉ IP nội bộ cho 3 mạch xử lý</h3>
-- Bạn cấp nguồn cho mạch <span style=color:red>Tổng</span> rồi kết nối với wifi <span style=color:red>CongToDien</span> do thiết bị phát ra.<br>
+<br><br><br><h3>Hướng dẫn lấy địa chỉ IP nội bộ cho 3 mạch điều khiển</h3>
+- Bạn cấp nguồn cho Mạch Công Tơ <span style=color:red>Tổng</span> rồi kết nối với wifi <span style=color:red>CongToDien</span> do thiết bị phát ra.<br>
 - Bạn mở trình duyệt web rồi truy cập 1.2.3.4<br>
 - Bạn ghi nhớ địa chỉ MAC của thiết bị được hiển thị trên màn hình, sau đó chọn mạng wifi nhà bạn, nhập chính xác mật khẩu và bấm "Kết Nối". Khi thiết bị kết nối thành công với wifi nhà bạn, thì wifi CongToDien sẽ biến mất.<br>
-- Bạn dùng điện thoại android vào CHplay cài ứng dụng Network Analyzer để xem địa chỉ IP nội bộ của mạch Tổng, và thêm địa chỉ IP đó vào IP tĩnh trong modem wifi nhà bạn. (ghi nhớ địa chỉ nội bộ ra giấy nháp để dùng ở bước dưới)<br>
+- Bạn dùng điện thoại android vào CHplay cài ứng dụng Network Analyzer để xem địa chỉ IP nội bộ của Mạch Công Tơ Tổng, và thêm địa chỉ IP đó vào IP tĩnh trong modem wifi nhà bạn. (ghi nhớ địa chỉ nội bộ ra giấy nháp để dùng ở bước dưới)<br>
 <br><br>
 <img width="20%" src="wifi.jpg"></img><img width="20%" src="ketnoi.jpg"></img><img width="20%" src="ipnoibo.jpg"></img><br><br>
-- Với mạch <span style=color:red>Hòa Lưới</span> và <span style=color:red>Mạch Đốt</span> bạn cũng làm tương tự như cách làm ở trên.<br>
+- Với <span style=color:red>Mạch Hòa Lưới</span> và <span style=color:red>Mạch Điều Khiển Đốt</span> bạn cũng làm tương tự như cách làm ở trên.<br>
 
 <h3>Lệnh Cài Đặt Thiết Bị</h3>
-Sau khi đã lấy được IP nội bộ của 3 mạch điều khiển.
-
-<li>Lệnh dùng cho mạch công tơ <span style=color:orange>Tổng</span>.</li>
-Bạn dùng trình duyệt web, truy cập vào địa chỉ IP nội bộ của mạch Tổng. Ví dụ là <span style=color:red>192.168.1.10</span><br><br>
-- Với lần sử dụng đầu tiên, bạn cần nhập lệnh: <span style=color:red>chaylandau</span> (để cấu hình tự động các chỉ số cho công tơ điện)<br><br>
-- Thay đổi IP nội bộ của mạch hòa lưới<br>
-. IP nội bộ của mạch Hòa Lưới đã lấy được ở bước trên.<br>
-. Ví dụ IP của mạch Hòa Lưới là 192.168.1.23 bạn nhập: <span style=color:red>iphoaluoi</span><span style=color:blue>192.168.1.23</span>
-<br><br>- Thay đổi IP nội bộ của mạch điều khiển đốt<br>
-. IP nội bộ của mạch Đốt đã lấy được ở bước trên.<br>
-. Ví dụ IP của mạch Điều khiển đốt là 192.168.1.24 bạn nhập: <span style=color:red>ipmachdot</span><span style=color:blue>192.168.1.24</span>
+Các lệnh này chỉ dùng được khi đã lấy được IP nội bộ của 3 mạch điều khiển.<br><br>
+<li>Lệnh dùng cho Mạch Công Tơ <span style=color:orange>Tổng</span>.</li>
+Bạn dùng trình duyệt web, truy cập vào địa chỉ IP nội bộ của Mạch Công Tơ Tổng. Ví dụ là <span style=color:red>192.168.1.10</span><br><br>
+- Với lần sử dụng đầu tiên, bạn cần nhập lệnh: <span style=color:red>chaylandau</span> (để cấu hình tự động các chỉ số theo mặc định)<br><br>
+- Thay đổi IP nội bộ của Mạch Hòa Lưới<br>
+. IP nội bộ của Mạch Hòa Lưới đã lấy được ở bước trên.<br>
+. Ví dụ IP của Mạch Hòa Lưới là 192.168.1.23 bạn nhập: <span style=color:red>iphoaluoi</span><span style=color:blue>192.168.1.23</span>
+<br><br>- Thay đổi IP nội bộ của Mạch Điều Khiển Đốt<br>
+. IP nội bộ của Mạch Điều Khiển Đốt đã lấy được ở bước trên.<br>
+. Ví dụ IP của Mạch Điều Khiển Đốt là 192.168.1.24 bạn nhập: <span style=color:red>ipmachdot</span><span style=color:blue>192.168.1.24</span>
 <br><br>- Thay đổi ngày chốt số<br>
 . Thiết bị sẽ chốt số điện hàng tháng vào 24h00 của ngày mà bạn cài đặt.<br>
 . Ví dụ khu vực bạn sống chốt số vào ngày 20, bạn nhập: <span style=color:red>ngaychotso</span><span style=color:blue>20</span>
@@ -539,17 +538,19 @@ Bạn dùng trình duyệt web, truy cập vào địa chỉ IP nội bộ của
 . Không muốn theo dõi trên Google Sheet mà chỉ cần quan tâm tới tính năng đốt bỏ công suất dư thừa.<br>
 . Bạn nhập lệnh: <span style=color:red>tatdongbo</span>. Bạn cũng không cần bận tâm tới các lệnh thiết lập Google Sheet ở dưới nữa.<br>
 <br><br>
-<li>Lệnh dùng cho <span style=color:orange>Mạch Đốt</span></li>
-Bạn dùng trình duyệt web, truy cập vào địa chỉ IP nội bộ của Mạch Đốt. Ví dụ là <span style=color:red>192.168.1.24</span><br><br>
-- Nếu nhà bạn đang dùng hòa lưới Micro Inverter công suất phát tối đa là 600w.<br>
-- Bạn nhập: <span style=color:red>congsuatdot</span><span style=color:blue>600</span>
+<li>Lệnh dùng cho <span style=color:orange>Mạch Điều Khiển Đốt</span></li>
+Bạn dùng trình duyệt web, truy cập vào địa chỉ IP nội bộ của Mạch Điều Khiển Đốt. Ví dụ là <span style=color:red>192.168.1.24</span><br>
+Phần mềm hỗ trợ đốt tối đa 3000w (nếu bạn muốn đốt tối đa 3000w, thì phải hàn 5 mạch đốt vào Mạch Điều Khiển Đốt).<br>
+- Ví dụ nhà bạn đang dùng hòa lưới Micro Inverter công suất phát tối đa là 600w.<br>
+. Bạn nhập: <span style=color:red>congsuatdot</span><span style=color:blue>600</span>
+. Lúc này nếu công suất hòa lưới đang dư thừa so với công suất sử dụng trong bất kỳ giá trị nào từ 1w -> 600w sẽ được đốt hết. Để đảm bảo không đẩy ngược công suất dư thừa ra công tơ của EVN.<br>
 
 <h3>Hướng dẫn đồng bộ dữ liệu lên Google Sheet</h3>
 - Mỗi một bảng tính google sheet sẽ có một ID riêng biệt, hoặc khi bạn thay đổi App Script thì ID này cũng sẽ thay đổi.<br>
-- Cách tạo ID google sheet bạn xem hướng dẫn ở video dưới (phải thao tác trên máy tính, nếu bạn không có máy tính thì trước khi mua hàng liên hệ mình trước, để mình hỗ trợ).<br>
+- Cách tạo ID google sheet bạn xem hướng dẫn ở video dưới (phải thao tác trên máy tính).<br>
 - Các bạn bấm vào link này để tạo ID bảng tính của google sheet <a href="https://docs.google.com/spreadsheets/create">https://docs.google.com/spreadsheets/create</a><br>
 - Bạn copy toàn bộ nội dung trong file ==> <a href="https://github.com/npbk21/congtodien/raw/main/App%20Script.txt">App Script.txt</a> và làm theo hướng dẫn trong video.<br>
-- Khi đã có được ID google sheet, bạn truy cập vào IP nội bộ của mạch Tổng rồi nhập: <span style=color:red>idmoi</span><span style=color:blue>chuỗiIDcủabạn</span><br>
+- Khi đã có được ID google sheet, bạn truy cập vào IP nội bộ của Mạch Công Tơ Tổng rồi nhập: <span style=color:red>idmoi</span><span style=color:blue>chuỗiIDcủabạn</span><br>
 Ví dụ chuỗi mới là <span style=color:blue>AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
 Thì bạn nhập <span style=color:red>idmoi</span><span style=color:blue>AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
 - Nếu đã làm theo hướng dẫn mà vẫn chưa thấy Bảng Tính cập nhật dữ liệu, bạn thay ID của các bạn vào <a href="https://github.com/npbk21/congtodien/raw/main/LinkCheck.txt">LinkCheck.txt</a> này, rồi truy cập thử xem kết quả trả về là gì.<br>
@@ -578,7 +579,7 @@ Thì bạn nhập <span style=color:red>idmoi</span><span style=color:blue>AKfyc
 <img width="40%" src="flash4.jpg"></img><br><br>
 <li>Sau khi nạp xong, bạn cấp nguồn cho thiết bị, và truy cập vào wifi <span style=color:red>DangKyMach</span> do thiết bị phát ra.</li><br>
 <li>Bạn mở trình duyệt web rồi truy cập 1.2.3.4</li><br>
-<li>Bạn ghi số IDchip ra giấy, và đánh dấu nếu muốn đó là mạch Tổng, Hoà Lưới, hay Mạch Đốt.</li><br>
+<li>Bạn ghi số IDchip ra giấy, và đánh dấu nếu muốn đó là Mạch Công Tơ Tổng, Mạch Hoà Lưới, hay Mạch Điều Khiển Đốt.</li><br>
 <img width="20%" src="KetNoi.PNG"></img><img width="20%" src="ChonWifi.PNG"></img><img width="20%" src="NhapMK.PNG"></img><br><br>
 <br><br>
 </div>
