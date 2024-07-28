@@ -519,31 +519,31 @@ Hoặc bạn cũng có thể mua phần mềm bên mình giá 250k, và tự n�
 - Với mạch <span style=color:red>Hòa Lưới</span> và <span style=color:red>Mạch Đốt</span> bạn cũng làm tương tự như cách làm ở trên.<br>
 
 <h3>Lệnh Cài Đặt Thiết Bị</h3>
-<li>Lưu ý các lệnh dưới đây chỉ dùng để nhập cho mạch công tơ <span style=color:red>Tổng</span>.</li>
-<li>Mạch công tơ tổng sẽ tự gửi lệnh cài đặt cho mạch Hòa Lưới và Mạch Đốt.</li>
-<li> Với lần sử dụng đầu tiên, bạn cần nhập lệnh: <span style=color:red>chaylandau</span> (để cấu hình tự động các chỉ số cho công tơ điện)</li>
-<br><li>Thay đổi IP nội bộ của mạch hòa lưới</li>
-- IP nội bộ của mạch Hòa Lưới đã lấy được ở bước trên.<br>
-- Ví dụ IP của mạch Hòa Lưới là 192.168.1.23 bạn nhập: <span style=color:red>iphoaluoi</span><span style=color:blue>192.168.1.23</span>
-<br><br><li>Thay đổi IP nội bộ của mạch điều khiển đốt</li>
-- IP nội bộ của mạch Đốt đã lấy được ở bước trên.<br>
-- Ví dụ IP của mạch Điều khiển đốt là 192.168.1.24 bạn nhập: <span style=color:red>ipmachdot</span><span style=color:blue>192.168.1.24</span>
-<br><br><li>Thay đổi ngày chốt số</li>
-- Thiết bị sẽ chốt số điện hàng tháng vào 24h00 của ngày mà bạn cài đặt.<br>
-- Ví dụ khu vực bạn sống chốt số vào ngày 20, bạn nhập: <span style=color:red>ngaychotso</span><span style=color:blue>20</span>
-<br><br><li>Thay đổi công suất đốt tối đa</li>
-- Khi bạn đã xác định được công suất tốt tối đa thì bạn nhập theo lệnh dưới, để công tơ tổng điều khiển đốt chính xác lượng điện dư thừa theo thời gian thực.<br>
-- Ví dụ công suất đốt tối đa là 600w bạn nhập: <span style=color:red>congsuatdot</span><span style=color:blue>600</span>
-<br><br><li>Bật hoặc tắt đồng bộ dữ liệu lên Google Sheet</li>
-- Google sheet là dịch vụ hoàn toàn miễn phí của google, giúp bạn theo dõi qua điện thoại các chỉ số mà thiết bị đo và tính toán được theo thời gian thực.<br>
-- Bạn nhập lệnh: <span style=color:red>batdongbo</span><br>
-- Không muốn theo dõi trên Google Sheet mà chỉ cần quan tâm tới tính năng đốt bỏ công suất dư thừa.<br>
-- Bạn nhập lệnh: <span style=color:red>tatdongbo</span>. Bạn cũng không cần bận tâm tới các lệnh thiết lập Google Sheet ở dưới nữa.<br>
-<br><li>Thay đổi theo giá điện mới của EVN</li>
-- Từ 15/5/2024, giá điện sẽ được xét duyệt thay đổi 3 tháng một lần nếu giá đầu vào thay đổi trên 3%.<br>
-- Bạn truy cập link này để trả cứu giá điện mới của EVN: <a href="https://www.evn.com.vn/c3/calc/Cong-cu-tinh-hoa-don-tien-dien-9-172.aspx">https://www.evn.com.vn/c3/calc/Cong-cu-tinh-hoa-don-tien-dien-9-172.aspx</a><br>
-- Để thay đổi giá điện các bậc 1, 2, 3, 4, 5, 6 bạn nhập lần lượt các lệnh sau: <span style=color:red>bacmot</span><span style=color:blue>XXXX</span>, <span style=color:red>bachai</span><span style=color:blue>XXXX</span>, <span style=color:red>bacba</span><span style=color:blue>XXXX</span>, <span style=color:red>bacbon</span><span style=color:blue>XXXX</span>, <span style=color:red>bacnam</span><span style=color:blue>XXXX</span>, <span style=color:red>bacsau</span><span style=color:blue>XXXX</span><br>
-- <span style=color:blue>XXXX</span> là giá điện mới của từng bậc.<br>
+Sau khi đã lấy được IP nội bộ của 3 mạch điều khiển.
+
+<li>Lệnh dùng cho mạch công tơ <span style=color:orange>Tổng</span>.</li>
+Bạn dùng trình duyệt web, truy cập vào địa chỉ IP nội bộ của mạch Tổng. Ví dụ là <span style=color:red>192.168.1.10</span><br><br>
+- Với lần sử dụng đầu tiên, bạn cần nhập lệnh: <span style=color:red>chaylandau</span> (để cấu hình tự động các chỉ số cho công tơ điện)<br><br>
+- Thay đổi IP nội bộ của mạch hòa lưới<br>
+. IP nội bộ của mạch Hòa Lưới đã lấy được ở bước trên.<br>
+. Ví dụ IP của mạch Hòa Lưới là 192.168.1.23 bạn nhập: <span style=color:red>iphoaluoi</span><span style=color:blue>192.168.1.23</span>
+<br><br>- Thay đổi IP nội bộ của mạch điều khiển đốt<br>
+. IP nội bộ của mạch Đốt đã lấy được ở bước trên.<br>
+. Ví dụ IP của mạch Điều khiển đốt là 192.168.1.24 bạn nhập: <span style=color:red>ipmachdot</span><span style=color:blue>192.168.1.24</span>
+<br><br>- Thay đổi ngày chốt số<br>
+. Thiết bị sẽ chốt số điện hàng tháng vào 24h00 của ngày mà bạn cài đặt.<br>
+. Ví dụ khu vực bạn sống chốt số vào ngày 20, bạn nhập: <span style=color:red>ngaychotso</span><span style=color:blue>20</span>
+<br><br>- Bật hoặc tắt đồng bộ dữ liệu lên Google Sheet<br>
+. Google sheet là dịch vụ hoàn toàn miễn phí của google, giúp bạn theo dõi qua điện thoại các chỉ số mà thiết bị đo và tính toán được theo thời gian thực.<br>
+. Bạn nhập lệnh: <span style=color:red>batdongbo</span><br>
+. Không muốn theo dõi trên Google Sheet mà chỉ cần quan tâm tới tính năng đốt bỏ công suất dư thừa.<br>
+. Bạn nhập lệnh: <span style=color:red>tatdongbo</span>. Bạn cũng không cần bận tâm tới các lệnh thiết lập Google Sheet ở dưới nữa.<br>
+<br><br>
+<li>Lệnh dùng cho <span style=color:orange>Mạch Đốt</span></li>
+Bạn dùng trình duyệt web, truy cập vào địa chỉ IP nội bộ của Mạch Đốt. Ví dụ là <span style=color:red>192.168.1.24</span><br><br>
+- Nếu nhà bạn đang dùng hòa lưới Micro Inverter công suất phát tối đa là 600w.<br>
+- Bạn nhập: <span style=color:red>congsuatdot</span><span style=color:blue>600</span>
+
 <h3>Hướng dẫn đồng bộ dữ liệu lên Google Sheet</h3>
 - Mỗi một bảng tính google sheet sẽ có một ID riêng biệt, hoặc khi bạn thay đổi App Script thì ID này cũng sẽ thay đổi.<br>
 - Cách tạo ID google sheet bạn xem hướng dẫn ở video dưới (phải thao tác trên máy tính, nếu bạn không có máy tính thì trước khi mua hàng liên hệ mình trước, để mình hỗ trợ).<br>
