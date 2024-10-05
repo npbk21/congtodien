@@ -5,31 +5,36 @@ function doGet(e) {
   if (!e.parameter) {
     result = 'No Parameters';
   } else {
-    var sheet_id = '1tWG6sktzOsAZ4HDm0LssavmPNACuyQFlBodEgx2wqJI'; // ID của bảng tính
+    var sheet_id = '19W4k67rsOdqEU5UKkDEJUkrnJ8AJTOSjXJAwvBLmgty'; // ID của bảng tính
     var sheet = SpreadsheetApp.openById(sheet_id).getActiveSheet();
     var lastRow = sheet.getLastRow();
     var rowData = [];
-
     if (e.parameter.congsuat) {
       updateRow(sheet, lastRow, 'Đang dùng', e.parameter.congsuat);
     }
     if (e.parameter.hoaluoi) {
       updateRow(sheet, lastRow, 'Hoà lưới', e.parameter.hoaluoi);
     }
+    if (e.parameter.congsuatdot) {
+      updateRow(sheet, lastRow, 'Cần đốt', e.parameter.congsuatdot);
+    }
+    if (e.parameter.congsuatcaonhat) {
+      updateRow(sheet, lastRow, 'Hòa Lưới Max', e.parameter.congsuatcaonhat);
+    }
+    if (e.parameter.sohoaluoihomnay) {
+      updateRow(sheet, lastRow, 'Hòa lưới hôm nay', e.parameter.sohoaluoihomnay);
+    }
+    if (e.parameter.tonghoaluoi) {
+      updateRow(sheet, lastRow, 'Tổng hoà lưới', e.parameter.tonghoaluoi);
+    }
     if (e.parameter.sohomnay) {
       updateRow(sheet, lastRow, 'Số hôm nay', e.parameter.sohomnay);
-    }
-    if (e.parameter.sohomqua) {
-      updateRow(sheet, lastRow, 'Số hôm qua', e.parameter.sohomqua);
-    }
-    if (e.parameter.dongdien) {
-      updateRow(sheet, lastRow, 'Dòng điện', e.parameter.dongdien);
     }
     if (e.parameter.dienap) {
       updateRow(sheet, lastRow, 'Điện áp', e.parameter.dienap);
     }
-    if (e.parameter.sohoaluoihomnay) {
-      updateRow(sheet, lastRow, 'Hòa lưới hôm nay', e.parameter.sohoaluoihomnay);
+    if (e.parameter.dongdien) {
+      updateRow(sheet, lastRow, 'Dòng điện', e.parameter.dongdien);
     }
   }
 
