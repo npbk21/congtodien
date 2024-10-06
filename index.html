@@ -494,7 +494,7 @@ input[type="file"] {
 <h1>Công Tơ Điện Thông Minh - Zalo 0971282336</h1>
 <p>- Công tơ điện thông minh là hệ thống thiết bị đo công suất tiêu thụ điện của gia đình bạn và công suất của biến tần hòa lưới trực tiếp (Micro Inverter), nhằm tính toàn công suất dư thừa và triệt tiêu chúng nếu có. Để đảm bảo không có lượng điện dư nào bị đẩy ngược ra công tơ của EVN.<br>
 - Bạn có thể dùng điện thoại để theo dõi các chỉ số từ xa thông qua dịch vụ miễn phí của google sheet.<br>
-- Phương pháp này giúp mọi người tiếp cận với năng lượng mặt trời theo hướng rẻ và hiệu quả nhất.<br>
+- Giải pháp này giúp mọi người tiếp cận với năng lượng mặt trời theo hướng rẻ và hiệu quả nhất.<br>
 <br>Các bạn truy cập kênh youtube của mình để xem nhiều video hơn nhé: <a href="https://youtube.com/@vuongnguyenhp234">https://youtube.com/@vuongnguyenhp234</a>
 <br><br>Video chạy thực tế khả năng đốt công suất dư thừa.<br>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VKCawNA2NZY?si=axPUMWMRyM7WWv89" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -503,13 +503,13 @@ input[type="file"] {
 <h3>Chuẩn Bị Phần Cứng</h3> 
 - Link mua mạch điều khiển (mua 1 mạch): <a href="https://s.shopee.vn/40N5xgqQgG">https://shopee.vn/MạchĐiềuKhiển</a><br><br>
 - Link mua Pzem 004T (mua 2 mạch): <a href="https://s.shopee.vn/3q3flWwQyF">https://shopee.vn/Pzem004tV3.0</a><br><br>
-- Link mua mạch đốt công suất dư thừa: <a href="https://s.shopee.vn/LUs6tmqxz">https://shopee.vn/MạchĐốtCôngSuấtDưthừa</a> hoặc <a href="https://s.shopee.vn/2AvCkbvwS9">Shop này</a>.<br><br>
-- Link mua Micro Inver (600w hoặc 1200w) <a href="https://s.shopee.vn/2qBO04Uh2M">https://shopee.vn/MicroInverter</a><br><br>
+- Link mua mạch đốt công suất dư thừa: <a href="https://s.shopee.vn/LUs6tmqxz">https://shopee.vn/MạchĐốtCôngSuấtDưthừa</a> hoặc <a href="https://s.shopee.vn/2AvCkbvwS9">Shop này</a><br><br>
+- Link mua Micro Inver (600w hoặc 1200w).<a href="https://s.shopee.vn/2qBO04Uh2M">https://shopee.vn/MicroInverter</a><br><br>
 - Nếu bạn đang dùng Micro Inverter có công suất > 250w, hãy mua thêm 1 con Triac BTA41-600 để thay cho triac BT138 có sẵn ở mạch đốt 👆<br>
 - Mỏ hàn thiếc hoặc ra quán điện thoại nhờ hàn hộ mạch esp8266<--->pzem004<--->mạchđốt theo sơ đồ dưới:<br><br>
 <li>Sơ đồ đấu nối.</li>
-- Có thể nối dài các dây tín hiệu D1, D2, D5, D6, D7, 5v, 3v3, pwm, GND, <span style=color:red>nhưng không được nối dài dây của 2 cục CT </span>.<br>
-- Dây 5v (+) và dây GND (-) của các mạch nối chung với nhau.
+- Bạn có thể nối dài các dây tín hiệu D1, D2, D5, D6, D7, 5v, 3v3, pwm, GND, <span style=color:red>nhưng không được nối dài dây của 2 cục CT </span>.<br>
+- Dây 5v (+) và dây GND (-) nối chung với nhau.
 <img width="90%" src="Tong.jpg"></img><br><br><br>
 <h3>Nạp Phần Mềm Cho Thiết Bị</h3>
 <li>Đây là cách nạp phần mềm cho mạch wifi (esp8266).</li>
@@ -527,14 +527,21 @@ input[type="file"] {
 <img width="40%" src="flash3.jpg"></img><br><br>
 <li>Chờ chương trình nạp xong và hiển thị dấu tích màu xanh giống như hình dưới là xong.</li><br>
 <img width="40%" src="flash4.jpg"></img><br><br>
-<br><br>
+<li>Sau khi nạp xong, bạn cấp nguồn cho thiết bị, và truy cập vào wifi <span style=color:red>0971282336</span> do thiết bị phát ra.</li><br>
+<li>Bạn mở trình duyệt web rồi truy cập <span style=color:red>1.2.3.4</span></li><br>
+<img width="40%" src="ketnoi.jpg"></img><br><br>
+<li>Bạn ghi nhớ địa chỉ MAC được hiển thị trên màn hình, sau đó chọn mạng wifi nhà bạn, nhập chính xác mật khẩu và bấm "Kết Nối" để thiết bị kết nối với wifi nhà bạn.</li><br>
+<li>Bạn dùng điện thoại android vào CHplay cài ứng dụng Network Analyzer để xem địa chỉ IP nội bộ của công tơ điện.</li><br>
+<img width="40%" src="ipnoibo.jpg"></img><br><br>
+<li>Sau khi đã biết được IP nội bộ của công tơ điện, ví dụ là <span style=color:red>192.168.1.11</span> như hình trên, bạn vào trình duyệt web nhập địa chỉ IP nội bộ để tiến hành cài đặt lệnh cho lần đầu sử dụng đầu tiêntrên.</li><br>
+- Bạn nhập lệnh: <span style=color:red>chaylandau</span>
 <h3>Hướng dẫn đồng bộ dữ liệu lên Google Sheet</h3>
 - Mỗi một bảng tính google sheet sẽ có một ID riêng biệt.<br>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/RUMqmZPsydE?si=P6AqRm4qeOFfV1ab" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <br><br><br>- Link tạo ID bảng tính của google Sheet <a href="https://docs.google.com/spreadsheets/create">https://docs.google.com/spreadsheets/create</a><br>
 - Link quản lý các bảng tính Google Sheet đã tạo <a href="https://docs.google.com/spreadsheets/u/0/">https://docs.google.com/spreadsheets/u/0/</a><br>
 - Copy toàn bộ nội dung trong file ==> <a href="https://github.com/npbk21/congtodien/raw/main/App%20Script.txt">App Script.txt</a> và <a href="https://github.com/npbk21/congtodien/raw/main/LinkCheck.txt">LinkCheck.txt</a><br>
-- Ví dụ chuỗi mới là <span style=color:blue>AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
-- Copy và gửi qua Zalo cho mình, mình sẽ tích hợp các thông tin đó vào phần mềm cho mạch của bạn.<br>
+Ví dụ chuỗi mới là <span style=color:blue>AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
+Thì bạn nhập lệnh: <span style=color:red>idmoi</span><span style=color:blue>AKfycbxiL7rmnBRa0txRGtxwQeX2b12nb6g0hM9u</span><br>
 <br><br><br><br></div>
 </body></html>
