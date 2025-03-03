@@ -7,142 +7,101 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <style>
-        body { 
-            /* background: #f4f4f4;  */
-            font-family: "Roboto", serif;
-            font-optical-sizing: auto;
-            font-style: normal;
-            font-variation-settings: "wdth" 100;
-        }
-        .battery-level {
-            transition: height 0.8s ease-in-out; /* Smooth height transition */
-        }
-        
-    </style>
-	    <!-- Đảm bảo bạn đã thêm Firebase SDK -->
+    
+	    <!-- Giao diện này được chỉnh sửa từ mã nguồn của bạn Tiến Túng Tiền -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
         var firebaseConfig = {
-        apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
-        authDomain: "congtodien-3ab2b.firebaseapp.com",
-        databaseURL: "https://congtodien-3ab2b-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "congtodien-3ab2b",
-        storageBucket: "congtodien-3ab2b.appspot.com",
-        messagingSenderId: "605873453267",
-        appId: "1:605873453267:web:c2feb364cc48a44493fc26"
-      };
-  // Khởi tạo Firebase
-      firebase.initializeApp(firebaseConfig);
+    apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
+    authDomain: "congtodien-3ab2b.firebaseapp.com",
+    databaseURL: "https://congtodien-3ab2b-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "congtodien-3ab2b",
+    storageBucket: "congtodien-3ab2b.appspot.com",
+    messagingSenderId: "605873453267",
+    appId: "1:605873453267:web:c2feb364cc48a44493fc26"
+};
 
-      // Lấy tham chiếu đến node "/esp8266"
-      var sensorRef = firebase.database().ref("/esp8266");
+firebase.initializeApp(firebaseConfig);
+var sensorRef = firebase.database().ref("/esp8266");
 
-      // Lắng nghe thay đổi dữ liệu và cập nhật giao diện
-      sensorRef.on("value", function(snapshot) {
-		var data = snapshot.val();
-			if (data) {
-				updateUI(data);
-			}
-		}, function(error) {
-		console.error("Lỗi khi lấy dữ liệu: " + error.code);
-	   });
-	   
-        
+sensorRef.on("value", function(snapshot) {
+    var data = snapshot.val();
+    if (data) {
+        updateUI(data);
+    }
+}, function(error) {
+    console.error("Lỗi khi lấy dữ liệu: " + error.code);
+});
 
-        function updateUI(data) {
-            document.getElementById("p-pv1").innerText = "Hòa lưới max: " + data.HoaLuoiCaoNhat + "W";
-			document.getElementById("p-pv1").innerText = "Hòa lưới max: " + data.HoaLuoiCaoNhat + "W";
-			document.getElementById("p-pv2").innerText = "Đang hòa lưới: " + data.CongSuatHoaLuoi + "W";
-			document.getElementById("p-grid").innerText = data.CongSuatEVN + "W";
-			document.getElementById("p-home").innerText = data.CongSuatEVN + "W";
-            document.getElementById("b-soc").innerText = data.soc + " %";
-            document.getElementById("b-temp").innerText = (data.bt/10).toFixed(1) + " °C";
-            document.getElementById("b-vol").innerText = (data.bv/100).toFixed(2) + " V";
-            document.getElementById("g-vol").innerText = data.voltage + "V";
-			document.getElementById("g-cur").innerText = data.currentI + "A";
-			document.getElementById("p-pv").innerText = data.energyHoaLuoi + "kW";;
-            updateBatteryLevel(data.soc, data.b);
+function updateUI(data) {
+    document.getElementById("PV-HoaLuoiCaoNhat").innerText = `Hòa lưới max: ${data.HoaLuoiCaoNhat}W`;
+    document.getElementById("PV-CongSuatHoaLuoi").innerText = `Đang hòa lưới: ${data.CongSuatHoaLuoi}W`;
+    document.getElementById("power-tongtai").innerText = `${data.CongSuatTieuThu + data.CongSuatCanDot}W`;
+    document.getElementById("power-candot").innerText = `${data.CongSuatCanDot}W`;
+    document.getElementById("power-grid").innerText = `${(data.CongSuatTieuThu + data.CongSuatCanDot) - data.CongSuatHoaLuoi}W`;
+    document.getElementById("power-home").innerText = `${data.CongSuatTieuThu}W`;
+    document.getElementById("vol-home").innerText = `${data.voltage}V`;
+    document.getElementById("cur-home").innerText = `${data.currentI}A`;
+    document.getElementById("p-TongHoaLuoi").innerText = `${data.energyHoaLuoi}kW`;
+    updateBatteryLevel(data.soc, data.b);
 
-            if(data.p1 > 0){
-                document.getElementById("n-pv1").classList.add("dot3");
-            } else {
-                document.getElementById("n-pv1").classList.remove("dot3");
-            }
-            if(data.p2 > 0){
-                document.getElementById("n-pv2").classList.add("dot2");
-            } else {
-                document.getElementById("n-pv2").classList.remove("dot2");
-            }
-            if(data.p1 == 0 && data.p2 == 0){
-                document.getElementById("n-pv").classList.remove("dot");
-            } else {
-                document.getElementById("n-pv").classList.add("dot");
-            }
-            if(data.l + data.u == 0){
-                document.getElementById("n-load").classList.remove("dot");
-            } else {
-                document.getElementById("n-load").classList.add("dot");
-            }
+    toggleClass("n-pv1", "dot3", data.p1 > 0);
+    toggleClass("n-pv2", "dot2", data.p2 > 0);
+    toggleClass("n-pv", "dot", data.p1 > 0 || data.p2 > 0);
+    toggleClass("n-load", "dot", data.l + data.u > 0);
+    updateGridIndicator(data.g);
+}
 
-            var batI = document.getElementById("n-bat");
-            if (data.CongSuatHoaLuoi > CongSuatEVN) {
-                batI.classList.remove("move-down");
-                batI.classList.add("dot");
-                batI.classList.add("move-up");
-            } else if (data.CongSuatHoaLuoi = CongSuatEVN) {
-                batI.classList.remove("dot");
-            } else {
-                batI.classList.remove("dot");
-            }
-            var gridI = document.getElementById("n-grid");
-            if (data.g < 0) {
-              gridI.classList.remove("move-right");
-              gridI.classList.add("dot");
-              gridI.classList.add("move-left");
-            } else if (data.g > 0) {
-              gridI.classList.remove("move-left");
-              gridI.classList.add("dot");
-              gridI.classList.add("move-right");
-            } else {
-              gridI.classList.remove("dot");
-            }
-        }
-		
-      function scaleToFit() {
-		let progressBar = document.getElementById("diagram-container");
-		let containerWidth = document.querySelector("body").offsetWidth;
-		let originalWidth = 460; // The original size of the element
-		let scaleFactor = containerWidth / originalWidth; // Calculate scale ratio
-      if(scaleFactor > 1) {
-          scaleFactor = 1;
-      }
-      progressBar.style.transform = "scale(" + scaleFactor + ")"; // Apply scaling
-  }
-  window.onload = function () {
-      connectFirebase();
-      scaleToFit();
-  };
-  window.onresize = scaleToFit;
+function toggleClass(elementId, className, condition) {
+    var element = document.getElementById(elementId);
+    if (condition) {
+        element.classList.add(className);
+    } else {
+        element.classList.remove(className);
+    }
+}
 
-  // Hàm kết nối Firebase thay vì WebSocket
-  function connectFirebase() {
-      // Giả sử dữ liệu được lưu tại đường dẫn "/esp8266" trong Firebase
-      var dataRef = firebase.database().ref("/esp8266");
-      dataRef.on("value", function(snapshot) {
-          var data = snapshot.val();
-          console.log("Firebase data:", data);
-          updateUI(data);
-      }, function(error) {
-          console.error("Error fetching Firebase data: " + error.code);
-      });
-  }
+function updateGridIndicator(gridPower) {
+    var gridI = document.getElementById("n-grid");
+    gridI.classList.remove("move-left", "move-right", "dot");
+    
+    if (gridPower < 0) {
+        gridI.classList.add("dot", "move-left");
+    } else if (gridPower > 0) {
+        gridI.classList.add("dot", "move-right");
+    }
+}
+
+function scaleToFit() {
+    let progressBar = document.getElementById("diagram-container");
+    let containerWidth = document.body.offsetWidth;
+    let scaleFactor = Math.min(containerWidth / 460, 1);
+    progressBar.style.transform = `scale(${scaleFactor})`;
+}
+
+window.onload = function() {
+    connectFirebase();
+    scaleToFit();
+};
+
+window.onresize = scaleToFit;
+
+function connectFirebase() {
+    var dataRef = firebase.database().ref("/esp8266");
+    dataRef.on("value", function(snapshot) {
+        var data = snapshot.val();
+        console.log("Firebase data:", data);
+        updateUI(data);
+    }, function(error) {
+        console.error("Error fetching Firebase data: " + error.code);
+    });
+}
     </script>
 </head>
 <body >
   <div class="container flex flex-col items-center justify-center" style="margin: 0 auto;">
-    <div style="font-weight: bold; padding: 5px 0; background-color: #008ae0; width: 100%; text-align: center; color: white;">LOCAL SOLAR MONITORING</div>
+    <div style="font-weight: bold; padding: 5px 0; background-color: #008ae0; width: 100%; text-align: center; color: white;">Giám Sát Năng Lượng Mặt Trời</div>
     <div id="diagram-container" class="diagram-container grid h-[500px] place-items-center w-full" style="margin: 0 auto; padding-right: 10px;">
       <div class="relative rounded-lg">
         <div class="h-[100px] w-[70px] rounded-sm bg-amber-950">
@@ -154,13 +113,13 @@
               <path class="" fill="#057A1D" d="M11.45 2v3.55L15 3.77L11.45 2m-1 6L8 10.46l3.75 1.25L10.45 8M2 11.45L3.77 15l1.78-3.55H2M10 2H2v8c.57.17 1.17.25 1.77.25c3.58.01 6.49-2.9 6.5-6.5c-.01-.59-.1-1.18-.27-1.75m7 20v-6h-3l5-9v6h3l-5 9Z"></path>
             </svg>
             <div>
-              <p class="solar-color text-xl font-bold" id="p-pv">.</p>
-              <p class="solar-color text-[9px]">Tổng hòa lưới</p>
+              <p class="solar-color text-xl font-bold" id="p-TongHoaLuoi">.</p>
+              <p class="solar-color text-[9px]">Tổng Hòa Lưới</p>
             </div>
           </div>
           <div class="mt-3 flex gap-6">
             <div class="relative w-1/2">
-              <div class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="p-pv2"></div>
+              <div class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="PV-CongSuatHoaLuoi"></div>
               <div class="bg-re absolute right-[26px] -bottom-[35px] h-[35px] w-[20px] rounded-bl-md border-b-2 border-l-2 border-[#057a1c]">
                 <div class="dot2 -ml-[5px] bg-[#057a1c]" id="n-pv2" style="--speed:3s"></div>
               </div>
@@ -170,7 +129,7 @@
               </div>
             </div>
             <div class="relative w-1/2">
-              <div class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="p-pv1">.</div>
+              <div class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="PV-HoaLuoiCaoNhat">.</div>
   
               <div class="absolute -bottom-[35px] left-[26px] h-[35px] w-[20px] rounded-br-md border-r-2 border-b-2 border-[#057a1c]">
                 <div class="dot3 ml-[15px] bg-[#057a1c]" id="n-pv1" style="--speed:5s"></div>
@@ -187,45 +146,41 @@
           </div>
         </div>
         <div class="battery-color absolute -bottom-[174px] -left-[166px] flex w-[400px] flex-col items-center">
-          <div class="solar-color battery-color rounded-sm border-[1px] border-[#008ae0] px-4 py-1 text-center font-bold"><span id="p-bat">- W</span></div>
           <div class="mt-5 flex justify-center">
             <div>
-              <p id="b-vol" class="font-bold">- V</p>
-              <p class="mb-1 text-[9px]">BATTERY VOLTAGE</p>
-              <p id="b-cur" class="font-bold">- A</p>
-              <p class="text-[9px]">BATTERY CURRENT</p>
+              <p id="b-vol" class="font-bold"></p>
+              <p class="mb-1 text-[9px]"></p>
+              <p id="b-cur" class="font-bold"></p>
+              <p class="text-[9px]"></p>
             </div>
-            <div class="relative ml-5 flex h-20 w-12 flex-col justify-end rounded-lg border-4 border-[#008ae0]">
-              <div class="absolute -top-2 left-1/2 h-2 w-4 -translate-x-1/2 transform rounded-lg bg-[#008ae0]"></div>
-              <div class="battery-level h-0 w-full transition-all duration-500 ease-in-out"></div>
-            </div>
+            
             <div class="ml-5">
-              <p id="b-soc" class="font-bold">- %</p>
-              <p class="mb-1 text-[9px]">STATE OF CHARGE</p>
-              <p id="b-temp" class="font-bold">- °C</p>
-              <p class="text-[9px]">TEMPERATURE</p>
+              <p id="b-soc" class="font-bold"></p>
+              <p class="mb-1 text-[9px]"></p>
+              <p id="b-temp" class="font-bold"></p>
+              <p class="text-[9px]"></p>
             </div>
           </div>
         </div>
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
-          <p class="text-left font-bold" id="g-vol">- V</p>
-          <p class="text-left text-[9px]">Điện áp</p>
+          <p class="text-left font-bold" id="vol-home">- V</p>
+          <p class="text-left text-[9px]">Điện Áp</p>
           <div class="relative flex items-center justify-between">
             <svg id="transmission_on" x="-0.5" y="187.5" width="64.5" height="64.5" viewBox="0 0 24 24">
               <path class="" fill="#C70000" display="" d="m8.28 5.45l-1.78-.9L7.76 2h8.47l1.27 2.55l-1.78.89L15 4H9l-.72 1.45M18.62 8h-4.53l-.79-3h-2.6l-.79 3H5.38L4.1 10.55l1.79.89l.73-1.44h10.76l.72 1.45l1.79-.89L18.62 8m-.85 14H15.7l-.24-.9L12 15.9l-3.47 5.2l-.23.9H6.23l2.89-11h2.07l-.36 1.35L12 14.1l1.16-1.75l-.35-1.35h2.07l2.89 11m-6.37-7l-.9-1.35l-1.18 4.48L11.4 15m3.28 3.12l-1.18-4.48l-.9 1.36l2.08 3.12Z"></path>
             </svg>
-            <p class="solar-color grid-color w-[80px] rounded-sm border-[1px] border-[#c70000] py-1 text-center font-bold flip" style="width: 80px;" id="p-grid">- W</p>
+            <p class="solar-color grid-color w-[80px] rounded-sm border-[1px] border-[#c70000] py-1 text-center font-bold flip" style="width: 80px;" id="power-grid">- W</p>
           </div>
-          <p class="text-left font-bold" id="g-cur">- A</p>
+          <p class="text-left font-bold" id="cur-home">- A</p>
           <p class="text-left text-[9px]">Dòng Điện</p>
         </div>
         <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
-            <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="p-load" class="flash">- W</span></p>
+            <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="power-tongtai" class="flash">- W</span></p>
           </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
-            <p class="text-[9px]">UPS</p>
-            <p class="solar-color home-color rounded-sm border-[1px] border-[#ff7b00] px-2 py-1 text-center font-bold "><span id="p-ups" class="flash">- W</span></p>
+            <p class="text-[9px]">Công Suất Cần Đốt</p>
+            <p class="solar-color home-color rounded-sm border-[1px] border-[#ff7b00] px-2 py-1 text-center font-bold "><span id="power-candot" class="flash">- W</span></p>
             <div class="relative my-5 flex items-center justify-between">
               <svg id="essen" viewBox="0 0 24 24" x="402" y="177.5" width="79" height="79">
                 <defs>
@@ -241,8 +196,8 @@
                 <path fill="#ff7b00" d="m15 13l-4 4v-3H2v-2h9V9l4 4M5 20v-4h2v2h10v-7.81l-5-4.5L7.21 10H4.22L12 3l10 9h-3v8H5Z"></path>
               </svg>
             </div>
-            <p class="solar-color home-color rounded-sm border-[1px] border-[#ff7b00] px-2 py-1 text-center font-bold" id="p-home">.</p>
-            <p class="text-[9px]">HOME</p>
+            <p class="solar-color home-color rounded-sm border-[1px] border-[#ff7b00] px-2 py-1 text-center font-bold" id="power-home">.</p>
+            <p class="text-[9px]">Công Suất Nhà Dùng</p>
   
             <div class="absolute top-[51px] right-[50%] h-[30px] w-[2px] bg-[#ff7b00]"></div>
             <div class="absolute right-[50%] bottom-[51px] h-[30px] w-[2px] bg-[#ff7b00]"></div>
@@ -252,9 +207,7 @@
         <div class="absolute -top-[40px] left-[33px] h-[40px] w-[2px] bg-[#057a1c]">
           <div class="dot move-down -ml-[3px] bg-[#057a1c]" id="n-pv" style="--speed:1.5s"></div>
         </div>
-        <div class="absolute -bottom-[40px] left-[33px] h-[40px] w-[2px] bg-[#008ae0]">
-          <div class="dot move-down -ml-[3px] bg-[#008ae0]" style="--speed:3s" id="n-bat"></div>
-        </div>
+        
         <div class="absolute top-[50px] -left-[35px] h-[2px] w-[35px] bg-[#c70000]">
           <div class="dot move-right n-grid -mt-[3px] bg-[#c70000]" style="--speed:4s" id="n-grid"></div>
         </div>
