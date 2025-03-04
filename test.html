@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
-	    <!-- Đảm bảo bạn đã thêm Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
@@ -21,13 +20,10 @@
         messagingSenderId: "605873453267",
         appId: "1:605873453267:web:c2feb364cc48a44493fc26"
       };
-  // Khởi tạo Firebase
       firebase.initializeApp(firebaseConfig);
 
-      // Lấy tham chiếu đến node "/esp8266"
       var sensorRef = firebase.database().ref("/esp8266");
 
-      // Lắng nghe thay đổi dữ liệu và cập nhật giao diện
       sensorRef.on("value", function(snapshot) {
 		var data = snapshot.val();
 			if (data) {
@@ -104,9 +100,8 @@
   };
   window.onresize = scaleToFit;
 
-  // Hàm kết nối Firebase thay vì WebSocket
   function connectFirebase() {
-      // Giả sử dữ liệu được lưu tại đường dẫn "/esp8266" trong Firebase
+
       var dataRef = firebase.database().ref("/esp8266");
       dataRef.on("value", function(snapshot) {
           var data = snapshot.val();
@@ -120,7 +115,7 @@
 </head>
 <body >
   <div class="container flex flex-col items-center justify-center" style="margin: 0 auto;">
-    <div style="font-weight: bold; padding: 5px 0; background-color: #008ae0; width: 100%; text-align: center; color: white;">LOCAL SOLAR MONITORING</div>
+    <div style="font-weight: bold; padding: 5px 0; background-color: #008ae0; width: 100%; text-align: center; color: white;">Giám Sát Năng Lượng Mặt Trời</div>
     <div id="diagram-container" class="diagram-container grid h-[500px] place-items-center w-full" style="margin: 0 auto; padding-right: 10px;">
       <div class="relative rounded-lg">
         <div class="h-[100px] w-[70px] rounded-sm bg-amber-950">
