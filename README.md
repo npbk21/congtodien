@@ -6,7 +6,6 @@ Hướng dẫn chi tiết<br>
 https://congtodientu.xyz<br>
 Zero Export<br>
 Firebase<br>
-Google Sheet<br>
 #esp8266<br>
 #pzem 004t v3.0 <br>
 #Chisage<br>
