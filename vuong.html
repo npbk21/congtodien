@@ -41,6 +41,7 @@
 			document.getElementById("PV-CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
 			document.getElementById("p-load").innerText =  data.CongSuatTongTai + "W";
 			document.getElementById("p-solar").innerText =  data.HoaLuoiHomNay + "kW";
+			document.getElementById("E-SoHomNay").innerText =  data.SoHomNay + "kW";
 			document.getElementById("P-CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
 			document.getElementById("P-CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
 			document.getElementById("P-CongSuatNhaDung").innerText = data.CongSuatTongTai - data.CongSuatCanDot + "W";
@@ -202,7 +203,8 @@
         </div>
         <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
-            <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="p-load" class="flash">- W</span></p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="E-SoHomNay" class="flash">- W</span></p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="p-load" class="flash">- W</span></p>
           </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
             <p class="text-[9px]">💡 Công Suất Cần Đốt</p>
