@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
         var firebaseConfig = {
         apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
@@ -37,16 +37,17 @@
 
         function updateUI(data) {
 		
-			document.getElementById("PV-HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
-			document.getElementById("PV-CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
-			document.getElementById("p-load").innerText =  data.CongSuatTongTai + "W";
-			document.getElementById("p-solar").innerText =  data.HoaLuoiHomNay + "kW";
-			document.getElementById("P-CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
-			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
-			document.getElementById("P-CongSuatNhaDung").innerText = data.CongSuatTongTai - data.CongSuatCanDot + "W";
-            document.getElementById("V-DienAp").innerText = data.voltage + "V";
-			document.getElementById("I-DongDien").innerText = data.currentI + "A";
-			document.getElementById("P-TongHoaLuoi").innerText = data.energyHoaLuoi + "kW";;
+			document.getElementById("PV-HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat.toFixed(2) + "W";
+			document.getElementById("PV-CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi.toFixed(2) + "W";
+			document.getElementById("p-load").innerText = data.CongSuatTongTai.toFixed(2) + "W";
+			document.getElementById("p-solar").innerText = data.HoaLuoiHomNay.toFixed(2) + "kW";
+			document.getElementById("P-CongSuatCanDot").innerText = data.CongSuatCanDot.toFixed(2) + "W";
+			document.getElementById("CongSuatLayLuoi").innerText = (data.CongSuatTongTai - data.CongSuatHoaLuoi).toFixed(2) + "W";
+			document.getElementById("P-CongSuatNhaDung").innerText = (data.CongSuatTongTai - data.CongSuatCanDot).toFixed(2) + "W";
+			document.getElementById("V-DienAp").innerText = data.voltage.toFixed(2) + "V";
+			document.getElementById("I-DongDien").innerText = data.currentI.toFixed(2) + "A";
+			document.getElementById("P-TongHoaLuoi").innerText = data.energyHoaLuoi.toFixed(2) + "kW";
+
             updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
