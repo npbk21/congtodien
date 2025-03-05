@@ -5,9 +5,15 @@ Zalo: 0971.282.336<br>
 Hướng dẫn chi tiết<br>
 https://congtodientu.xyz<br>
 Zero Export<br>
+Firebase<br>
 Google Sheet<br>
 #esp8266<br>
 #pzem 004t v3.0 <br>
+#Chisage<br>
+#LuxPower<br>
+#Dahai<br>
+#ChintPower<br>
+#Lumentree
 #Fronius<br>
 #Solaredge<br>
 #Enphase<br>
@@ -19,7 +25,3 @@ Google Sheet<br>
 #SMA<br>
 #Ingeteam<br>
 #Eaton<br>
-#LuxPower<br>
-#Dahai<br>
-#ChintPower<br>
-#Lumentree
