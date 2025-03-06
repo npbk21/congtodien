@@ -10,6 +10,41 @@
     
 	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+	<script>
+        function getWeather(lat, lon) {
+            const apiKey = '5d282bc38dac34f7348a71b9fcc1729f';
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const locationName = data.name;
+                    const weatherDesc = data.weather[0].description;
+                    const temp = data.main.temp;
+                    const icon = data.weather[0].icon;
+                    const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+                    
+                    document.getElementById("location").innerHTML = `<img src="https://img.icons8.com/ios-filled/50/000000/marker.png" alt="Icon định vị" width="16" height="16"> <span>Vị trí: ${locationName}</span>`;
+                    document.getElementById("weather-text").innerText = `Nhiệt độ: ${temp}°C, ${weatherDesc}`;
+                    const weatherIcon = document.getElementById("weather-icon");
+                    weatherIcon.src = iconUrl;
+                    weatherIcon.style.display = "inline-block";
+                })
+                .catch(error => {
+                    document.getElementById("weather-text").innerText = "Không thể lấy dữ liệu thời tiết.";
+                    console.error("Lỗi lấy thời tiết:", error);
+                });
+        }
+        
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => getWeather(position.coords.latitude, position.coords.longitude),
+                error => document.getElementById("weather-text").innerText = "Không thể xác định vị trí."
+            );
+        } else {
+            document.getElementById("weather-text").innerText = "Trình duyệt không hỗ trợ định vị.";
+        }
+    </script>
     <script>
         var firebaseConfig = {
         apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
@@ -120,7 +155,13 @@
 </head>
 <body >
   <div class="container flex flex-col items-center justify-center" style="margin: 0 auto;">
-    <div style="font-weight: bold; padding: 5px 0; background-color: #008ae0; width: 100%; text-align: center; color: white;">Giám Sát Năng Lượng Mặt Trời Cho Micro Inverter Và Biến Tần Nội Địa Nhật</div>
+    <div id="weather-container" style="font-weight: bold; padding: 5px 0; background-color: #008ae0; width: 100%; text-align: center; color: white;">
+        <p id="location"><img src="https://img.icons8.com/ios-filled/50/000000/marker.png" alt="Icon định vị" width="16" height="16"> <span>Đang lấy vị trí...</span></p>
+        <p id="weather">
+            <img id="weather-icon" src="" alt="Icon thời tiết" style="width: 30px; height: 30px; vertical-align: middle; display: none;"> 
+            <span id="weather-text">Đang lấy thông tin thời tiết...</span>
+        </p>
+		</div>
     <div id="diagram-container" class="diagram-container grid h-[500px] place-items-center w-full" style="margin: 0 auto; padding-right: 10px;">
       <div class="relative rounded-lg">
         <div class="h-[100px] w-[70px] rounded-sm bg-amber-950">
@@ -244,7 +285,7 @@
         </div>
       </div>
     </div>
-  </div>
+  
 </body>
 </html>
 <style>
