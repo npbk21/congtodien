@@ -155,13 +155,17 @@
 </head>
 <body >
   <div class="container flex flex-col items-center justify-center" style="margin: 0 auto;">
-    <div id="weather-container" style="font-weight: bold; padding: 5px 0; background-color: #008ae0; width: 100%; text-align: center; color: white;">
-        <p id="location"><img src="https://img.icons8.com/ios-filled/50/000000/marker.png" alt="Icon định vị" width="16" height="16"> <span>Đang lấy vị trí...</span></p>
-        <p id="weather">
+    <div style="font-weight: bold; padding: 5px 0; background-color: #008ae0; width: 100%; text-align: center; color: white;">Giám Sát NLMT Cho Micro Inverter Và Biến Tần Nội Địa Nhật</div>
+	<div id="weather-container" style="font-weight: bold; padding: 5px 0; background-color: #008ae0; width: 100%; text-align: center; color: white;">
+        <div id="location" style="display: inline-flex; align-items: center; gap: 5px;">
+            <img src="https://img.icons8.com/ios-filled/50/000000/marker.png" alt="Icon định vị" width="16" height="16"> 
+            <span>Đang lấy vị trí...</span>
+        </div>
+        <div id="weather" style="display: inline-flex; align-items: center; gap: 5px;">
             <img id="weather-icon" src="" alt="Icon thời tiết" style="width: 30px; height: 30px; vertical-align: middle; display: none;"> 
             <span id="weather-text">Đang lấy thông tin thời tiết...</span>
-        </p>
-		</div>
+        </div>
+    </div>
     <div id="diagram-container" class="diagram-container grid h-[500px] place-items-center w-full" style="margin: 0 auto; padding-right: 10px;">
       <div class="relative rounded-lg">
         <div class="h-[100px] w-[70px] rounded-sm bg-amber-950">
@@ -285,7 +289,7 @@
         </div>
       </div>
     </div>
-  
+  </div>
 </body>
 </html>
 <style>
