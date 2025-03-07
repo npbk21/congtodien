@@ -161,22 +161,43 @@
     </script>
 </head>
 <body >
-  <div class="container flex flex-col items-center justify-center" style="margin: 0 auto;">
-    <div style="font-weight: bold; padding: 5px 0; background-color: #008ae0; width: 100%; text-align: center; color: white;">Giám sát NLMT cho Micro Inverter và biến tần nội địa Nhật</div>
-	<div id="weather-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 20px; background-color: #008ae0; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">
-        <div style="text-align: left;">
-            <p><img style="width: 24px; height: 24px; vertical-align: middle; margin-right: 5px;" src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png"> <span id="date"></span></p>
-            <p>ID: <span id="userId">Đang tải...</span></p>
-            <p>Ontime: <span id="ontime">Đang tải...</span>h</p>
-            <p>Ngày kích hoạt: <span id="activationDate">17/1</span></p>
+  <div id="weather-containerTT">
+    <div class="leftTT">
+        <div class="weather-item">
+            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png">
+            <span id="date"></span>
         </div>
-        <div style="text-align: right;">
-            <p><img style="width: 24px; height: 24px; vertical-align: middle; margin-right: 5px;" src="https://img.icons8.com/ios-filled/50/ffffff/marker.png"> <span id="location">Đang tải...</span></p>
-            <p><img style="width: 24px; height: 24px; vertical-align: middle; margin-right: 5px;" src="https://img.icons8.com/ios-filled/50/ffffff/temperature.png"> <span id="temperature">Đang tải...</span></p>
-            <p><img style="width: 24px; height: 24px; vertical-align: middle; margin-right: 5px;" src="https://img.icons8.com/ios-filled/50/ffffff/humidity.png"> <span id="humidity">Đang tải...</span></p>
-            <p><img style="width: 24px; height: 24px; vertical-align: middle; margin-right: 5px;" src="https://img.icons8.com/ios-filled/50/ffffff/wind.png"> <span id="windSpeed">Đang tải...</span></p>
+        <div class="weather-item">
+            <p>ID: <span id="userId">6622266</span></p>
+        </div>
+        <div class="weather-item">
+            <p>Ontime: <span id="ontime">Đang tải...</span>h</p>
+        </div>
+        <div class="weather-item">
+            <p>Ngày kích hoạt: <span id="activationDate">07/3/2025</span></p>
         </div>
     </div>
+    
+    <div class="rightTT">
+        <div class="weather-item">
+            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/marker.png">
+            <span id="location">Đang tải...</span>
+        </div>
+        <div class="weather-item">
+            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/temperature.png">
+            <span id="temperature">Đang tải...</span>
+        </div>
+        <div class="weather-item">
+            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/humidity.png">
+            <span id="humidity">Đang tải...</span>
+        </div>
+        <div class="weather-item">
+            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/wind.png">
+            <span id="windSpeed">Đang tải...</span>
+        </div>
+    </div>
+</div>
+
     <div id="diagram-container" class="diagram-container grid h-[500px] place-items-center w-full" style="margin: 0 auto; padding-right: 10px;">
       <div class="relative rounded-lg">
         <div class="h-[100px] w-[70px] rounded-sm bg-amber-950">
@@ -362,7 +383,7 @@
     border: 0 solid;
   }
 
-  body { line-height: inherit; }
+
   hr {
     height: 0;
     border-top-width: 1px;
@@ -599,7 +620,37 @@
     0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
     50% { transform: none; animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
   }
+	#weather-containerTT {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    background: #008ae0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin: 0 auto; /* Căn giữa */
+}
 
+.leftTT, .rightTT {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Tạo khoảng cách giữa các dòng */
+}
+
+.weather-item { /* Đảm bảo icon và chữ trên cùng 1 dòng */
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Tạo khoảng cách giữa icon và chữ */
+}
+
+.iconTT {
+    width: 24px;
+    height: 24px;
+}
+
+	
   .dot, .dot2, .dot3 {
     width: 8px;
     height: 8px;
