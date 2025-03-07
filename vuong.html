@@ -141,16 +141,23 @@
   window.onresize = scaleToFit;
 
   function connectFirebase() {
-
-      var dataRef = firebase.database().ref("/esp8266");
-      dataRef.on("value", function(snapshot) {
-          var data = snapshot.val();
-          console.log("Firebase data:", data);
-          updateUI(data);
-      }, function(error) {
-          console.error("Error fetching Firebase data: " + error.code);
-      });
-  }
+    var dataRef = firebase.database().ref("/esp8266");
+    dataRef.off(); // Ngắt mọi listener cũ
+    dataRef.on("value", function(snapshot) {
+        var data = snapshot.val();
+        console.log("Firebase data:", data);
+        updateUI(data);
+    }, function(error) {
+        console.error("Error fetching Firebase data: " + error.code);
+    });
+}
+	    var connectedRef = firebase.database().ref(".info/connected");
+connectedRef.on("value", function(snapshot) {
+    if (snapshot.val() === false) {
+        console.warn("Mất kết nối Firebase, thử kết nối lại...");
+        connectFirebase(); // Thử kết nối lại
+    }
+});
     </script>
 </head>
 <body >
