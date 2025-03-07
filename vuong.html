@@ -83,7 +83,7 @@
 			document.getElementById("p-load").innerText =  data.CongSuatTongTai + "W";
 			document.getElementById("p-solar").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("E-SoHomNay").innerText =  data.SoHomNay + "kW";
-			document.getElementById("T-OnTime").innerText =  data.OnTime + " giờ";
+			document.getElementById("P-CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
 			document.getElementById("P-CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
 			document.getElementById("P-CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
 			document.getElementById("P-CongSuatNhaDung").innerText = data.CongSuatTongTai - data.CongSuatCanDot + "W";
@@ -172,9 +172,11 @@
         <p>ID: <span id="userId">6622266</span></p>
     </div>
     <div class="weather-item">
-        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/clock.png">
-        <p>Ontime: <span id="T-OnTime">Đang tải...</span></p>
-    </div>
+		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
+		<p>Công suất đốt: <span id="P-CongSuatMachDot">Đang tải...</span></p> 
+	</div>
+
+
     <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/bookmark.png">
         <p>Kích hoạt: <span id="activationDate">05/3/2025</span></p>
