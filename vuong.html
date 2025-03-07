@@ -84,6 +84,7 @@
 			document.getElementById("p-load").innerText =  data.CongSuatTongTai + "W";
 			document.getElementById("p-solar").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("E-SoHomNay").innerText =  data.SoHomNay + "kW";
+			document.getElementById("T-OnTime").innerText =  data.OnTime + " giờ";
 			document.getElementById("P-CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
 			document.getElementById("P-CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
 			document.getElementById("P-CongSuatNhaDung").innerText = data.CongSuatTongTai - data.CongSuatCanDot + "W";
@@ -171,7 +172,7 @@
             <p>ID: <span id="userId">6622266</span></p>
         </div>
         <div class="weather-item">
-            <p>Ontime: <span id="ontime">Đang tải...</span>h</p>
+            <p>Ontime: <span id="T-OnTime">Đang tải...</span></p>
         </div>
         <div class="weather-item">
             <p>Ngày kích hoạt: <span id="activationDate">07/3/2025</span></p>
@@ -628,9 +629,10 @@
     width: 100%;
     padding: 20px;
     background: #008ae0;
-    border-radius: 10px;
+    border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin: 0 auto; /* Căn giữa */
+	margin-top: 10px;
 }
 
 .leftTT, .rightTT {
