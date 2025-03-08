@@ -75,7 +75,7 @@ Video chạy thực tế khả năng đốt công suất dư thừa.<br>
     </ul>
 
     <h2>2. Lấy Thông Tin Firebase</h2>
-    <h3>2.1. Lấy <code>FIREBASE_HOST</code> (databaseURL)</h3>
+    <h3>2.1. Lấy Link database</h3>
     <ul>
         <li>Trong Firebase Console, chọn <strong>"Build" → "Realtime Database"</strong></li>
         <li>Nhấn <strong>"Tạo cơ sở dữ liệu"</strong> (<em>Create Database</em>)</li>
@@ -84,19 +84,12 @@ Video chạy thực tế khả năng đốt công suất dư thừa.<br>
         <li>Bạn sẽ thấy đường dẫn dạng:</li>
     </ul>
     <pre>https://your-project-id-default-rtdb.firebaseio.com/</pre>
-    <p>Đây chính là <code>FIREBASE_HOST</code> gửi qua zalo cho mình</p>
+    <p>Gửi link đó qua zalo cho mình</p>
 
-    <h3>2.2. Lấy <code>FIREBASE_AUTH</code> (API Key)</h3>
-    <ul>
-        <li>Vào <strong>"Cài đặt dự án"</strong> (biểu tượng bánh răng) → <strong>"Chung"</strong></li>
-        <li>Kéo xuống mục <strong>SDK cài đặt Firebase cho ứng dụng web</strong></li>
-        <li>Tìm giá trị <code>apiKey</code>, đây chính là <code>FIREBASE_AUTH</code>  gửi qua zalo cho mình</li>
-    </ul>
-
-    <h2>3. Lấy Cấu Hình Firebase Cho Ứng Dụng Web</h2>
+    <h3>2.2 Lấy Cấu Hình Firebase Cho Ứng Dụng Web</h3>
     <ul>
         <li>Trong Firebase Console, chọn <strong>"Cài đặt dự án"</strong> → <strong>"Chung"</strong></li>
-        <li>Kéo xuống phần <strong>SDK cài đặt Firebase cho ứng dụng web</strong></li>
+        <li>Kéo xuống phần <strong>SDK cài đặt Firebase cho ứng dụng web</strong> nó có hình như này <code></></code></li>
         <li>Bạn sẽ thấy đoạn mã JSON chứa các thông tin sau:</li>
     </ul>
     <pre>
@@ -110,7 +103,7 @@ const firebaseConfig = {
     appId: "1:123456789012:web:abcdef123456"
 };
     </pre>
-    <p>Bạn lấy các thông tin sau và gửi qua zalo cho mình<p>
+    <p>Bạn gửi các thông tin đó qua zalo cho mình<p>
     <ul>
         <li><code>apiKey</code></li>
         <li><code>authDomain</code></li>
