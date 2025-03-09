@@ -51,6 +51,47 @@
         document.getElementById("temperature").innerText = "Trình duyệt không hỗ trợ định vị.";
     }
 </script>
+<script>
+        async function fetchNotification() {
+            const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Lỗi khi tải thông báo");
+                const text = await response.text();
+                
+                const notificationDiv = document.getElementById("notification");
+                
+               
+                if (text.trim() === "<trống>") {
+                    throw new Error("Thông báo không hợp lệ!");
+                }
+                
+                notificationDiv.innerText = text;
+                notificationDiv.style.display = "block";
+            } catch (error) {
+                console.error("Lỗi:", error);
+                startCountdown();
+            }
+        }
+
+        function startCountdown() {
+            let timeLeft = 30;
+            const notificationDiv = document.getElementById("notification");
+            notificationDiv.innerText = `Chuyển hướng sau ${timeLeft} giây...`;
+
+            let countdownTimer = setInterval(function() {
+                timeLeft--;
+                notificationDiv.innerText = `Không có thông báo! Chuyển hướng sau ${timeLeft} giây...`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownTimer);
+                    window.location.href = "https://s.shopee.vn/8fE6IihU7o"; 
+                }
+            }, 1000);
+        }
+
+        fetchNotification();
+    </script>
     <script>
         var firebaseConfig = {
         apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
@@ -134,12 +175,12 @@
       function scaleToFit() {
 		let progressBar = document.getElementById("diagram-container");
 		let containerWidth = document.querySelector("body").offsetWidth;
-		let originalWidth = 460; // The original size of the element
-		let scaleFactor = containerWidth / originalWidth; // Calculate scale ratio
+		let originalWidth = 460; 
+		let scaleFactor = containerWidth / originalWidth; 
       if(scaleFactor > 1) {
           scaleFactor = 1;
       }
-      progressBar.style.transform = "scale(" + scaleFactor + ")"; // Apply scaling
+      progressBar.style.transform = "scale(" + scaleFactor + ")";
   }
   window.onload = function () {
       connectFirebase();
@@ -159,6 +200,7 @@
       });
   }
     </script>
+	
 </head>
 <body >
   <div id="weather-containerTT">
@@ -176,11 +218,15 @@
 		<p>Công suất đốt: <span id="P-CongSuatMachDot">Đang tải...</span></p> 
 	</div>
 
-
     <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/bookmark.png">
         <p>Kích hoạt: <span id="activationDate">05/3/2025</span></p>
     </div>
+	<div class="weather-item">
+		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/appointment-reminders.png">
+		<p>Thông báo: <span id="notification">Đang tải thông báo...</span></p>
+	</div>
+	
 </div>
 
     
@@ -190,10 +236,8 @@
             <span id="location">Đang tải...</span>
         </div>
         <div class="weather-item">
-            <p>
-            <img id="weather-icon" style="width: 30px; height: 30px; vertical-align: middle;" src="" alt="Thời tiết">
-            <span id="temperature">Đang tải...</span>
-        </p>
+            <img id="weather-icon" style="display: flex; width: 35px; gap: 5px;  height: 35px; flex-direction: column;" src="" alt="Thời tiết">
+            <span id="temperature">Đang tải...</span> 
         </div>
         <div class="weather-item">
             <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/humidity.png">
@@ -204,6 +248,7 @@
             <span id="windSpeed">Đang tải...</span>
         </div>
     </div>
+	
 </div>
 
     <div id="diagram-container" class="diagram-container grid h-[500px] place-items-center w-full" style="margin: 0 auto; padding-right: 10px;">
@@ -647,20 +692,19 @@
 .leftTT, .rightTT {
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Tạo khoảng cách giữa các dòng */
+    gap: 5px; 
 }
 
-.weather-item { /* Đảm bảo icon và chữ trên cùng 1 dòng */
+.weather-item { 
     display: flex;
     align-items: center;
-    gap: 5px; /* Tạo khoảng cách giữa icon và chữ */
+    gap: 5px; 
 }
 
 .iconTT {
     width: 24px;
     height: 24px;
 }
-
 	
   .dot, .dot2, .dot3 {
     width: 8px;
