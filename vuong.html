@@ -62,7 +62,7 @@
             const notificationDiv = document.getElementById("notification");
 
             if (text === "<trống>") {
-                notificationDiv.innerText = "Quảng cáo sau 10 giây...";
+                notificationDiv.innerText = "Quảng cáo sau 20 giây";
             } else {
                 notificationDiv.innerText = text;
             }
@@ -71,7 +71,7 @@
 
         } catch (error) {
             console.error("Lỗi:", error);
-            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 20 giây...";
+            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 20 giây";
             startCountdown(true);
         }
     }
@@ -84,10 +84,10 @@
             timeLeft--;
 
             if (isEmpty) {
-                notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây...`;
+                notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
             } 
             else {
-                notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây...)`;
+                notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây)`;
             }
 
             if (timeLeft <= 0) {
