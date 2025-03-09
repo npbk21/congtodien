@@ -49,49 +49,56 @@
         );
     } else {
         document.getElementById("temperature").innerText = "Trình duyệt không hỗ trợ định vị.";
-    }
-</script>
+    } // https://s.shopee.vn/8fE6IihU7o
+</script> 
 <script>
-        async function fetchNotification() {
-            const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error("Lỗi khi tải thông báo");
-                const text = await response.text();
-                
-                const notificationDiv = document.getElementById("notification");
-                
-               
-                if (text.trim() === "<trống>") {
-                    throw new Error("Thông báo không hợp lệ!");
-                }
-                
-                notificationDiv.innerText = text;
-                notificationDiv.style.display = "block";
-            } catch (error) {
-                console.error("Lỗi:", error);
-                startCountdown();
-            }
-        }
+    async function fetchNotification() {
+        const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Lỗi khi tải thông báo");
 
-        function startCountdown() {
-            let timeLeft = 30;
+            const text = await response.text().trim();
             const notificationDiv = document.getElementById("notification");
-            notificationDiv.innerText = `Chuyển hướng sau ${timeLeft} giây...`;
 
-            let countdownTimer = setInterval(function() {
-                timeLeft--;
-                notificationDiv.innerText = `Không có thông báo! Chuyển hướng sau ${timeLeft} giây...`;
+            if (text === "<trống>") {
+                notificationDiv.innerText = "Quảng cáo sau 60 giây...";
+            } else {
+                notificationDiv.innerText = text;
+            }
 
-                if (timeLeft <= 0) {
-                    clearInterval(countdownTimer);
-                    window.location.href = "https://s.shopee.vn/8fE6IihU7o"; 
-                }
-            }, 1000);
+            startCountdown(text === "<trống>");
+
+        } catch (error) {
+            console.error("Lỗi:", error);
+            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 20 giây...";
+            startCountdown(true);
         }
+    }
 
-        fetchNotification();
-    </script>
+    function startCountdown(isEmpty) {
+        let timeLeft = 20;
+        const notificationDiv = document.getElementById("notification");
+
+        let countdownTimer = setInterval(function() {
+            timeLeft--;
+
+            if (isEmpty) {
+                notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây...`;
+            } 
+            else {
+                notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây...)`;
+            }
+
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                window.location.href = "https://s.shopee.vn/8fE6IihU7o";
+            }
+        }, 1000);
+    }
+
+    fetchNotification();
+</script>
     <script>
         var firebaseConfig = {
         apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
