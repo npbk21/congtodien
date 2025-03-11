@@ -56,13 +56,13 @@
         const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
         try {
             const response = await fetch(url);
-            if (!response.ok) throw new Error("Lỗi khi tải thông báo");
+            if (!response.ok) throw new Error("Lỗi tải thông báo");
 
             const text = await response.text().trim();
             const notificationDiv = document.getElementById("notification");
 
             if (text === "<trống>") {
-                notificationDiv.innerText = "Quảng cáo sau 20 giây";
+                notificationDiv.innerText = "Quảng cáo sau 600 giây";
             } else {
                 notificationDiv.innerText = text;
             }
@@ -71,13 +71,13 @@
 
         } catch (error) {
             console.error("Lỗi:", error);
-            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 20 giây";
+            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
             startCountdown(true);
         }
     }
 
     function startCountdown(isEmpty) {
-        let timeLeft = 60;
+        let timeLeft = 600;
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
