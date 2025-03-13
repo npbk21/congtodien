@@ -62,7 +62,7 @@
             const notificationDiv = document.getElementById("notification");
 
             if (text === "<trống>") {
-                notificationDiv.innerText = "Quảng cáo sau 600 giây";
+                notificationDiv.innerText = "Quảng cáo sau 10 giây";
             } else {
                 notificationDiv.innerText = text;
             }
@@ -71,13 +71,13 @@
 
         } catch (error) {
             console.error("Lỗi:", error);
-            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
+            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 10 giây";
             startCountdown(true);
         }
     }
 
     function startCountdown(isEmpty) {
-        let timeLeft = 600;
+        let timeLeft = 10;
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
@@ -92,9 +92,20 @@
 
             if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
-                window.location.href = "https://s.shopee.vn/8fE6IihU7o";
+                openShopeeApp();
             }
         }, 1000);
+    }
+
+    function openShopeeApp() {
+        const shopeeLink = "https://s.shopee.vn/8fE6IihU7o";
+        const shopeeAppLink = "shopee://open?url=https://s.shopee.vn/8fE6IihU7o";
+
+        window.location.href = shopeeAppLink; // Thử mở app Shopee trước
+
+        setTimeout(() => {
+            window.location.href = shopeeLink; // Nếu không mở được app, fallback sang link web
+        }, 2000);
     }
 
     fetchNotification();
