@@ -52,6 +52,7 @@
     } // https://s.shopee.vn/8fE6IihU7o
 </script> 
 <script>
+<script>
     async function fetchNotification() {
         const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
         try {
@@ -62,7 +63,7 @@
             const notificationDiv = document.getElementById("notification");
 
             if (text === "<trống>") {
-                notificationDiv.innerText = "Quảng cáo sau 10 giây";
+                notificationDiv.innerText = "Quảng cáo sau 600 giây";
             } else {
                 notificationDiv.innerText = text;
             }
@@ -71,13 +72,13 @@
 
         } catch (error) {
             console.error("Lỗi:", error);
-            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 10 giây";
+            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
             startCountdown(true);
         }
     }
 
     function startCountdown(isEmpty) {
-        let timeLeft = 10;
+        let timeLeft = 10; // Để test nhanh, bạn có thể chỉnh lại thành 600 giây
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
@@ -92,19 +93,31 @@
 
             if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
-                openShopeeApp();
+                showTransparentButton();
             }
         }, 1000);
     }
 
-    function openShopeeApp() {
-        const shopeeLink = "https://s.shopee.vn/8fE6IihU7o";
-        const shopeeAppLink = "shopee://open?url=https://s.shopee.vn/8fE6IihU7o";
+    function showTransparentButton() {
+        const overlay = document.createElement("div");
+        overlay.id = "overlay";
+        overlay.onclick = openShopeeApp;
+        document.body.appendChild(overlay);
+    }
 
-        window.location.href = shopeeAppLink; // Thử mở app Shopee trước
+    function openShopeeApp() {
+        const fallbackURL = "https://s.shopee.vn/8fE6IihU7o";
+
+        if (navigator.userAgent.includes("Android")) {
+            window.location.href = "intent://s.shopee.vn/8fE6IihU7o#Intent;scheme=https;package=com.shopee.vn;end;";
+        } else if (navigator.userAgent.includes("iPhone") || navigator.userAgent.includes("iPad")) {
+            window.location.href = "shopee://s.shopee.vn/8fE6IihU7o";
+        } else {
+            window.location.href = fallbackURL;
+        }
 
         setTimeout(() => {
-            window.location.href = shopeeLink; // Nếu không mở được app, fallback sang link web
+            window.location.href = fallbackURL;
         }, 2000);
     }
 
@@ -706,6 +719,15 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin: 0 auto; /* Căn giữa */
 	margin-top: 10px;
+}
+#overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        z-index: 9999;
 }
 .leftTT, .rightTT {
     display: flex;
