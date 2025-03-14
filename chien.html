@@ -164,7 +164,8 @@
 			document.getElementById("P-CongSuatNhaDung").innerText = data.CongSuatTongTai - data.CongSuatCanDot + "W";
             document.getElementById("V-DienAp").innerText = data.voltage + "V";
 			document.getElementById("I-DongDien").innerText = data.currentI + "A";
-			document.getElementById("P-TongHoaLuoi").innerText = data.energyHoaLuoi + "kW";;
+			document.getElementById("P-TongHoaLuoi").innerText = data.energyHoaLuoi + "kW";
+			document.getElementById("userId").innerText = data.userId;
             updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -251,11 +252,6 @@
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
 		<p>Công suất đốt: <span id="P-CongSuatMachDot">Đang tải...</span></p> 
 	</div>
-
-    <div class="weather-item">
-        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/bookmark.png">
-        <p>Kích hoạt: <span id="activationDate">22/8/2024</span></p>
-    </div>
 	<div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/appointment-reminders.png">
 		<p>Thông báo: <span id="notification">Đang tải thông báo...</span></p>
