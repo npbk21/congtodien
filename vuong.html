@@ -64,7 +64,7 @@
             const notificationDiv = document.getElementById("notification");
 
             if (text === "<trống>") {
-                notificationDiv.innerText = "Quảng cáo sau 10 giây";
+                notificationDiv.innerText = "Quảng cáo sau 600 giây";
             } else {
                 notificationDiv.innerText = text;
             }
@@ -79,7 +79,7 @@
     }
 
     function startCountdown(isEmpty) {
-        let timeLeft = 10;
+        let timeLeft = 600;
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
