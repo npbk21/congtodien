@@ -51,14 +51,46 @@
          document.getElementById("temperature").innerText = "Trình duyệt không hỗ trợ định vị.";
      } // https://s.shopee.vn/8fE6IihU7o
  </script> 
+
+	
 	<script>
-    function startCountdown() {
+    async function fetchNotification() {
+        const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Lỗi tải thông báo");
+
+            const text = await response.text().trim();
+            const notificationDiv = document.getElementById("notification");
+
+            if (text === "<trống>") {
+                notificationDiv.innerText = "Quảng cáo sau 600 giây";
+            } else {
+                notificationDiv.innerText = text;
+            }
+
+            startCountdown(text === "<trống>");
+
+        } catch (error) {
+            console.error("Lỗi:", error);
+            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
+            startCountdown(true);
+        }
+    }
+
+    function startCountdown(isEmpty) {
         let timeLeft = 10; // Để test nhanh, có thể đổi thành 600 giây
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
             timeLeft--;
-            notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
+
+            if (isEmpty) {
+                notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
+            } 
+            else {
+                notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây)`;
+            }
 
             if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
@@ -90,8 +122,9 @@
         }, 2000);
     }
 
-    startCountdown();
+    fetchNotification();
 </script>
+
     <script>
         var firebaseConfig = {
         apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
