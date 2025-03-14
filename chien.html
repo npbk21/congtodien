@@ -245,7 +245,7 @@
     </div>
     <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
-        <p>ID: <span id="userId">2844925</span></p>
+        <p>ID: <span id="userId">6622266</span></p>
     </div>
     <div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
@@ -254,7 +254,7 @@
 
     <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/bookmark.png">
-        <p>Kích hoạt: <span id="activationDate">22/8/2024</span></p>
+        <p>Kích hoạt: <span id="activationDate">05/3/2025</span></p>
     </div>
 	<div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/appointment-reminders.png">
@@ -270,8 +270,8 @@
             <span id="location">Đang tải...</span>
         </div>
         <div class="weather-item">
-            <img id="weather-icon" style="display: flex; width: 35px; gap: 5px;  height: 35px; flex-direction: column;" src="" alt="Thời tiết">
-            <span id="temperature">Đang tải...</span> 
+            <img id="weather-icon" src="" alt="Thời tiết" class="iconTT" style="display: none;">
+			<span id="temperature">Đang tải...</span> 
         </div>
         <div class="weather-item">
             <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/humidity.png">
@@ -742,14 +742,16 @@
 
 .weather-item { 
     display: flex;
-    align-items: center;
+    align-items: center; /* Căn giữa theo chiều dọc */
     gap: 5px; 
 }
 
-.iconTT {
-    width: 24px;
+.iconTT, #weather-icon {
+    width: 24px; /* Đảm bảo kích thước đồng nhất */
     height: 24px;
+    vertical-align: middle; /* Giữ thẳng hàng với text */
 }
+
 	
   .dot, .dot2, .dot3 {
     width: 8px;
