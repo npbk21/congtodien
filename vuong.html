@@ -11,43 +11,13 @@
 	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
-    async function fetchNotification() {
-        const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error("Lỗi tải thông báo");
-
-            const text = await response.text().trim();
-            const notificationDiv = document.getElementById("notification");
-
-            if (text === "<trống>") {
-                notificationDiv.innerText = "Quảng cáo sau 600 giây";
-            } else {
-                notificationDiv.innerText = text;
-            }
-
-            startCountdown(text === "<trống>");
-
-        } catch (error) {
-            console.error("Lỗi:", error);
-            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
-            startCountdown(true);
-        }
-    }
-
-    function startCountdown(isEmpty) {
-        let timeLeft = 600; // Để test nhanh, có thể đổi thành 600 giây
+    function startCountdown() {
+        let timeLeft = 10; // Để test nhanh, có thể đổi thành 600 giây
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
             timeLeft--;
-
-            if (isEmpty) {
-                notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
-            } 
-            else {
-                notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây)`;
-            }
+            notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
 
             if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
@@ -79,7 +49,7 @@
         }, 2000);
     }
 
-    fetchNotification();
+    startCountdown();
 </script>
     <script>
         var firebaseConfig = {
