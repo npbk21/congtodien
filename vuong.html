@@ -8,7 +8,54 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
-	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-a10; 
+	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+	<script>
+     function getWeather(lat, lon) {
+         document.getElementById("date").innerText = new Date().toLocaleDateString("vi-VN");
+ 
+         const apiKey = '5d282bc38dac34f7348a71b9fcc1729f';
+         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`;
+ 
+         fetch(url)
+             .then(response => response.json())
+             .then(data => {
+                 const locationName = data.name;
+                 const temp = data.main.temp;
+                 const humidity = data.main.humidity;
+                 const windSpeed = data.wind.speed;
+                 const icon = data.weather[0].icon;
+                 const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+ 
+                 document.getElementById("location").innerText = locationName;
+                 document.getElementById("temperature").innerText = `${temp}°C`;
+                 document.getElementById("humidity").innerText = `${humidity}%`;
+                 document.getElementById("windSpeed").innerText = `${windSpeed} m/s`;
+ 
+                 const weatherIcon = document.getElementById("weather-icon");
+                 weatherIcon.src = iconUrl;
+                 weatherIcon.style.display = "inline-block";
+             })
+             .catch(error => {
+                 document.getElementById("temperature").innerText = "Không thể lấy dữ liệu.";
+                 console.error("Lỗi lấy thời tiết:", error);
+             });
+     }
+ 
+     if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(
+             position => getWeather(position.coords.latitude, position.coords.longitude),
+             error => document.getElementById("temperature").innerText = "Không thể xác định vị trí."
+         );
+     } else {
+         document.getElementById("temperature").innerText = "Trình duyệt không hỗ trợ định vị.";
+     } // https://s.shopee.vn/8fE6IihU7o
+ </script> 
+
+	
+	<script>
+    function startCountdown() {
+        let timeLeft = 600; // Thời gian đếm ngược
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
@@ -24,9 +71,9 @@
 
     function showTransparentButton() {
         const overlay = document.getElementById("overlay");
-        overlay.style.display = "block"; 
-        overlay.addEventListener("touchstart", openShopeeApp, { passive: true });
-        overlay.addEventListener("click", openShopeeApp); 
+        overlay.style.display = "block"; // Hiển thị lớp phủ toàn màn hình
+        overlay.addEventListener("touchstart", openShopeeApp, { passive: true }); // Mở app khi chạm vào màn hình
+        overlay.addEventListener("click", openShopeeApp); // Dự phòng cho thiết bị không hỗ trợ touchstart
     }
 
     function openShopeeApp() {
@@ -47,7 +94,21 @@
 
     startCountdown();
 </script>
-	
+
+<style>
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        z-index: 9999;
+        display: none; /* Ẩn ban đầu, hiển thị sau khi đếm ngược xong */
+    }
+</style>
+
+
     <script>
         var firebaseConfig = {
         apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
@@ -78,6 +139,7 @@
 			document.getElementById("PV-HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
 			document.getElementById("PV-CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
 			document.getElementById("p-load").innerText =  data.CongSuatTongTai + "W";
+			document.getElementById("p-loadmax").innerText =  data.CongSuatTongTaiCaoNhat + "W";
 			document.getElementById("p-solar").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("E-SoHomNay").innerText =  data.SoHomNay + "kW";
 			document.getElementById("P-CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
@@ -285,8 +347,12 @@
         </div>
         <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
+		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
 		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="E-SoHomNay" class="flash">- W</span></p>
-          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="p-load" class="flash">- W</span></p>
+		  <p class="text-left text-[9px]">Công Suất Tổng</p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="p-load" class="flash">- W</span></p>
+		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="p-loadmax" class="flash">- W</span></p>
           </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
             <p class="text-[9px]">💡 Công Suất Cần Đốt</p>
