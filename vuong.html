@@ -165,8 +165,11 @@
 			document.getElementById("P-CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
 			document.getElementById("P-CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
 			document.getElementById("P-CongSuatNhaDung").innerText = data.CongSuatTongTai - data.CongSuatCanDot + "W";
-            document.getElementById("V-DienAp").innerText = data.voltage + "V";
-			document.getElementById("I-DongDien").innerText = data.currentI + "A";
+            document.getElementById("V-DienAp").innerText = data.DienAp + "V";
+			document.getElementById("V-DienApCaoNhat").innerText = data.DienApCaoNhat + "V";
+			document.getElementById("V-DienAp").innerText = data.DienApThapNhat + "V";
+			document.getElementById("I-DongDien").innerText = data.DongDien + "A";
+			document.getElementById("I-DongDienCaoNhat").innerText = data.DongDienCaoNhat + "A";
 			document.getElementById("P-TongHoaLuoi").innerText = data.energyHoaLuoi + "kW";
 			document.getElementById("userId").innerText = data.userId;
             updateBatteryLevel(data.soc, data.b);
@@ -355,6 +358,10 @@
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
           <p class="text-left font-bold" id="V-DienAp">- V</p>
           <p class="text-left text-[9px]">Điện Áp ~</p>
+		  <p class="text-left font-bold" id="V-DienApMax">- V</p>
+          <p class="text-left text-[9px]">Cao Nhất ~</p>
+		  <p class="text-left font-bold" id="V-DienApMin">- V</p>
+          <p class="text-left text-[9px]">Thấp Nhất ~</p>
           <div class="relative flex items-center justify-between">
             <svg id="transmission_on" x="-0.5" y="187.5" width="64.5" height="64.5" viewBox="0 0 24 24">
               <path class="" fill="#C70000" display="" d="m8.28 5.45l-1.78-.9L7.76 2h8.47l1.27 2.55l-1.78.89L15 4H9l-.72 1.45M18.62 8h-4.53l-.79-3h-2.6l-.79 3H5.38L4.1 10.55l1.79.89l.73-1.44h10.76l.72 1.45l1.79-.89L18.62 8m-.85 14H15.7l-.24-.9L12 15.9l-3.47 5.2l-.23.9H6.23l2.89-11h2.07l-.36 1.35L12 14.1l1.16-1.75l-.35-1.35h2.07l2.89 11m-6.37-7l-.9-1.35l-1.18 4.48L11.4 15m3.28 3.12l-1.18-4.48l-.9 1.36l2.08 3.12Z"></path>
@@ -363,6 +370,10 @@
           </div>
           <p class="text-left font-bold" id="I-DongDien">- A</p>
           <p class="text-left text-[9px]">Dòng Điện</p>
+		  <p class="text-left font-bold" id="I-DongDienMax">- A</p>
+          <p class="text-left text-[9px]">Cao Nhất</p>
+		  <p class="text-left font-bold" id="TanSo">- Hz</p>
+          <p class="text-left text-[9px]">Tần Số</p>
         </div>
         <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
