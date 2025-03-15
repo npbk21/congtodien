@@ -55,7 +55,7 @@
 	
 	<script>
     function startCountdown() {
-        let timeLeft = 600; // Thời gian đếm ngược
+        let timeLeft = 10; 
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
@@ -71,9 +71,9 @@
 
     function showTransparentButton() {
         const overlay = document.getElementById("overlay");
-        overlay.style.display = "block"; // Hiển thị lớp phủ toàn màn hình
-        overlay.addEventListener("touchstart", openShopeeApp, { passive: true }); // Mở app khi chạm vào màn hình
-        overlay.addEventListener("click", openShopeeApp); // Dự phòng cho thiết bị không hỗ trợ touchstart
+        overlay.style.display = "block";
+        overlay.addEventListener("touchstart", openShopeeApp, { passive: true });
+        overlay.addEventListener("click", openShopeeApp); 
     }
 
     function openShopeeApp() {
