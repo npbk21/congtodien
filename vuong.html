@@ -8,89 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
-	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-	<script>
-     function getWeather(lat, lon) {
-         document.getElementById("date").innerText = new Date().toLocaleDateString("vi-VN");
- 
-         const apiKey = '5d282bc38dac34f7348a71b9fcc1729f';
-         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`;
- 
-         fetch(url)
-             .then(response => response.json())
-             .then(data => {
-                 const locationName = data.name;
-                 const temp = data.main.temp;
-                 const humidity = data.main.humidity;
-                 const windSpeed = data.wind.speed;
-                 const icon = data.weather[0].icon;
-                 const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
- 
-                 document.getElementById("location").innerText = locationName;
-                 document.getElementById("temperature").innerText = `${temp}°C`;
-                 document.getElementById("humidity").innerText = `${humidity}%`;
-                 document.getElementById("windSpeed").innerText = `${windSpeed} m/s`;
- 
-                 const weatherIcon = document.getElementById("weather-icon");
-                 weatherIcon.src = iconUrl;
-                 weatherIcon.style.display = "inline-block";
-             })
-             .catch(error => {
-                 document.getElementById("temperature").innerText = "Không thể lấy dữ liệu.";
-                 console.error("Lỗi lấy thời tiết:", error);
-             });
-     }
- 
-     if (navigator.geolocation) {
-         navigator.geolocation.getCurrentPosition(
-             position => getWeather(position.coords.latitude, position.coords.longitude),
-             error => document.getElementById("temperature").innerText = "Không thể xác định vị trí."
-         );
-     } else {
-         document.getElementById("temperature").innerText = "Trình duyệt không hỗ trợ định vị.";
-     } // https://s.shopee.vn/8fE6IihU7o
- </script> 
-
-	
-	<script>
-    async function fetchNotification() {
-        const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error("Lỗi tải thông báo");
-
-            const text = await response.text().trim();
-            const notificationDiv = document.getElementById("notification");
-
-            if (text === "<trống>") {
-                notificationDiv.innerText = "Quảng cáo sau 600 giây";
-            } else {
-                notificationDiv.innerText = text;
-            }
-
-            startCountdown(text === "<trống>");
-
-        } catch (error) {
-            console.error("Lỗi:", error);
-            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
-            startCountdown(true);
-        }
-    }
-
-    function startCountdown(isEmpty) {
-        let timeLeft = 600;
+	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-a10; 
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
             timeLeft--;
-
-            if (isEmpty) {
-                notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
-            } 
-            else {
-                notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây)`;
-            }
+            notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
 
             if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
@@ -101,9 +24,9 @@
 
     function showTransparentButton() {
         const overlay = document.getElementById("overlay");
-        overlay.style.display = "block";
+        overlay.style.display = "block"; 
         overlay.addEventListener("touchstart", openShopeeApp, { passive: true });
-        overlay.addEventListener("click", openShopeeApp);
+        overlay.addEventListener("click", openShopeeApp); 
     }
 
     function openShopeeApp() {
@@ -122,9 +45,9 @@
         }, 2000);
     }
 
-    fetchNotification();
+    startCountdown();
 </script>
-
+	
     <script>
         var firebaseConfig = {
         apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
