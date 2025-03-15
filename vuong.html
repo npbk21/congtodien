@@ -61,28 +61,28 @@
         if (!response.ok) throw new Error(`Lỗi tải thông báo: ${response.status}`);
 
         const text = await response.text();
-        console.log("📢 Nội dung nhận được:", text); // Ghi log nội dung thực tế
+        console.log("📢 Nội dung nhận được:", text);
 
         const notificationDiv = document.getElementById("notification");
 
         if (text.trim() === "<trống>") {
-            notificationDiv.innerText = "Quảng cáo sau 10 giây";
+            notificationDiv.innerText = "Quảng cáo sau 600 giây";
             startCountdown(true);
         } else {
-            notificationDiv.innerText = text.trim(); // Đảm bảo hiển thị nội dung chính xác
+            notificationDiv.innerText = text.trim();
             startCountdown(false);
         }
 
     } catch (error) {
         console.error("❌ Lỗi:", error);
-        document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 10 giây";
+        document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
         startCountdown(true);
     }
 }
 
 
     function startCountdown(isEmpty) {
-        let timeLeft = 10;
+        let timeLeft = 600;
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
