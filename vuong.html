@@ -54,13 +54,46 @@
 
 	
 	<script>
-    function startCountdown() {
-        let timeLeft = 10; 
+    async function fetchNotification() {
+    const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Lỗi tải thông báo: ${response.status}`);
+
+        const text = await response.text();
+        console.log("📢 Nội dung nhận được:", text); // Ghi log nội dung thực tế
+
+        const notificationDiv = document.getElementById("notification");
+
+        if (text.trim() === "<trống>") {
+            notificationDiv.innerText = "Quảng cáo sau 10 giây";
+            startCountdown(true);
+        } else {
+            notificationDiv.innerText = text.trim(); // Đảm bảo hiển thị nội dung chính xác
+            startCountdown(false);
+        }
+
+    } catch (error) {
+        console.error("❌ Lỗi:", error);
+        document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 10 giây";
+        startCountdown(true);
+    }
+}
+
+
+    function startCountdown(isEmpty) {
+        let timeLeft = 10;
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
             timeLeft--;
-            notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
+
+            if (isEmpty) {
+                notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
+            } 
+            else {
+                notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây)`;
+            }
 
             if (timeLeft <= 0) {
                 clearInterval(countdownTimer);
@@ -73,7 +106,7 @@
         const overlay = document.getElementById("overlay");
         overlay.style.display = "block";
         overlay.addEventListener("touchstart", openShopeeApp, { passive: true });
-        overlay.addEventListener("click", openShopeeApp); 
+        overlay.addEventListener("click", openShopeeApp);
     }
 
     function openShopeeApp() {
@@ -92,7 +125,7 @@
         }, 2000);
     }
 
-    startCountdown();
+    fetchNotification();
 </script>
 
     <script>
@@ -224,7 +257,7 @@
 	</div>
 	<div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/appointment-reminders.png">
-		<div id="notification">Đang tải quảng cáo</div>
+		<div id="notification">Quảng cáo sau 600 giây</div>
 	</div>
 	<div id="overlay"></div>
 </div>
