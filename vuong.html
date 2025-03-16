@@ -173,7 +173,7 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
-			document.getElementById("XuLyTime").innerText = data.XuLyTime;
+			document.getElementById("XuLyTime").innerText = data.XuLyTime + "ms";
             updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
