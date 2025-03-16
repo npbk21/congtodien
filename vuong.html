@@ -175,7 +175,7 @@
 			document.getElementById("userId").innerText = data.userId;
 			document.getElementById("XuLyTime").innerText = data.XuLyTime + "ms";
 			document.getElementById("CPU").innerText = data.CPU + "MHz";
-			document.getElementById("RAM").innerText = data.RAM + "bytes";
+			document.getElementById("RAM").innerText = data.RAM + "%";
             updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
