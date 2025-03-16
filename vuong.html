@@ -12,7 +12,7 @@
 	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 	<script>
      function getWeather(lat, lon) {
-        // document.getElementById("date").innerText = new Date().toLocaleDateString("vi-VN");
+         document.getElementById("date").innerText = new Date().toLocaleDateString("vi-VN");
  
          const apiKey = '5d282bc38dac34f7348a71b9fcc1729f';
          const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`;
@@ -66,7 +66,7 @@
         const notificationDiv = document.getElementById("notification");
 
         if (text.trim() === "<trống>") {
-            notificationDiv.innerText = "Quảng cáo sau 10 giây";
+            notificationDiv.innerText = "Quảng cáo sau 600 giây";
             startCountdown(true);
         } else {
             notificationDiv.innerText = text.trim(); // Đảm bảo hiển thị nội dung chính xác
@@ -75,21 +75,21 @@
 
     } catch (error) {
         console.error("❌ Lỗi:", error);
-        document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 10 giây";
+        document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
         startCountdown(true);
     }
 }
 
 
     function startCountdown(isEmpty) {
-        let timeLeft = 10;
+        let timeLeft = 600;
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
             timeLeft--;
 
             if (isEmpty) {
-                notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
+                notificationDiv.innerText = `Quảng cáo sau: ${timeLeft} giây`;
             } 
             else {
                 notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây)`;
@@ -173,9 +173,7 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
-			document.getElementById("XuLyTime").innerText = data.XuLyTime + "ms";
-			document.getElementById("CPU").innerText = data.CPU + "MHz";
-			document.getElementById("RAM").innerText = data.RAM + "%";
+			document.getElementById("XuLyTime").innerText = "Thời gian xử lý: " + data.XuLyTime + "ms";
             updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -255,8 +253,8 @@
         <p>ID: <span id="userId">6622266</span></p>
     </div>
     <div class="weather-item">
-        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/speed.png">
-		<span id="XuLyTime"></span><span id="RAM"></span><span id="CPU"></span>
+        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png">
+        <span id="date"></span>
     </div>
     <div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
