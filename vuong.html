@@ -12,7 +12,7 @@
 	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 	<script>
      function getWeather(lat, lon) {
-         document.getElementById("date").innerText = new Date().toLocaleDateString("vi-VN");
+        // document.getElementById("date").innerText = new Date().toLocaleDateString("vi-VN");
  
          const apiKey = '5d282bc38dac34f7348a71b9fcc1729f';
          const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`;
@@ -61,28 +61,28 @@
         if (!response.ok) throw new Error(`Lỗi tải thông báo: ${response.status}`);
 
         const text = await response.text();
-        console.log("📢 Nội dung nhận được:", text);
+        console.log("📢 Nội dung nhận được:", text); // Ghi log nội dung thực tế
 
         const notificationDiv = document.getElementById("notification");
 
         if (text.trim() === "<trống>") {
-            notificationDiv.innerText = "Quảng cáo sau 600 giây";
+            notificationDiv.innerText = "Quảng cáo sau 10 giây";
             startCountdown(true);
         } else {
-            notificationDiv.innerText = text.trim();
+            notificationDiv.innerText = text.trim(); // Đảm bảo hiển thị nội dung chính xác
             startCountdown(false);
         }
 
     } catch (error) {
         console.error("❌ Lỗi:", error);
-        document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
+        document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 10 giây";
         startCountdown(true);
     }
 }
 
 
     function startCountdown(isEmpty) {
-        let timeLeft = 600;
+        let timeLeft = 10;
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
@@ -173,6 +173,7 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
+			document.getElementById("XuLyTime").innerText = data.XuLyTime;
             updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -248,8 +249,8 @@
   <div id="weather-containerTT">
     <div class="leftTT">
     <div class="weather-item">
-        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png">
-        <span id="date"></span>
+        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/speed.png">
+		<span id="XuLyTime"></span>
     </div>
     <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
