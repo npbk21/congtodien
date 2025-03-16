@@ -174,6 +174,8 @@
 			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
 			document.getElementById("XuLyTime").innerText = data.XuLyTime + "ms";
+			document.getElementById("CPU").innerText = data.CPU + "MHz";
+			document.getElementById("RAM").innerText = data.RAM + "bytes";
             updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -254,7 +256,7 @@
     </div>
     <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/speed.png">
-		<span id="XuLyTime"></span>
+		<span id="XuLyTime"></span><span id="RAM"></span><span id="CPU"></span>
     </div>
     <div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
