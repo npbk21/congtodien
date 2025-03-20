@@ -66,7 +66,7 @@
         const notificationDiv = document.getElementById("notification");
 
         if (text.trim() === "<trống>") {
-            notificationDiv.innerText = "Quảng cáo sau 10 giây";
+            notificationDiv.innerText = "Quảng cáo sau 600 giây";
             startCountdown(true);
         } else {
             notificationDiv.innerText = text.trim(); // Đảm bảo hiển thị nội dung chính xác
@@ -75,21 +75,21 @@
 
     } catch (error) {
         console.error("❌ Lỗi:", error);
-        document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 10 giây";
+        document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
         startCountdown(true);
     }
 }
 
 
     function startCountdown(isEmpty) {
-        let timeLeft = 10;
+        let timeLeft = 600;
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
             timeLeft--;
 
             if (isEmpty) {
-                notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây`;
+                notificationDiv.innerText = `Quảng cáo sau: ${timeLeft} giây`;
             } 
             else {
                 notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây)`;
@@ -174,6 +174,7 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
+			document.getElementById("VerionHienTai").innerText =data.VerionHienTai;
             updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -248,13 +249,13 @@
 <body >
   <div id="weather-containerTT">
     <div class="leftTT">
-    <div class="weather-item">
+	    <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png">
         <span id="date"></span>
     </div>
-    <div class="weather-item">
+	<div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
-        <p>ID: <span id="userId">6622266</span></p>
+        <p>ID: <span id="userId">6622266</span></p><p>Ver: <span id="VerionHienTai">1.0</span></p>
     </div>
     <div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 

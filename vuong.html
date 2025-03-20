@@ -159,7 +159,7 @@
 			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
 			document.getElementById("CongSuatTongTai").innerText =  data.CongSuatTongTai + "W";
 			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
-			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kWh";
+			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
 			document.getElementById("CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
 			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
@@ -173,7 +173,7 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
-			document.getElementById("XuLyTime").innerText = "Thời gian xử lý: " + data.XuLyTime + "ms";
+			document.getElementById("VerionHienTai").innerText =data.VerionHienTai;
             updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -248,13 +248,13 @@
 <body >
   <div id="weather-containerTT">
     <div class="leftTT">
-	<div class="weather-item">
-        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
-        <p>ID: <span id="userId">6622266</span></p>
-    </div>
-    <div class="weather-item">
+	    <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png">
         <span id="date"></span>
+    </div>
+	<div class="weather-item">
+        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
+        <p>ID: <span id="userId">6622266</span></p><p>Ver: <span id="VerionHienTai">1.0</span></p>
     </div>
     <div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
