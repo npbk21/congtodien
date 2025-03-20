@@ -173,8 +173,7 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
-			document.getElementById("VerionHienTai").innerText =data.VerionHienTai;
-            updateBatteryLevel(data.soc, data.b);
+			updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
                 document.getElementById("n-pv1").classList.add("dot3");
@@ -254,7 +253,7 @@
     </div>
 	<div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
-        <p>ID: <span id="userId">6622266</span></p><p>Ver: <span id="VerionHienTai">1.0</span></p>
+        <p>ID: <span id="userId">6622266</span></p>
     </div>
     <div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
