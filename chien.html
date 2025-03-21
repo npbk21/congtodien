@@ -165,8 +165,9 @@
 			document.getElementById("CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
 			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
 			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
-			document.getElementById("CongSuatNhaDung").innerText = data.CongSuatTongTai - data.CongSuatCanDot + "W";
-            document.getElementById("DienAp").innerText = data.DienAp + "V";
+			let value = data.CongSuatTongTai - data.CongSuatCanDot;
+			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating..." : value + "W";
+			document.getElementById("DienAp").innerText = data.DienAp + "V";
 			document.getElementById("DienApCaoNhat").innerText = data.DienApCaoNhat + "V";
 			document.getElementById("DienApThapNhat").innerText = data.DienApThapNhat + "V";
 			document.getElementById("DongDien").innerText = data.DongDien + "A";
