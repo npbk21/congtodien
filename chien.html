@@ -175,6 +175,8 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
+			document.getElementById("Ver").innerText = data.Ver;
+			
 			updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -255,7 +257,7 @@
     </div>
 	<div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
-        <p>ID: <span id="userId">6622266</span></p>
+        <p>ID: <span id="userId">6622266</span></p><p>Ver: <span id="Ver">0.9</span></p>
     </div>
     <div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
@@ -734,12 +736,14 @@
     max-width: 600px;
     width: 100%;
     padding: 20px;
-    background: #008ae0;
+    background: #e1ebdf; /* Nền trắng */
+    border: 1px solid #000000; /* Viền đen */
     border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin: 0 auto; /* Căn giữa */
-	margin-top: 10px;
+    margin-top: 10px;
 }
+
     #overlay {
         position: fixed;
         top: 0;
