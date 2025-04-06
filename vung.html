@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="vi" translate="no">
+<head>
+    <title>0971.282.336</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+	<script>
+     function getWeather(lat, lon) {
+         document.getElementById("date").innerText = new Date().toLocaleDateString("vi-VN");
+ 
+         const apiKey = '5d282bc38dac34f7348a71b9fcc1729f';
+         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`;
+ 
+         fetch(url)
+             .then(response => response.json())
+             .then(data => {
+                 const locationName = data.name;
+                 const temp = data.main.temp;
+                 const humidity = data.main.humidity;
+                 const windSpeed = data.wind.speed;
+                 const icon = data.weather[0].icon;
+                 const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+ 
+                 document.getElementById("location").innerText = locationName;
+                 document.getElementById("temperature").innerText = `${temp}°C`;
+                 document.getElementById("humidity").innerText = `${humidity}%`;
+                 document.getElementById("windSpeed").innerText = `${windSpeed} m/s`;
+ 
+                 const weatherIcon = document.getElementById("weather-icon");
+                 weatherIcon.src = iconUrl;
+                 weatherIcon.style.display = "inline-block";
+             })
+             .catch(error => {
+                 document.getElementById("temperature").innerText = "Không thể lấy dữ liệu.";
+                 console.error("Lỗi lấy thời tiết:", error);
+             });
+     }
+ 
+     if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(
+             position => getWeather(position.coords.latitude, position.coords.longitude),
+             error => document.getElementById("temperature").innerText = "Không thể xác định vị trí."
+         );
+     } else {
+         document.getElementById("temperature").innerText = "Trình duyệt không hỗ trợ định vị.";
+     } // https://s.shopee.vn/8fE6IihU7o
+ </script> 
+
+	
+	<script>
+    async function fetchNotification() {
+    const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Lỗi tải thông báo: ${response.status}`);
+
+        const text = await response.text();
+        console.log("📢 Nội dung nhận được:", text); // Ghi log nội dung thực tế
+
+        const notificationDiv = document.getElementById("notification");
+
+        if (text.trim() === "<trống>") {
+            notificationDiv.innerText = "Quảng cáo sau 600 giây";
+            startCountdown(true);
+        } else {
+            notificationDiv.innerText = text.trim(); // Đảm bảo hiển thị nội dung chính xác
+            startCountdown(false);
+        }
+
+    } catch (error) {
+        console.error("❌ Lỗi:", error);
+        document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 600 giây";
+        startCountdown(true);
+    }
+}
+
+
+    function startCountdown(isEmpty) {
+        let timeLeft = 600;
+        const notificationDiv = document.getElementById("notification");
+
+        let countdownTimer = setInterval(function() {
+            timeLeft--;
+
+            if (isEmpty) {
+                notificationDiv.innerText = `Quảng cáo sau: ${timeLeft} giây`;
+            } 
+            else {
+                notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây)`;
+            }
+
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                showTransparentButton();
+            }
+        }, 1000);
+    }
+
+    function showTransparentButton() {
+        const overlay = document.getElementById("overlay");
+        overlay.style.display = "block";
+        overlay.addEventListener("touchstart", openShopeeApp, { passive: true });
+        overlay.addEventListener("click", openShopeeApp);
+    }
+
+    function openShopeeApp() {
+        const fallbackURL = "https://s.shopee.vn/8fE6IihU7o";
+
+        if (navigator.userAgent.includes("Android")) {
+            window.location.href = "intent://s.shopee.vn/8fE6IihU7o#Intent;scheme=https;package=com.shopee.vn;end;";
+        } else if (navigator.userAgent.includes("iPhone") || navigator.userAgent.includes("iPad")) {
+            window.location.href = "shopee://s.shopee.vn/8fE6IihU7o";
+        } else {
+            window.location.href = fallbackURL;
+        }
+
+        setTimeout(() => {
+            window.location.href = fallbackURL;
+        }, 2000);
+    }
+
+    fetchNotification();
+</script>
+
+    <script>
+        var firebaseConfig = {		
+		apiKey: "AIzaSyAmSj1lQc3jNh-kz8UjGeqOpLaOcgb9MFs",
+		authDomain: "vung-f9614.firebaseapp.com",
+		databaseURL: "https://vung-f9614-default-rtdb.asia-southeast1.firebasedatabase.app",
+		projectId: "vung-f9614",
+		storageBucket: "vung-f9614.firebasestorage.app",
+  		messagingSenderId: "549094464237",
+  		appId: "1:549094464237:web:c11ca3fae8d1c9040c4ae4",
+		measurementId: "G-XPSRGWL33C"
+		};
+      firebase.initializeApp(firebaseConfig);
+
+      var sensorRef = firebase.database().ref("/esp8266");
+
+      sensorRef.on("value", function(snapshot) {
+		var data = snapshot.val();
+			if (data) {
+				updateUI(data);
+			}
+		}, function(error) {
+		console.error("Lỗi khi lấy dữ liệu: " + error.code);
+	   });
+	   
+        
+
+        function updateUI(data) {
+		
+			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
+			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
+			document.getElementById("CongSuatTongTai").innerText =  data.CongSuatTongTai + "W";
+			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
+			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
+			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
+			document.getElementById("CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
+			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
+			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
+			let value = data.CongSuatTongTai - data.CongSuatCanDot;
+			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating..." : value + "W";
+			document.getElementById("DienAp").innerText = data.DienAp + "V";
+			document.getElementById("DienApCaoNhat").innerText = data.DienApCaoNhat + "V";
+			document.getElementById("DienApThapNhat").innerText = data.DienApThapNhat + "V";
+			document.getElementById("DongDien").innerText = data.DongDien + "A";
+			document.getElementById("DongDienCaoNhat").innerText = data.DongDienCaoNhat + "A";
+			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
+			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
+			document.getElementById("userId").innerText = data.userId;
+			document.getElementById("Ver").innerText = data.Ver;
+			
+			updateBatteryLevel(data.soc, data.b);
+
+            if(data.p1 > 0){
+                document.getElementById("n-pv1").classList.add("dot3");
+            } else {
+                document.getElementById("n-pv1").classList.remove("dot3");
+            }
+            if(data.p2 > 0){
+                document.getElementById("n-pv2").classList.add("dot2");
+            } else {
+                document.getElementById("n-pv2").classList.remove("dot2");
+            }
+            if(data.p1 == 0 && data.p2 == 0){
+                document.getElementById("n-pv").classList.remove("dot");
+            } else {
+                document.getElementById("n-pv").classList.add("dot");
+            }
+            if(data.l + data.u == 0){
+                document.getElementById("n-load").classList.remove("dot");
+            } else {
+                document.getElementById("n-load").classList.add("dot");
+            }
+
+            
+            var gridI = document.getElementById("n-grid");
+			var calculatedG = (data.CongSuatTongTai - data.CongSuatHoaLuoi);
+
+			if (calculatedG < 0) {
+				gridI.classList.remove("move-right");
+				gridI.classList.add("dot");
+				gridI.classList.add("move-left");
+			} else if (calculatedG > 0) {
+				gridI.classList.remove("move-left");
+				gridI.classList.add("dot");
+				gridI.classList.add("move-right");
+			} else {
+				gridI.classList.remove("dot");
+			}
+
+        }
+		
+      function scaleToFit() {
+		let progressBar = document.getElementById("diagram-container");
+		let containerWidth = document.querySelector("body").offsetWidth;
+		let originalWidth = 460; 
+		let scaleFactor = containerWidth / originalWidth; 
+      if(scaleFactor > 1) {
+          scaleFactor = 1;
+      }
+      progressBar.style.transform = "scale(" + scaleFactor + ")";
+  }
+  window.onload = function () {
+      connectFirebase();
+      scaleToFit();
+  };
+  window.onresize = scaleToFit;
+
+  function connectFirebase() {
+
+      var dataRef = firebase.database().ref("/esp8266");
+      dataRef.on("value", function(snapshot) {
+          var data = snapshot.val();
+          console.log("Firebase data:", data);
+          updateUI(data);
+      }, function(error) {
+          console.error("Error fetching Firebase data: " + error.code);
+      });
+  }
+    </script>
+	
+</head>
+<body >
+  <div id="weather-containerTT">
+    <div class="leftTT">
+	    <div class="weather-item">
+        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png">
+        <span id="date"></span>
+    </div>
+	<div class="weather-item">
+        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
+        <p>ID: <span id="userId">6622266</span></p><p>Ver: <span id="Ver">0.9</span></p>
+    </div>
+    <div class="weather-item">
+		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
+		<p>Công suất đốt: <span id="CongSuatMachDot">Đang tải...</span></p> 
+	</div>
+	<div class="weather-item">
+		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/appointment-reminders.png">
+		<div id="notification">Quảng cáo sau 600 giây</div>
+	</div>
+	<div id="overlay"></div>
+</div>
+
+    
+    <div class="rightTT">
+        <div class="weather-item">
+            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/marker.png">
+            <span id="location">Đang tải...</span>
+        </div>
+        <div class="weather-item">
+            <img id="weather-icon" src="" alt="Thời tiết" class="iconTT" style="display: none;">
+			<span id="temperature">Đang tải...</span> 
+        </div>
+        <div class="weather-item">
+            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/humidity.png">
+            <span id="humidity">Đang tải...</span>
+        </div>
+        <div class="weather-item">
+            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/wind.png">
+            <span id="windSpeed">Đang tải...</span>
+        </div>
+    </div>
+	
+</div>
+
+    <div id="diagram-container" class="diagram-container grid h-[500px] place-items-center w-full" style="margin: 0 auto; padding-right: 10px;">
+      <div class="relative rounded-lg">
+        <div class="h-[100px] w-[70px] rounded-sm bg-amber-950">
+          <img src="data:image/png;base64,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" alt="" class="h-[100px] w-[70px] rounded-sm" />
+        </div>
+        <div class="absolute -top-[178px] -left-[66px] flex w-[200px] flex-col content-center">
+          <div class="flex gap-2">
+            <svg id="sun" x="154" y="10" width="40" height="40" viewBox="0 0 24 24">
+              <path class="" fill="#057A1D" d="M11.45 2v3.55L15 3.77L11.45 2m-1 6L8 10.46l3.75 1.25L10.45 8M2 11.45L3.77 15l1.78-3.55H2M10 2H2v8c.57.17 1.17.25 1.77.25c3.58.01 6.49-2.9 6.5-6.5c-.01-.59-.1-1.18-.27-1.75m7 20v-6h-3l5-9v6h3l-5 9Z"></path>
+            </svg>
+            <div class="flex flex-col items-center">
+              <p class="solar-color text-xl font-bold" id="CongSuatHoaLuoi">.</p>
+              <p class="solar-color text-[9px]">Đang Hòa Lưới</p>
+            </div>
+          </div>
+          <div class="mt-3 flex gap-6">
+            <div class="relative w-1/2">
+              <div>
+				<p class="solar-color text-[9px] text-center">Tổng Hòa Lưới</p>
+				<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="TongHoaLuoi"</p>
+              </div>
+			  <div class="bg-re absolute right-[26px] -bottom-[35px] h-[35px] w-[20px] rounded-bl-md border-b-2 border-l-2 border-[#057a1c]">
+                <div class="dot2 -ml-[5px] bg-[#057a1c]" id="n-pv2" style="--speed:3s"></div>
+              </div>
+              <div class="absolute text-[9px] solar-color mt-1 ml-1">
+                <p id="pv1-vol">.</p>
+                <p id="pv1-cur">.</p>
+              </div>
+            </div>
+            <div class="relative w-1/2"> 
+              <div>
+			  <p class="solar-color text-[9px] text-center">Cao Nhất Hôm Nay</p>
+			 <p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiCaoNhat"</p>
+              </div>
+			  
+			  <div class="absolute -bottom-[35px] left-[26px] h-[35px] w-[20px] rounded-br-md border-r-2 border-b-2 border-[#057a1c]">
+                <div class="dot3 ml-[15px] bg-[#057a1c]" id="n-pv1" style="--speed:5s"></div>
+              </div>
+              <div class="absolute text-[9px] solar-color mt-1 mr-1 text-right right-0">
+                <p id="pv2-vol">.</p>
+                <p id="pv2-cur">.</p>
+              </div>
+            </div>
+          </div>
+          
+            <div>
+			<p class="solar-color text-[9px] text-center">Hòa Lưới Hôm Nay</p>
+			<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiHomNay"</p>
+			</div>
+          
+        </div>
+        <div class="battery-color absolute -bottom-[174px] -left-[166px] flex w-[400px] flex-col items-center">
+          <div class="mt-5 flex justify-center">
+            <div>
+              <p id="b-vol" class="font-bold"></p>
+              <p class="mb-1 text-[9px]"></p>
+              <p id="b-cur" class="font-bold"></p>
+              <p class="text-[9px]"></p>
+            </div>
+            
+            <div class="ml-5">
+              <p id="b-soc" class="font-bold"></p>
+              <p class="mb-1 text-[9px]"></p>
+              <p id="b-temp" class="font-bold"></p>
+              <p class="text-[9px]"></p>
+            </div>
+          </div>
+        </div>
+        <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
+          <p class="text-left text-[9px]">Điện Áp ~</p>
+		  <p class="text-left font-bold" id="DienAp">- V</p>
+          <p class="text-left text-[9px]">Cao Nhất Hôm Nay ~</p>
+		  <p class="text-left font-bold" id="DienApCaoNhat">- V</p>
+          <p class="text-left text-[9px]">Thấp Nhất Hôm Nay ~</p>
+		  <p class="text-left font-bold" id="DienApThapNhat">- V</p>
+          <div class="relative flex items-center justify-between">
+            <svg id="transmission_on" x="-0.5" y="187.5" width="64.5" height="64.5" viewBox="0 0 24 24">
+              <path class="" fill="#C70000" display="" d="m8.28 5.45l-1.78-.9L7.76 2h8.47l1.27 2.55l-1.78.89L15 4H9l-.72 1.45M18.62 8h-4.53l-.79-3h-2.6l-.79 3H5.38L4.1 10.55l1.79.89l.73-1.44h10.76l.72 1.45l1.79-.89L18.62 8m-.85 14H15.7l-.24-.9L12 15.9l-3.47 5.2l-.23.9H6.23l2.89-11h2.07l-.36 1.35L12 14.1l1.16-1.75l-.35-1.35h2.07l2.89 11m-6.37-7l-.9-1.35l-1.18 4.48L11.4 15m3.28 3.12l-1.18-4.48l-.9 1.36l2.08 3.12Z"></path>
+            </svg>
+            <p class="solar-color grid-color w-[80px] rounded-sm border-[1px] border-[#c70000] py-1 text-center font-bold flip" style="width: 80px;" id="CongSuatLayLuoi">- W</p>
+          </div>
+		  <p class="text-left text-[9px]">Dòng Điện</p>
+          <p class="text-left font-bold" id="DongDien">- A</p>
+          <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
+		  <p class="text-left font-bold" id="DongDienCaoNhat">- A</p>
+          <p class="text-left text-[9px]">Tần Số</p>
+		  <p class="text-left font-bold" id="TanSo">- Hz</p>
+        </div>
+        <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
+          <div>
+		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay" class="flash">- W</span></p>
+		  <p class="text-left text-[9px]">Tổng Đang Dùng</p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTai" class="flash">- W</span></p>
+		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTaiCaoNhat" class="flash">- W</span></p>
+          </div>
+          <div class="relative flex flex-col items-center justify-center gap-1">
+            <p class="text-[9px]">💡 Công Suất Cần Đốt</p>
+            <p class="solar-color home-color rounded-sm border-[1px] border-[#ff7b00] px-2 py-1 text-center font-bold "><span id="CongSuatCanDot" class="flash">- W</span></p>
+            <div class="relative my-5 flex items-center justify-between">
+              <svg id="essen" viewBox="0 0 24 24" x="402" y="177.5" width="79" height="79">
+                <defs>
+                  <linearGradient x1="0%" x2="0%" y1="100%" y2="0%" id="Lg-1739720801079">
+                    <stop offset="0%" stop-color="#c70000"></stop>
+                    <stop offset="0%" stop-color="#c70000"></stop>
+                    <stop offset="0%" stop-color="#c70000"></stop>
+                    <stop offset="0%" stop-color="#c70000"></stop>
+                    <stop offset="0%" stop-color="#c70000"></stop>
+                    <stop offset="100%" stop-color="#c70000"></stop>
+                  </linearGradient>
+                </defs>
+                <path fill="#ff7b00" d="m15 13l-4 4v-3H2v-2h9V9l4 4M5 20v-4h2v2h10v-7.81l-5-4.5L7.21 10H4.22L12 3l10 9h-3v8H5Z"></path>
+              </svg>
+            </div>
+            <p class="solar-color home-color rounded-sm border-[1px] border-[#ff7b00] px-2 py-1 text-center font-bold" id="CongSuatNhaDung">.</p>
+            <p class="text-[9px]">Công Suất Nhà Dùng</p>
+  
+            <div class="absolute top-[51px] right-[50%] h-[30px] w-[2px] bg-[#ff7b00]"></div>
+            <div class="absolute right-[50%] bottom-[51px] h-[30px] w-[2px] bg-[#ff7b00]"></div>
+          </div>
+        </div>
+  
+        <div class="absolute -top-[40px] left-[33px] h-[40px] w-[2px] bg-[#057a1c]">
+          <div class="dot move-down -ml-[3px] bg-[#057a1c]" id="n-pv" style="--speed:1.5s"></div>
+        </div>
+        
+        <div class="absolute top-[50px] -left-[35px] h-[2px] w-[35px] bg-[#c70000]">
+          <div class="dot move-right n-grid -mt-[3px] bg-[#c70000]" style="--speed:4s" id="n-grid"></div>
+        </div>
+        <div class="absolute top-[50px] -right-[35px] h-[2px] w-[35px] bg-[#ff7b00]">
+          <div class="dot move-right -mt-[3px] bg-[#ff7b00]" style="--speed:2s" id="n-load"></div>
+        </div>
+      </div>
+    </div>
+	<p style="text-align: center; margin-top: 20px; font-size: 14px; color: #ccc;">
+        Thiết bị bám tải cho Micro Inverter và biến tần nội địa Nhật
+    </p>
+  </div>
+</body>
+</html>
+<style>
+/*! tailwindcss v4.0.6 | MIT License | https://tailwindcss.com */
+@layer theme, base, components, utilities;
+
+/* Theme Layer: Biến và định nghĩa cơ bản */
+@layer theme {
+  :host, :root {
+    
+
+    /* Basic Colors */
+    --color-black: #000;
+    --color-white: #fff;
+
+    /* Spacing and Breakpoints */
+    --spacing: 0.25rem;
+    --breakpoint-sm: 40rem;
+    --breakpoint-md: 48rem;
+    --breakpoint-lg: 64rem;
+    --breakpoint-xl: 80rem;
+    --breakpoint-2xl: 96rem;
+
+    /* Font Weights */
+    --font-weight-thin: 100;
+    --font-weight-extralight: 200;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --font-weight-black: 900;
+	
+    /* Perspective */
+    --perspective-dramatic: 100px;
+    --perspective-near: 300px;
+    --perspective-normal: 500px;
+    --perspective-midrange: 800px;
+    --perspective-distant: 1200px;
+
+    /* Aspect Ratio */
+    --aspect-video: 16/9;
+
+    /* Default Transition */
+    --default-transition-duration: 150ms;
+    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Base Layer: Reset và định nghĩa cơ bản */
+@layer base {
+  progress, sub, sup { vertical-align: baseline; }
+  a, hr { color: inherit; }
+  *, ::after, ::backdrop, ::before, ::file-selector-button {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0 solid;
+  }
+
+
+  hr {
+    height: 0;
+    border-top-width: 1px;
+  }
+  abbr:where([title]) {
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+  a {
+    -webkit-text-decoration: inherit;
+    text-decoration: inherit;
+  }
+  b, strong { font-weight: bolder; }
+  code, kbd, pre, samp {
+    font-family: var(--default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace);
+    font-feature-settings: var(--default-mono-font-feature-settings, normal);
+    font-variation-settings: var(--default-mono-font-variation-settings, normal);
+    font-size: 1em;
+  }
+  small { font-size: 80%; }
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+  }
+  sub { bottom: -.25em; }
+  sup { top: -.5em; }
+  table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: collapse;
+  }
+  :-moz-focusring { outline: auto; }
+  summary { display: list-item; }
+  menu, ol, ul { list-style: none; }
+  audio, canvas, embed, iframe, img, object, svg, video {
+    display: block;
+    vertical-align: middle;
+  }
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+  ::file-selector-button, button, input, optgroup, select, textarea {
+    font: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    border-radius: 0;
+    background-color: transparent;
+    opacity: 1;
+  }
+  :where(select:is([multiple],[size])) optgroup { font-weight: bolder; }
+  :where(select:is([multiple],[size])) optgroup option { padding-inline-start: 20px; }
+  ::file-selector-button { margin-inline-end: 4px; }
+  ::placeholder {
+    opacity: 1;
+    color: color-mix(in oklab, currentColor 50%, transparent);
+  }
+  textarea { resize: vertical; }
+  ::-webkit-search-decoration { -webkit-appearance: none; }
+  ::-webkit-date-and-time-value {
+    min-height: 1lh;
+    text-align: inherit;
+  }
+  ::-webkit-datetime-edit { display: inline-flex; }
+  ::-webkit-datetime-edit-fields-wrapper { padding: 0; }
+  ::-webkit-datetime-edit, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-meridiem-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-year-field {
+    padding-block: 0;
+  }
+  :-moz-ui-invalid { box-shadow: none; }
+  ::file-selector-button, button, input:where([type=button],[type=reset],[type=submit]) { appearance: button; }
+  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button { height: auto; }
+  [hidden]:where(:not([hidden=until-found])) { display: none !important; }
+  .border-4, .border-\[1px\] { border-style: var(--tw-border-style); }
+}
+
+/* Utilities Layer: Các tiện ích Tailwind */
+@layer utilities {
+  .absolute { position: absolute; }
+  .relative { position: relative; }
+  .-top-2 { top: calc(var(--spacing) * -2); }
+  .-top-\[40px\] { top: calc(40px * -1); }
+  .-top-\[50px\] { top: calc(50px * -1); }
+  .-top-\[178px\] { top: calc(178px * -1); }
+  .top-\[50px\] { top: 50px; }
+  .top-\[51px\] { top: 51px; }
+  .-right-\[35px\] { right: calc(35px * -1); }
+  .-right-\[203px\] { right: calc(203px * -1); }
+  .right-0 { right: calc(var(--spacing) * 0); }
+  .right-\[26px\] { right: 26px; }
+  .right-\[50\%\] { right: 50%; }
+  .-bottom-\[35px\] { bottom: calc(35px * -1); }
+  .-bottom-\[40px\] { bottom: calc(40px * -1); }
+  .-bottom-\[174px\] { bottom: calc(174px * -1); }
+  .bottom-\[51px\] { bottom: 51px; }
+  .-left-\[35px\] { left: calc(35px * -1); }
+  .-left-\[66px\] { left: calc(66px * -1); }
+  .-left-\[166px\] { left: calc(166px * -1); }
+  .-left-\[180px\] { left: calc(180px * -1); }
+  .left-1\/2 { left: calc(1/2 * 100%); }
+  .left-\[26px\] { left: 26px; }
+  .left-\[33px\] { left: 33px; }
+  .container { width: 100%; }
+  .my-5 { margin-block: calc(var(--spacing) * 5); }
+  .-mt-\[3px\] { margin-top: calc(3px * -1); }
+  .mt-1 { margin-top: calc(var(--spacing) * 1); }
+  .mt-3 { margin-top: calc(var(--spacing) * 3); }
+  .mt-5 { margin-top: calc(var(--spacing) * 5); }
+  .mt-\[17px\] { margin-top: 17px; }
+  .mr-1 { margin-right: calc(var(--spacing) * 1); }
+  .mb-1 { margin-bottom: calc(var(--spacing) * 1); }
+  .-ml-\[3px\] { margin-left: calc(3px * -1); }
+  .-ml-\[5px\] { margin-left: calc(5px * -1); }
+  .ml-1 { margin-left: calc(var(--spacing) * 1); }
+  .ml-5 { margin-left: calc(var(--spacing) * 5); }
+  .ml-\[15px\] { margin-left: 15px; }
+  .flex { display: flex; }
+  .grid { display: grid; }
+  .h-0 { height: calc(var(--spacing) * 0); }
+  .h-2 { height: calc(var(--spacing) * 2); }
+  .h-20 { height: calc(var(--spacing) * 20); }
+  .h-\[2px\] { height: 2px; }
+  .h-\[30px\] { height: 30px; }
+  .h-\[35px\] { height: 35px; }
+  .h-\[40px\] { height: 40px; }
+  .h-\[100px\] { height: 100px; }
+  .h-\[200px\] { height: 200px; }
+  .h-\[500px\] { height: 500px; }
+  .w-1\/2 { width: calc(1/2 * 100%); }
+  .w-4 { width: calc(var(--spacing) * 4); }
+  .w-12 { width: calc(var(--spacing) * 12); }
+  .w-\[40\%\] { width: 40%; }
+  .w-\[70px\] { width: 70px; }
+  .w-\[200px\] { width: 200px; }
+  .w-\[20px\] { width: 20px; }
+  .w-\[2px\] { width: 2px; }
+  .w-\[35px\] { width: 35px; }
+  .w-\[80px\] { width: 80px; }
+  .w-\[400px\] { width: 400px; }
+  .w-full { width: 100%; }
+  .-translate-x-1\/2 { --tw-translate-x: calc(calc(1/2 * 100%) * -1); translate: var(--tw-translate-x) var(--tw-translate-y); }
+  .transform { transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-rotate-z) var(--tw-skew-x) var(--tw-skew-y); }
+  .flex-col { flex-direction: column; }
+  .place-items-center { place-items: center; }
+  .content-center { align-content: center; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .justify-center { justify-content: center; }
+  .justify-end { justify-content: flex-end; }
+  .gap-1 { gap: calc(var(--spacing) * 1); }
+  .gap-2 { gap: calc(var(--spacing) * 2); }
+  .gap-6 { gap: calc(var(--spacing) * 6); }
+  .rounded-lg { border-radius: var(--radius-lg); }
+  .rounded-sm { border-radius: var(--radius-sm); }
+  .rounded-br-md { border-bottom-right-radius: var(--radius-md); }
+  .rounded-bl-md { border-bottom-left-radius: var(--radius-md); }
+  .border-4 { border-width: 4px; }
+  .border-\[1px\] { border-width: 1px; }
+  .border-r-2 { border-right-style: var(--tw-border-style); border-right-width: 2px; }
+  .border-b-2 { border-bottom-style: var(--tw-border-style); border-bottom-width: 2px; }
+  .border-l-2 { border-left-style: var(--tw-border-style); border-left-width: 2px; }
+  .border-\[\#008ae0\] { border-color: #008ae0; }
+  .border-\[\#057a1c\] { border-color: #057a1c; }
+  .border-\[\#c70000\] { border-color: #c70000; }
+  .border-\[\#ff7b00\] { border-color: #ff7b00; }
+  .bg-\[\#008ae0\] { background-color: #008ae0; }
+  .bg-\[\#057a1c\] { background-color: #057a1c; }
+  .bg-\[\#c70000\] { background-color: #c70000; }
+  .bg-\[\#ff7b00\] { background-color: #ff7b00; }
+  .bg-amber-950 { background-color: var(--color-amber-950); }
+  .px-2 { padding-inline: calc(var(--spacing) * 2); }
+  .px-4 { padding-inline: calc(var(--spacing) * 4); }
+  .py-1 { padding-block: calc(var(--spacing) * 1); }
+  .text-center { text-align: center; }
+  .text-left { text-align: left; }
+  .text-right { text-align: right; }
+  .text-xl { font-size: var(--text-xl); line-height: var(--tw-leading, var(--text-xl--line-height)); }
+  .text-\[9px\] { font-size: 9px; }
+  .font-bold { --tw-font-weight: var(--font-weight-bold); font-weight: var(--font-weight-bold); }
+  .transition-all { transition-property: all; transition-timing-function: var(--tw-ease, var(--default-transition-timing-function)); transition-duration: var(--tw-duration, var(--default-transition-duration)); }
+  .duration-500 { --tw-duration: 500ms; transition-duration: .5s; }
+  .ease-in-out { --tw-ease: var(--ease-in-out); transition-timing-function: var(--ease-in-out); }
+  to { opacity: .5; }
+  .solar-color { color: #057a1c; }
+  .grid-color { color: #c70000; }
+  .home-color { color: #ff7b00; }
+  .battery-color { color: #008ae0; }
+
+  /* Custom Styles */
+  * { font-family: Roboto, Noto, sans-serif; }
+  :root { --speed: 4s; }
+
+  /* Animations */
+  @keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .2; }
+  }
+  @keyframes move-right {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(35px); }
+  }
+  @keyframes move-left {
+    0% { transform: translateX(35px); }
+    100% { transform: translateX(0); }
+  }
+  @keyframes move-down {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(35px); }
+  }
+  @keyframes move-up {
+    0% { transform: translateY(35px); }
+    100% { transform: translateY(0); }
+  }
+  @keyframes move-diagonal-1 {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(0, 30px); }
+    100% { transform: translate(20px, 30px); }
+  }
+  @keyframes move-diagonal-2 {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(0, 30px); }
+    100% { transform: translate(-20px, 30px); }
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+  @keyframes pulse { 50% { opacity: .5; } }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+    50% { transform: none; animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+  }
+	#weather-containerTT {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+    background: #e1ebdf; /* Nền trắng */
+    border: 1px solid #000000; /* Viền đen */
+    border-radius: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin: 0 auto; /* Căn giữa */
+    margin-top: 10px;
+}
+
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        z-index: 9999;
+        display: none; /* Ẩn ban đầu, hiển thị sau khi đếm ngược xong */
+    }
+	
+.leftTT, .rightTT {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; 
+}
+
+.weather-item { 
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 5px; 
+}
+
+.iconTT, #weather-icon {
+    width: 24px; /* Đảm bảo kích thước đồng nhất */
+    height: 24px;
+    vertical-align: middle; /* Giữ thẳng hàng với text */
+}
+
+	
+  .dot, .dot2, .dot3 {
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    animation-duration: var(--speed);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .dot { position: absolute; }
+  .move-right { animation-name: move-right; }
+  .move-left { animation-name: move-left; }
+  .move-down { animation-name: move-down; }
+  .move-up { animation-name: move-up; }
+  .dot2 { animation-name: move-diagonal-1; }
+  .dot3 { animation-name: move-diagonal-2; }
+
+  /* Media Queries */
+  @media (max-width: 600px) {
+    .container { width: 100%; }
+  }
+
+  /* Custom Properties */
+  @property --tw-translate-x { syntax: "*"; inherits: false; initial-value: 0; }
+  @property --tw-translate-y { syntax: "*"; inherits: false; initial-value: 0; }
+  @property --tw-translate-z { syntax: "*"; inherits: false; initial-value: 0; }
+  @property --tw-rotate-x { syntax: "*"; inherits: false; initial-value: rotateX(0); }
+  @property --tw-rotate-y { syntax: "*"; inherits: false; initial-value: rotateY(0); }
+  @property --tw-rotate-z { syntax: "*"; inherits: false; initial-value: rotateZ(0); }
+  @property --tw-skew-x { syntax: "*"; inherits: false; initial-value: skewX(0); }
+  @property --tw-skew-y { syntax: "*"; inherits: false; initial-value: skewY(0); }
+  @property --tw-border-style { syntax: "*"; inherits: false; initial-value: solid; }
+  @property --tw-font-weight { syntax: "*"; inherits: false; }
+  @property --tw-duration { syntax: "*"; inherits: false; }
+  @property --tw-ease { syntax: "*"; inherits: false; }
+}
+</style>
