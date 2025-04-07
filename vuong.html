@@ -129,7 +129,7 @@
 </script>
 
     <script>
-        var firebaseConfig = {
+       var firebaseConfig = {
         apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
         authDomain: "congtodien-3ab2b.firebaseapp.com",
         databaseURL: "https://congtodien-3ab2b-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -159,7 +159,7 @@
 			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
 			document.getElementById("CongSuatTongTai").innerText =  data.CongSuatTongTai + "W";
 			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
-			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kWh";
+			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
 			document.getElementById("CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
 			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
@@ -175,7 +175,8 @@
 			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
 			document.getElementById("Ver").innerText = data.Ver;
-			
+			document.getElementById("pf").innerText = data.pf;
+			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat;
 			updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -199,20 +200,19 @@
                 document.getElementById("n-load").classList.add("dot");
             }
 
-            
+            const CongSuatTongTaiUI = data.CongSuatTongTai;
+			const CongSuatHoaLuoiUI = data.CongSuatHoaLuoi;
             var gridI = document.getElementById("n-grid");
-			var calculatedG = (data.CongSuatTongTai - data.CongSuatHoaLuoi);
+			var calculatedG = (CongSuatTongTaiUI - CongSuatHoaLuoiUI);
 
-			if (calculatedG < 0) {
-				gridI.classList.remove("move-right");
-				gridI.classList.add("dot");
-				gridI.classList.add("move-left");
+			 if (calculatedG < 0) {
+				gridI.classList.remove("move-right", "move-left");
+				gridI.classList.add("dot", "move-left");
 			} else if (calculatedG > 0) {
-				gridI.classList.remove("move-left");
-				gridI.classList.add("dot");
-				gridI.classList.add("move-right");
+				gridI.classList.remove("move-left", "move-right");
+				gridI.classList.add("dot", "move-right");
 			} else {
-				gridI.classList.remove("dot");
+				gridI.classList.remove("dot", "move-left", "move-right");
 			}
 
         }
@@ -360,11 +360,11 @@
           </div>
         </div>
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
-          <p class="text-left text-[9px]">Điện Áp ~</p>
+          <p class="text-left text-[9px]">Điện Áp</p>
 		  <p class="text-left font-bold" id="DienAp">- V</p>
-          <p class="text-left text-[9px]">Cao Nhất Hôm Nay ~</p>
+          <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
 		  <p class="text-left font-bold" id="DienApCaoNhat">- V</p>
-          <p class="text-left text-[9px]">Thấp Nhất Hôm Nay ~</p>
+          <p class="text-left text-[9px]">Thấp Nhất Hôm Nay</p>
 		  <p class="text-left font-bold" id="DienApThapNhat">- V</p>
           <div class="relative flex items-center justify-between">
             <svg id="transmission_on" x="-0.5" y="187.5" width="64.5" height="64.5" viewBox="0 0 24 24">
@@ -379,19 +379,21 @@
           <p class="text-left text-[9px]">Tần Số</p>
 		  <p class="text-left font-bold" id="TanSo">- Hz</p>
         </div>
-        <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
+        <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px]  items-center justify-between" >
           <div>
 		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay" class="flash">- W</span></p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay">- W</span></p>
 		  <p class="text-left text-[9px]">Tổng Đang Dùng</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTai" class="flash">- W</span></p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTai">- W</span></p>
 		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTaiCaoNhat" class="flash">- W</span></p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTaiCaoNhat">- W</span></p>
           </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
-            <p class="text-[9px]">💡 Công Suất Cần Đốt</p>
-            <p class="solar-color home-color rounded-sm border-[1px] border-[#ff7b00] px-2 py-1 text-center font-bold "><span id="CongSuatCanDot" class="flash">- W</span></p>
-            <div class="relative my-5 flex items-center justify-between">
+		  <p class="text-left text-[9px]">💡 Công Suất Cần Đốt</p>
+		  <p class="text-left font-bold" id="CongSuatCanDot">- W</p>
+		  <p class="text-left text-[9px]">💡💡 Cần Đốt Cao Nhất</p>
+		  <p class="text-left font-bold" id="CongSuatCanDotCaoNhat">- W</p>
+			<div class="relative my-4 flex items-center justify-between">
               <svg id="essen" viewBox="0 0 24 24" x="402" y="177.5" width="79" height="79">
                 <defs>
                   <linearGradient x1="0%" x2="0%" y1="100%" y2="0%" id="Lg-1739720801079">
@@ -406,11 +408,11 @@
                 <path fill="#ff7b00" d="m15 13l-4 4v-3H2v-2h9V9l4 4M5 20v-4h2v2h10v-7.81l-5-4.5L7.21 10H4.22L12 3l10 9h-3v8H5Z"></path>
               </svg>
             </div>
-            <p class="solar-color home-color rounded-sm border-[1px] border-[#ff7b00] px-2 py-1 text-center font-bold" id="CongSuatNhaDung">.</p>
-            <p class="text-[9px]">Công Suất Nhà Dùng</p>
-  
-            <div class="absolute top-[51px] right-[50%] h-[30px] w-[2px] bg-[#ff7b00]"></div>
-            <div class="absolute right-[50%] bottom-[51px] h-[30px] w-[2px] bg-[#ff7b00]"></div>
+			<p class="text-left text-[9px]">Công Suất Nhà Dùng</p>
+		  <p class="text-left font-bold" id="CongSuatNhaDung">- W</p>
+		  <p class="text-left text-[9px]">Hệ Số Công Suất</p>
+		  <p class="text-left font-bold" id="pf"></p>
+			
           </div>
         </div>
   
