@@ -66,7 +66,8 @@
       if (text.trim() === "<trống>") {
         // Nếu không có thông báo → lấy IP từ Firebase
         const db = firebase.database();
-        const snapshot = await db.ref("ip").once("value");
+        const snapshot = await db.ref("esp8266/ip").once("value");
+
         const ip = snapshot.val() || "Không xác định";
 
         notificationDiv.innerText = `IP nội bộ: ${ip}`;
