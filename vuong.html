@@ -127,6 +127,29 @@
 
     fetchNotification();
 </script>
+<script>
+  const thongTin = [
+    { tieuDe: "Hòa Lưới Hôm Nay", id: "HoaLuoiHomNay" },
+    { tieuDe: "Cao Nhất Tháng Này", id: "CaoNhatThangNay" },
+    { tieuDe: "Cao Nhất Từng Ghi Nhận", id: "NgayHoaLuoiCaoNhat" },
+  ];
+
+  let index = 0;
+
+  setInterval(() => {
+    const item = thongTin[index];
+    const tieuDe = document.getElementById("tieuDeThongTin");
+    const giaTri = document.getElementById("giaTriThongTin");
+    const dataElement = document.getElementById(item.id);
+
+    if (tieuDe && giaTri && dataElement) {
+      tieuDe.innerText = item.tieuDe;
+      giaTri.innerText = dataElement.innerText;
+    }
+
+    index = (index + 1) % thongTin.length;
+  }, 4000);
+</script>
 
     <script>
        var firebaseConfig = {
@@ -177,6 +200,8 @@
 			document.getElementById("Ver").innerText = data.Ver;
 			document.getElementById("pf").innerText = data.pf;
 			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat;
+			document.getElementById("NgayHoaLuoiCaoNhat").innerText = data.NgayHoaLuoiCaoNhat;
+			document.getElementById("CaoNhatThangNay").innerText = data.CaoNhatThangNay;
 			updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -335,30 +360,16 @@
               </div>
             </div>
           </div>
-          
-            <div>
-			<p class="solar-color text-[9px] text-center">Hòa Lưới Hôm Nay</p>
-			<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiHomNay"</p>
+            <div id="ThongTinLuoi">
+				<p id="tieuDeThongTin" class="solar-color text-[9px] text-center">Hòa Lưới Hôm Nay</p>
+				<p id="giaTriThongTin" class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold">0</p>
 			</div>
-          
+				<p id="HoaLuoiHomNay" style="display:none">5.2 kWh</p>
+				<p id="CaoNhatThangNay" style="display:none">8.4 kWh</p>
+				<p id="NgayHoaLuoiCaoNhat" style="display:none">10.8 kWh</p>
+
         </div>
-        <div class="battery-color absolute -bottom-[174px] -left-[166px] flex w-[400px] flex-col items-center">
-          <div class="mt-5 flex justify-center">
-            <div>
-              <p id="b-vol" class="font-bold"></p>
-              <p class="mb-1 text-[9px]"></p>
-              <p id="b-cur" class="font-bold"></p>
-              <p class="text-[9px]"></p>
-            </div>
-            
-            <div class="ml-5">
-              <p id="b-soc" class="font-bold"></p>
-              <p class="mb-1 text-[9px]"></p>
-              <p id="b-temp" class="font-bold"></p>
-              <p class="text-[9px]"></p>
-            </div>
-          </div>
-        </div>
+
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
           <p class="text-left text-[9px]">Điện Áp</p>
 		  <p class="text-left font-bold" id="DienAp">- V</p>
@@ -736,10 +747,10 @@
     align-items: center;
     max-width: 600px;
     width: 100%;
-    padding: 20px;
+    padding: 5px;
     background: #e1ebdf; /* Nền trắng */
     border: 1px solid #000000; /* Viền đen */
-    border-radius: 30px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin: 0 auto; /* Căn giữa */
     margin-top: 10px;
