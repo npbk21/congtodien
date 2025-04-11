@@ -206,7 +206,7 @@
 			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
 			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
 			let value = data.CongSuatTongTai - data.CongSuatCanDot;
-			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating..." : value + "W";
+			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating.." : value + "W";
 			document.getElementById("DienAp").innerText = data.DienAp + "V";
 			document.getElementById("DienApCaoNhat").innerText = data.DienApCaoNhat + "V";
 			document.getElementById("DienApThapNhat").innerText = data.DienApThapNhat + "V";
@@ -217,8 +217,8 @@
 			document.getElementById("userId").innerText = data.userId;
 			document.getElementById("Ver").innerText = data.Ver;
 			document.getElementById("pf").innerText = data.pf;
-			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "w";
-			document.getElementById("NgayHoaLuoiCaoNhat").innerText = data.NgayHoaLuoiCaoNhat;
+			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
+			document.getElementById("NgayHoaLuoiCaoNhat").innerText = data.NgayHoaLuoiCaoNhat + "kWh";
 			document.getElementById("CaoNhatThangNay").innerText = data.CaoNhatThangNay + "kWh";
 			document.getElementById("HoaLuoiThangNay").innerText = data.HoaLuoiThangNay + "kWh";
 			document.getElementById("HoaLuoiThangTruoc").innerText = data.HoaLuoiThangTruoc + "kWh";
