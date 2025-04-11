@@ -120,8 +120,8 @@
   const thongTinNgay = [
     { tieuDe: "Hòa Lưới Hôm Nay", id: "HoaLuoiHomNay" },
 	{ tieuDe: "Hòa Lưới Hôm Qua", id: "HoaLuoiHomQua" },
+	{ tieuDe: "Ngày HL Cao Nhất", id: "NgayHoaLuoiCaoNhat" },
     { tieuDe: "Cao Nhất Tháng Này", id: "CaoNhatThangNay" },
-    { tieuDe: "Ngày HL Cao Nhất", id: "NgayHoaLuoiCaoNhat" },
   ];
 
   let indexNgay = 0;
@@ -144,7 +144,7 @@
 <script>
   const thongTinThang = [
     { tieuDe: "Hòa Lưới Tháng Này", id: "HoaLuoiThangNay" },
-	{ tieuDe: "Hòa Lưới Tháng Trước", id: "HoaLuoiThangTruoc" },
+	{ tieuDe: "Hòa Lưới ThángTrước", id: "HoaLuoiThangTruoc" },
     { tieuDe: "Tháng HL Cao Nhất", id: "HoaLuoiThangCaoNhat" },
     { tieuDe: "Tổng Hòa Lưới", id: "TongHoaLuoi" },
   ];
@@ -168,7 +168,7 @@
 
 
     <script>
-              var firebaseConfig = {
+       var firebaseConfig = {
         apiKey: "AIzaSyCNrATohxVSGXWu04M9NmjkyJBvAE_ArEI",
         authDomain: "congtodien-3ab2b.firebaseapp.com",
         databaseURL: "https://congtodien-3ab2b-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -196,7 +196,7 @@
 		
 			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
 			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
-			document.getElementById("CongSuatNhaDung").innerText =  data.CongSuatNhaDung + "W";
+			document.getElementById("CongSuatTongNhaDung").innerText =  data.CongSuatNhaDung + "W";
 			document.getElementById("CongSuatNhaDungCaoNhat").innerText =  data.CongSuatNhaDungCaoNhat + "W";
 			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("HoaLuoiHomQua").innerText =  data.HoaLuoiHomQua + "kW";
@@ -424,7 +424,7 @@
 		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
 		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay">- W</span></p>
 		  <p class="text-left text-[9px]">Tổng Đang Dùng</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatNhaDung">- W</span></p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongNhaDung">- W</span></p>
 		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
           <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatNhaDungCaoNhat">- W</span></p>
           </div>
