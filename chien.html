@@ -27,57 +27,7 @@
                 const icon = data.weather[0].icon;
                 const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
-                document.getElementById("location").innerText = locationName;
-                document.getElementById("temperature").innerText = `${temp}°C`;
-                document.getElementById("humidity").innerText = `${humidity}%`;
-                document.getElementById("windSpeed").innerText = `${windSpeed} m/s`;
-
-                const weatherIcon = document.getElementById("weather-icon");
-                weatherIcon.src = iconUrl;
-                weatherIcon.style.display = "inline-block";
-            })
-            .catch(error => {
-                document.getElementById("temperature").innerText = "Không thể lấy dữ liệu.";
-                console.error("Lỗi lấy thời tiết:", error);
-            });
-    }
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            position => getWeather(position.coords.latitude, position.coords.longitude),
-            error => document.getElementById("temperature").innerText = "Không thể xác định vị trí."
-        );
-    } else {
-        document.getElementById("temperature").innerText = "Trình duyệt không hỗ trợ định vị.";
-    } // https://s.shopee.vn/8fE6IihU7o
-</script> 
-<script>
-    async function fetchNotification() {
-        const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error("Lỗi khi tải thông báo");
-
-            const text = await response.text().trim();
-            const notificationDiv = document.getElementById("notification");
-
-            if (text === "<trống>") {
-                notificationDiv.innerText = "Quảng cáo sau 60 giây...";
-            } else {
-                notificationDiv.innerText = text;
-            }
-
-            startCountdown(text === "<trống>");
-
-        } catch (error) {
-            console.error("Lỗi:", error);
-            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 20 giây...";
-            startCountdown(true);
-        }
-    }
-
-    function startCountdown(isEmpty) {
-        let timeLeft = 20;
+60;
         const notificationDiv = document.getElementById("notification");
 
         let countdownTimer = setInterval(function() {
