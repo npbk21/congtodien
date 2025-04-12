@@ -120,8 +120,8 @@
   const thongTinNgay = [
     { tieuDe: "Hòa Lưới Hôm Nay", id: "HoaLuoiHomNay" },
 	{ tieuDe: "Hòa Lưới Hôm Qua", id: "HoaLuoiHomQua" },
+	{ tieuDe: "Ngày HL Cao Nhất", id: "NgayHoaLuoiCaoNhat" },
     { tieuDe: "Cao Nhất Tháng Này", id: "CaoNhatThangNay" },
-    { tieuDe: "Ngày Cao Nhất", id: "NgayHoaLuoiCaoNhat" },
   ];
 
   let indexNgay = 0;
@@ -144,8 +144,8 @@
 <script>
   const thongTinThang = [
     { tieuDe: "Hòa Lưới Tháng Này", id: "HoaLuoiThangNay" },
-	{ tieuDe: "Hòa Lưới Tháng Trước", id: "HoaLuoiThangTruoc" },
-    { tieuDe: "Tháng Cao Nhất", id: "HoaLuoiThangCaoNhat" },
+	{ tieuDe: "Hòa Lưới ThángTrước", id: "HoaLuoiThangTruoc" },
+    { tieuDe: "Tháng HL Cao Nhất", id: "HoaLuoiThangCaoNhat" },
     { tieuDe: "Tổng Hòa Lưới", id: "TongHoaLuoi" },
   ];
 
@@ -196,28 +196,28 @@
 		
 			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
 			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
-			document.getElementById("CongSuatTongTai").innerText =  data.CongSuatTongTai + "W";
-			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
+			document.getElementById("CongSuatTongNhaDung").innerText =  data.CongSuatNhaDung + "W";
+			document.getElementById("CongSuatNhaDungCaoNhat").innerText =  data.CongSuatNhaDungCaoNhat + "W";
 			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("HoaLuoiHomQua").innerText =  data.HoaLuoiHomQua + "kW";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
 			document.getElementById("CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
 			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
-			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
-			let value = data.CongSuatTongTai - data.CongSuatCanDot;
-			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating..." : value + "W";
+			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatNhaDung - data.CongSuatHoaLuoi + "W";
+			let value = data.CongSuatNhaDung - data.CongSuatCanDot;
+			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating.." : value + "W";
 			document.getElementById("DienAp").innerText = data.DienAp + "V";
 			document.getElementById("DienApCaoNhat").innerText = data.DienApCaoNhat + "V";
 			document.getElementById("DienApThapNhat").innerText = data.DienApThapNhat + "V";
 			document.getElementById("DongDien").innerText = data.DongDien + "A";
 			document.getElementById("DongDienCaoNhat").innerText = data.DongDienCaoNhat + "A";
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
-			document.getElementById("TongHoaLuoi").innerText = data.energyHoaLuoi + "kWh";
+			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
 			document.getElementById("Ver").innerText = data.Ver;
 			document.getElementById("pf").innerText = data.pf;
-			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat;
-			document.getElementById("NgayHoaLuoiCaoNhat").innerText = data.NgayHoaLuoiCaoNhat;
+			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
+			document.getElementById("NgayHoaLuoiCaoNhat").innerText = data.NgayHoaLuoiCaoNhat + "kWh";
 			document.getElementById("CaoNhatThangNay").innerText = data.CaoNhatThangNay + "kWh";
 			document.getElementById("HoaLuoiThangNay").innerText = data.HoaLuoiThangNay + "kWh";
 			document.getElementById("HoaLuoiThangTruoc").innerText = data.HoaLuoiThangTruoc + "kWh";
@@ -246,10 +246,10 @@
                 document.getElementById("n-load").classList.add("dot");
             }
 
-            const CongSuatTongTaiUI = data.CongSuatTongTai;
+            const CongSuatNhaDungUI = data.CongSuatNhaDung;
 			const CongSuatHoaLuoiUI = data.CongSuatHoaLuoi;
             var gridI = document.getElementById("n-grid");
-			var calculatedG = (CongSuatTongTaiUI - CongSuatHoaLuoiUI);
+			var calculatedG = (CongSuatNhaDungUI - CongSuatHoaLuoiUI);
 
 			 if (calculatedG < 0) {
 				gridI.classList.remove("move-right", "move-left");
@@ -310,8 +310,7 @@
 	</div>
 	<div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/server.png">
-
-		<div id="notification">Quảng cáo sau 60 giây</div>
+<div id="notification">Quảng cáo sau 60 giây</div>
 	</div>
 	<div id="overlay"></div>
 </div>
@@ -425,9 +424,9 @@
 		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
 		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay">- W</span></p>
 		  <p class="text-left text-[9px]">Tổng Đang Dùng</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTai">- W</span></p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongNhaDung">- W</span></p>
 		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTaiCaoNhat">- W</span></p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatNhaDungCaoNhat">- W</span></p>
           </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
 		  <p class="text-left text-[9px]">💡Công Suất Cần Đốt</p>
