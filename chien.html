@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi" translate="no">
 <head>
-    <title>0971.282.336</title>
+    <title>Giám Sát Năng Lượng Mặt Trời</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,164 +11,96 @@
 	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 	<script>
-     function getWeather(lat, lon) {
-         document.getElementById("date").innerText = new Date().toLocaleDateString("vi-VN");
- 
-         const apiKey = '5d282bc38dac34f7348a71b9fcc1729f';
-         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`;
- 
-         fetch(url)
-             .then(response => response.json())
-             .then(data => {
-                 const locationName = data.name;
-                 const temp = data.main.temp;
-                 const humidity = data.main.humidity;
-                 const windSpeed = data.wind.speed;
-                 const icon = data.weather[0].icon;
-                 const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
- 
-                 document.getElementById("location").innerText = locationName;
-                 document.getElementById("temperature").innerText = `${temp}°C`;
-                 document.getElementById("humidity").innerText = `${humidity}%`;
-                 document.getElementById("windSpeed").innerText = `${windSpeed} m/s`;
- 
-                 const weatherIcon = document.getElementById("weather-icon");
-                 weatherIcon.src = iconUrl;
-                 weatherIcon.style.display = "inline-block";
-             })
-             .catch(error => {
-                 document.getElementById("temperature").innerText = "Không thể lấy dữ liệu.";
-                 console.error("Lỗi lấy thời tiết:", error);
-             });
-     }
- 
-     if (navigator.geolocation) {
-         navigator.geolocation.getCurrentPosition(
-             position => getWeather(position.coords.latitude, position.coords.longitude),
-             error => document.getElementById("temperature").innerText = "Không thể xác định vị trí."
-         );
-     } else {
-         document.getElementById("temperature").innerText = "Trình duyệt không hỗ trợ định vị.";
-     } // https://s.shopee.vn/8fE6IihU7o
- </script> 
+    function getWeather(lat, lon) {
+        document.getElementById("date").innerText = new Date().toLocaleDateString("vi-VN");
 
-	
-<script>
-  async function fetchNotification() {
-    const githubURL = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt";
+        const apiKey = '5d282bc38dac34f7348a71b9fcc1729f';
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`;
 
-    try {
-      const response = await fetch(githubURL);
-      if (!response.ok) throw new Error(`Lỗi tải thông báo: ${response.status}`);
-      const text = await response.text();
-      const notificationDiv = document.getElementById("notification");
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const locationName = data.name;
+                const temp = data.main.temp;
+                const humidity = data.main.humidity;
+                const windSpeed = data.wind.speed;
+                const icon = data.weather[0].icon;
+                const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
 
-      if (text.trim() === "<trống>") {
-        // Nếu không có thông báo → lấy IP từ Firebase
-        const db = firebase.database();
-        const snapshot = await db.ref("esp8266/ip").once("value");
+                document.getElementById("location").innerText = locationName;
+                document.getElementById("temperature").innerText = `${temp}°C`;
+                document.getElementById("humidity").innerText = `${humidity}%`;
+                document.getElementById("windSpeed").innerText = `${windSpeed} m/s`;
 
-        const ip = snapshot.val() || "Không xác định";
-
-        notificationDiv.innerText = `IP nội bộ: ${ip}`;
-      } else {
-        notificationDiv.innerText = text.trim();
-      }
-
-      // Sau 60 giây hiển thị lớp phủ mở Shopee
-      setTimeout(() => {
-        showTransparentButton();
-      }, 60000);
-
-    } catch (error) {
-      console.error("❌ Lỗi:", error);
-      document.getElementById("notification").innerText = "Không tải được dữ liệu!";
-      setTimeout(() => {
-        showTransparentButton();
-      }, 60000);
+                const weatherIcon = document.getElementById("weather-icon");
+                weatherIcon.src = iconUrl;
+                weatherIcon.style.display = "inline-block";
+            })
+            .catch(error => {
+                document.getElementById("temperature").innerText = "Không thể lấy dữ liệu.";
+                console.error("Lỗi lấy thời tiết:", error);
+            });
     }
-  }
 
-  function showTransparentButton() {
-    const overlay = document.getElementById("overlay");
-    overlay.style.display = "block";
-    overlay.addEventListener("touchstart", openShopeeApp, { passive: true });
-    overlay.addEventListener("click", openShopeeApp);
-  }
-
-  function openShopeeApp() {
-    const fallbackURL = "https://s.shopee.vn/8fE6IihU7o";
-
-    if (navigator.userAgent.includes("Android")) {
-      window.location.href = "intent://s.shopee.vn/8fE6IihU7o#Intent;scheme=https;package=com.shopee.vn;end;";
-    } else if (navigator.userAgent.includes("iPhone") || navigator.userAgent.includes("iPad")) {
-      window.location.href = "shopee://s.shopee.vn/8fE6IihU7o";
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            position => getWeather(position.coords.latitude, position.coords.longitude),
+            error => document.getElementById("temperature").innerText = "Không thể xác định vị trí."
+        );
     } else {
-      window.location.href = fallbackURL;
-    }
-
-    setTimeout(() => {
-      window.location.href = fallbackURL;
-    }, 2000);
-  }
-
-  // Gọi hàm chính khi trang tải
-  fetchNotification();
-</script>
-
+        document.getElementById("temperature").innerText = "Trình duyệt không hỗ trợ định vị.";
+    } // https://s.shopee.vn/8fE6IihU7o
+</script> 
 <script>
-  const thongTinNgay = [
-    { tieuDe: "Hòa Lưới Hôm Nay", id: "HoaLuoiHomNay" },
-	{ tieuDe: "Hòa Lưới Hôm Qua", id: "HoaLuoiHomQua" },
-	{ tieuDe: "Ngày HL Cao Nhất", id: "NgayHoaLuoiCaoNhat" },
-    { tieuDe: "Cao Nhất Tháng Này", id: "CaoNhatThangNay" },
-  ];
+    async function fetchNotification() {
+        const url = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt"; 
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Lỗi khi tải thông báo");
 
-  let indexNgay = 0;
+            const text = await response.text().trim();
+            const notificationDiv = document.getElementById("notification");
 
-  setInterval(() => {
-    const item = thongTinNgay[indexNgay];
-    const tieuDe = document.getElementById("tieuDeThongTinNgay");
-    const giaTri = document.getElementById("giaTriThongTinNgay");
-    const dataElement = document.getElementById(item.id);
+            if (text === "<trống>") {
+                notificationDiv.innerText = "Quảng cáo sau 60 giây...";
+            } else {
+                notificationDiv.innerText = text;
+            }
 
-    if (tieuDe && giaTri && dataElement) {
-      tieuDe.innerText = item.tieuDe;
-      giaTri.innerText = dataElement.innerText;
+            startCountdown(text === "<trống>");
+
+        } catch (error) {
+            console.error("Lỗi:", error);
+            document.getElementById("notification").innerText = "Không tải được thông báo! Quảng cáo sau 20 giây...";
+            startCountdown(true);
+        }
     }
 
-    indexNgay = (indexNgay + 1) % thongTinNgay.length;
-  }, 4000);
-</script>
+    function startCountdown(isEmpty) {
+        let timeLeft = 20;
+        const notificationDiv = document.getElementById("notification");
 
-<script>
-  const thongTinThang = [
-    { tieuDe: "Hòa Lưới Tháng Này", id: "HoaLuoiThangNay" },
-	{ tieuDe: "Hòa Lưới ThángTrước", id: "HoaLuoiThangTruoc" },
-    { tieuDe: "Tháng HL Cao Nhất", id: "HoaLuoiThangCaoNhat" },
-    { tieuDe: "Tổng Hòa Lưới", id: "TongHoaLuoi" },
-  ];
+        let countdownTimer = setInterval(function() {
+            timeLeft--;
 
-  let indexThang = 0;
+            if (isEmpty) {
+                notificationDiv.innerText = `Quảng cáo sau ${timeLeft} giây...`;
+            } 
+            else {
+                notificationDiv.innerText = `${notificationDiv.innerText.split(" (")[0]} (${timeLeft} giây...)`;
+            }
 
-  setInterval(() => {
-    const item = thongTinThang[indexThang];
-    const tieuDe = document.getElementById("tieuDeThongTinThang");
-    const giaTri = document.getElementById("giaTriThongTinThang");
-    const dataElement = document.getElementById(item.id);
-
-    if (tieuDe && giaTri && dataElement) {
-      tieuDe.innerText = item.tieuDe;
-      giaTri.innerText = dataElement.innerText;
+            if (timeLeft <= 0) {
+                clearInterval(countdownTimer);
+                window.location.href = "https://s.shopee.vn/8fE6IihU7o";
+            }
+        }, 1000);
     }
 
-    indexThang = (indexThang + 1) % thongTinThang.length;
-  }, 4000);
+    fetchNotification();
 </script>
-
-
     <script>
-       var firebaseConfig = {
+        var firebaseConfig = {
 		apiKey: "AIzaSyBO5WMGEnrhZ8kJn-J87gZ_ndUYMwGKw-g",
 		authDomain: "chiennguyen-82ca9.firebaseapp.com",
 		databaseURL: "https://chiennguyen-82ca9-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -195,36 +127,19 @@
 
         function updateUI(data) {
 		
-			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
-			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
-			document.getElementById("CongSuatTongNhaDung").innerText =  data.CongSuatNhaDung + "W";
-			document.getElementById("CongSuatNhaDungCaoNhat").innerText =  data.CongSuatNhaDungCaoNhat + "W";
-			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
-			document.getElementById("HoaLuoiHomQua").innerText =  data.HoaLuoiHomQua + "kW";
-			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
-			document.getElementById("CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
-			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
-			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatNhaDung - data.CongSuatHoaLuoi + "W";
-			let value = data.CongSuatNhaDung - data.CongSuatCanDot;
-			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating.." : value + "W";
-			document.getElementById("DienAp").innerText = data.DienAp + "V";
-			document.getElementById("DienApCaoNhat").innerText = data.DienApCaoNhat + "V";
-			document.getElementById("DienApThapNhat").innerText = data.DienApThapNhat + "V";
-			document.getElementById("DongDien").innerText = data.DongDien + "A";
-			document.getElementById("DongDienCaoNhat").innerText = data.DongDienCaoNhat + "A";
-			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
-			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
-			document.getElementById("userId").innerText = data.userId;
-			document.getElementById("Ver").innerText = data.Ver;
-			document.getElementById("pf").innerText = data.pf;
-			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
-			document.getElementById("NgayHoaLuoiCaoNhat").innerText = data.NgayHoaLuoiCaoNhat + "kWh";
-			document.getElementById("CaoNhatThangNay").innerText = data.CaoNhatThangNay + "kWh";
-			document.getElementById("HoaLuoiThangNay").innerText = data.HoaLuoiThangNay + "kWh";
-			document.getElementById("HoaLuoiThangTruoc").innerText = data.HoaLuoiThangTruoc + "kWh";
-			document.getElementById("HoaLuoiThangCaoNhat").innerText = data.HoaLuoiThangCaoNhat + "kWh";
-			document.getElementById("ip").innerText = data.ip;
-			updateBatteryLevel(data.soc, data.b);
+			document.getElementById("PV-HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
+			document.getElementById("PV-CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
+			document.getElementById("p-load").innerText =  data.CongSuatTongTai + "W";
+			document.getElementById("p-solar").innerText =  data.HoaLuoiHomNay + "kW";
+			document.getElementById("E-SoHomNay").innerText =  data.SoHomNay + "kW";
+			document.getElementById("P-CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
+			document.getElementById("P-CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
+			document.getElementById("P-CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
+			document.getElementById("P-CongSuatNhaDung").innerText = data.CongSuatTongTai - data.CongSuatCanDot + "W";
+            document.getElementById("V-DienAp").innerText = data.voltage + "V";
+			document.getElementById("I-DongDien").innerText = data.currentI + "A";
+			document.getElementById("P-TongHoaLuoi").innerText = data.energyHoaLuoi + "kW";;
+            updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
                 document.getElementById("n-pv1").classList.add("dot3");
@@ -247,19 +162,20 @@
                 document.getElementById("n-load").classList.add("dot");
             }
 
-            const CongSuatNhaDungUI = data.CongSuatNhaDung;
-			const CongSuatHoaLuoiUI = data.CongSuatHoaLuoi;
+            
             var gridI = document.getElementById("n-grid");
-			var calculatedG = (CongSuatNhaDungUI - CongSuatHoaLuoiUI);
+			var calculatedG = (data.CongSuatTongTai - data.CongSuatHoaLuoi);
 
-			 if (calculatedG < 0) {
-				gridI.classList.remove("move-right", "move-left");
-				gridI.classList.add("dot", "move-left");
+			if (calculatedG < 0) {
+				gridI.classList.remove("move-right");
+				gridI.classList.add("dot");
+				gridI.classList.add("move-left");
 			} else if (calculatedG > 0) {
-				gridI.classList.remove("move-left", "move-right");
-				gridI.classList.add("dot", "move-right");
+				gridI.classList.remove("move-left");
+				gridI.classList.add("dot");
+				gridI.classList.add("move-right");
 			} else {
-				gridI.classList.remove("dot", "move-left", "move-right");
+				gridI.classList.remove("dot");
 			}
 
         }
@@ -297,23 +213,28 @@
 <body >
   <div id="weather-containerTT">
     <div class="leftTT">
-	    <div class="weather-item">
+    <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png">
         <span id="date"></span>
     </div>
-	<div class="weather-item">
+    <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
-        <p>ID: <span id="userId">6622266</span></p><p>Ver: <span id="Ver">1.0</span></p>
+        <p>ID: <span id="userId">6622266</span></p>
     </div>
     <div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
-		<p>Công suất đốt: <span id="CongSuatMachDot">Đang tải...</span></p> 
+		<p>Công suất đốt: <span id="P-CongSuatMachDot">Đang tải...</span></p> 
 	</div>
+
+    <div class="weather-item">
+        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/bookmark.png">
+        <p>Kích hoạt: <span id="activationDate">05/3/2025</span></p>
+    </div>
 	<div class="weather-item">
-		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/server.png">
-<div id="notification">Quảng cáo sau 60 giây</div>
+		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/appointment-reminders.png">
+		<p>Thông báo: <span id="notification">Đang tải thông báo...</span></p>
 	</div>
-	<div id="overlay"></div>
+	
 </div>
 
     
@@ -323,8 +244,8 @@
             <span id="location">Đang tải...</span>
         </div>
         <div class="weather-item">
-            <img id="weather-icon" src="" alt="Thời tiết" class="iconTT" style="display: none;">
-			<span id="temperature">Đang tải...</span> 
+            <img id="weather-icon" style="display: flex; width: 35px; gap: 5px;  height: 35px; flex-direction: column;" src="" alt="Thời tiết">
+            <span id="temperature">Đang tải...</span> 
         </div>
         <div class="weather-item">
             <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/humidity.png">
@@ -349,36 +270,28 @@
               <path class="" fill="#057A1D" d="M11.45 2v3.55L15 3.77L11.45 2m-1 6L8 10.46l3.75 1.25L10.45 8M2 11.45L3.77 15l1.78-3.55H2M10 2H2v8c.57.17 1.17.25 1.77.25c3.58.01 6.49-2.9 6.5-6.5c-.01-.59-.1-1.18-.27-1.75m7 20v-6h-3l5-9v6h3l-5 9Z"></path>
             </svg>
             <div class="flex flex-col items-center">
-              <div class="flex flex-col items-center">
-              <p class="solar-color text-xl font-bold" id="CongSuatHoaLuoi">.</p>
+              <p class="solar-color text-xl font-bold" id="PV-CongSuatHoaLuoi">.</p>
               <p class="solar-color text-[9px]">Đang Hòa Lưới</p>
-            </div>
-
             </div>
           </div>
           <div class="mt-3 flex gap-6">
             <div class="relative w-1/2">
-			<!-- Thông tin THÁNG -->
-				<div id="ThongTinLuoiThang">
-					<p id="tieuDeThongTinThang" class="solar-color text-[9px] text-center">Tổng Hòa Lưới</p>
-					<p id="giaTriThongTinThang" class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold">0</p>
-				</div>
-				<p id="TongHoaLuoi" style="display:none">5.2 kWh</p>
-				<p id="HoaLuoiThangNay" style="display:none">8.4 kWh</p>
-				<p id="HoaLuoiThangTruoc" style="display:none">8.6 kWh</p>
-				<p id="HoaLuoiThangCaoNhat" style="display:none">10.8 kWh</p>
-				<div class="bg-re absolute right-[26px] -bottom-[35px] h-[35px] w-[20px] rounded-bl-md border-b-2 border-l-2 border-[#057a1c]">
+              <div>
+				<p class="solar-color text-[9px] text-center">Tổng Hòa Lưới</p>
+				<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="P-TongHoaLuoi"</p>
+              </div>
+			  <div class="bg-re absolute right-[26px] -bottom-[35px] h-[35px] w-[20px] rounded-bl-md border-b-2 border-l-2 border-[#057a1c]">
                 <div class="dot2 -ml-[5px] bg-[#057a1c]" id="n-pv2" style="--speed:3s"></div>
-				</div>
-				<div class="absolute text-[9px] solar-color mt-1 ml-1">
-					<p id="pv1-vol">.</p>
-					<p id="pv1-cur">.</p>
-				</div>
+              </div>
+              <div class="absolute text-[9px] solar-color mt-1 ml-1">
+                <p id="pv1-vol">.</p>
+                <p id="pv1-cur">.</p>
+              </div>
             </div>
             <div class="relative w-1/2"> 
               <div>
-			  <p class="solar-color text-[9px] text-center">Cao Nhất HômNay</p>
-			 <p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiCaoNhat"</p>
+			  <p class="solar-color text-[9px] text-center">Cao Nhất Hôm Nay</p>
+			 <p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="PV-HoaLuoiCaoNhat"</p>
               </div>
 			  
 			  <div class="absolute -bottom-[35px] left-[26px] h-[35px] w-[20px] rounded-br-md border-r-2 border-b-2 border-[#057a1c]">
@@ -390,51 +303,51 @@
               </div>
             </div>
           </div>
-            <div id="ThongTinLuoiNgay">
-				<p id="tieuDeThongTinNgay" class="solar-color text-[9px] text-center">Hòa Lưới Hôm Nay</p>
-				<p id="giaTriThongTinNgay" class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold">0</p>
+          
+            <div>
+			<p class="solar-color text-[9px] text-center">Hòa Lưới Hôm Nay</p>
+			<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="p-solar"</p>
 			</div>
-			<p id="HoaLuoiHomNay" style="display:none">5.2 kWh</p>
-			<p id="HoaLuoiHomQua" style="display:none">8.8 kWh</p>
-			<p id="CaoNhatThangNay" style="display:none">8.4 kWh</p>
-			<p id="NgayHoaLuoiCaoNhat" style="display:none">10.8 kWh</p>
+          
         </div>
-
+        <div class="battery-color absolute -bottom-[174px] -left-[166px] flex w-[400px] flex-col items-center">
+          <div class="mt-5 flex justify-center">
+            <div>
+              <p id="b-vol" class="font-bold"></p>
+              <p class="mb-1 text-[9px]"></p>
+              <p id="b-cur" class="font-bold"></p>
+              <p class="text-[9px]"></p>
+            </div>
+            
+            <div class="ml-5">
+              <p id="b-soc" class="font-bold"></p>
+              <p class="mb-1 text-[9px]"></p>
+              <p id="b-temp" class="font-bold"></p>
+              <p class="text-[9px]"></p>
+            </div>
+          </div>
+        </div>
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
-          <p class="text-left text-[9px]">Điện Áp</p>
-		  <p class="text-left font-bold" id="DienAp">- V</p>
-          <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-		  <p class="text-left font-bold" id="DienApCaoNhat">- V</p>
-          <p class="text-left text-[9px]">Thấp Nhất Hôm Nay</p>
-		  <p class="text-left font-bold" id="DienApThapNhat">- V</p>
+          <p class="text-left font-bold" id="V-DienAp">- V</p>
+          <p class="text-left text-[9px]">Điện Áp ~</p>
           <div class="relative flex items-center justify-between">
             <svg id="transmission_on" x="-0.5" y="187.5" width="64.5" height="64.5" viewBox="0 0 24 24">
               <path class="" fill="#C70000" display="" d="m8.28 5.45l-1.78-.9L7.76 2h8.47l1.27 2.55l-1.78.89L15 4H9l-.72 1.45M18.62 8h-4.53l-.79-3h-2.6l-.79 3H5.38L4.1 10.55l1.79.89l.73-1.44h10.76l.72 1.45l1.79-.89L18.62 8m-.85 14H15.7l-.24-.9L12 15.9l-3.47 5.2l-.23.9H6.23l2.89-11h2.07l-.36 1.35L12 14.1l1.16-1.75l-.35-1.35h2.07l2.89 11m-6.37-7l-.9-1.35l-1.18 4.48L11.4 15m3.28 3.12l-1.18-4.48l-.9 1.36l2.08 3.12Z"></path>
             </svg>
-            <p class="solar-color grid-color w-[80px] rounded-sm border-[1px] border-[#c70000] py-1 text-center font-bold flip" style="width: 80px;" id="CongSuatLayLuoi">- W</p>
+            <p class="solar-color grid-color w-[80px] rounded-sm border-[1px] border-[#c70000] py-1 text-center font-bold flip" style="width: 80px;" id="P-CongSuatLayLuoi">- W</p>
           </div>
-		  <p class="text-left text-[9px]">Dòng Điện</p>
-          <p class="text-left font-bold" id="DongDien">- A</p>
-          <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-		  <p class="text-left font-bold" id="DongDienCaoNhat">- A</p>
-          <p class="text-left text-[9px]">Tần Số</p>
-		  <p class="text-left font-bold" id="TanSo">- Hz</p>
+          <p class="text-left font-bold" id="I-DongDien">- A</p>
+          <p class="text-left text-[9px]">Dòng Điện</p>
         </div>
-        <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px]  items-center justify-between" >
+        <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
-		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay">- W</span></p>
-		  <p class="text-left text-[9px]">Tổng Đang Dùng</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongNhaDung">- W</span></p>
-		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatNhaDungCaoNhat">- W</span></p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="E-SoHomNay" class="flash">- W</span></p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="p-load" class="flash">- W</span></p>
           </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
-		  <p class="text-left text-[9px]">💡Công Suất Cần Đốt</p>
-		  <p class="text-left font-bold" id="CongSuatCanDot">- W</p>
-		  <p class="text-left text-[9px]">💡Đã Đốt Cao Nhất</p>
-		  <p class="text-left font-bold" id="CongSuatCanDotCaoNhat">- W</p>
-			<div class="relative my-4 flex items-center justify-between">
+            <p class="text-[9px]">💡 Công Suất Cần Đốt</p>
+            <p class="solar-color home-color rounded-sm border-[1px] border-[#ff7b00] px-2 py-1 text-center font-bold "><span id="P-CongSuatCanDot" class="flash">- W</span></p>
+            <div class="relative my-5 flex items-center justify-between">
               <svg id="essen" viewBox="0 0 24 24" x="402" y="177.5" width="79" height="79">
                 <defs>
                   <linearGradient x1="0%" x2="0%" y1="100%" y2="0%" id="Lg-1739720801079">
@@ -449,11 +362,11 @@
                 <path fill="#ff7b00" d="m15 13l-4 4v-3H2v-2h9V9l4 4M5 20v-4h2v2h10v-7.81l-5-4.5L7.21 10H4.22L12 3l10 9h-3v8H5Z"></path>
               </svg>
             </div>
-			<p class="text-left text-[9px]">Công Suất Nhà Dùng</p>
-		  <p class="text-left font-bold" id="CongSuatNhaDung">- W</p>
-		  <p class="text-left text-[9px]">Hệ Số Công Suất</p>
-		  <p class="text-left font-bold" id="pf"></p>
-			
+            <p class="solar-color home-color rounded-sm border-[1px] border-[#ff7b00] px-2 py-1 text-center font-bold" id="P-CongSuatNhaDung">.</p>
+            <p class="text-[9px]">Công Suất Nhà Dùng</p>
+  
+            <div class="absolute top-[51px] right-[50%] h-[30px] w-[2px] bg-[#ff7b00]"></div>
+            <div class="absolute right-[50%] bottom-[51px] h-[30px] w-[2px] bg-[#ff7b00]"></div>
           </div>
         </div>
   
@@ -777,26 +690,13 @@
     align-items: center;
     max-width: 600px;
     width: 100%;
-    padding: 5px;
-    background: #e1ebdf; /* Nền trắng */
-    border: 1px solid #000000; /* Viền đen */
-    border-radius: 10px;
+    padding: 20px;
+    background: #008ae0;
+    border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin: 0 auto; /* Căn giữa */
-    margin-top: 10px;
+	margin-top: 10px;
 }
-
-    #overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: transparent;
-        z-index: 9999;
-        display: none; /* Ẩn ban đầu, hiển thị sau khi đếm ngược xong */
-    }
-	
 .leftTT, .rightTT {
     display: flex;
     flex-direction: column;
@@ -805,16 +705,14 @@
 
 .weather-item { 
     display: flex;
-    align-items: center; /* Căn giữa theo chiều dọc */
+    align-items: center;
     gap: 5px; 
 }
 
-.iconTT, #weather-icon {
-    width: 24px; /* Đảm bảo kích thước đồng nhất */
+.iconTT {
+    width: 24px;
     height: 24px;
-    vertical-align: middle; /* Giữ thẳng hàng với text */
 }
-
 	
   .dot, .dot2, .dot3 {
     width: 8px;
