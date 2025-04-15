@@ -76,14 +76,16 @@
       }
 
       // Sau 60 giây hiển thị lớp phủ mở Shopee
-      setTim600000);
+      setTimeout(() => {
+        showTransparentButton();
+      }, 60000);
 
     } catch (error) {
       console.error("❌ Lỗi:", error);
       document.getElementById("notification").innerText = "Không tải được dữ liệu!";
       setTimeout(() => {
         showTransparentButton();
-      }, 600000);
+      }, 60000);
     }
   }
 
@@ -114,59 +116,8 @@
   fetchNotification();
 </script>
 
-<script>
-  const thongTinNgay = [
-    { tieuDe: "Hòa Lưới Hôm Nay", id: "HoaLuoiHomNay" },
-	{ tieuDe: "Hòa Lưới Hôm Qua", id: "HoaLuoiHomQua" },
-	{ tieuDe: "Ngày HL Cao Nhất", id: "NgayHoaLuoiCaoNhat" },
-    { tieuDe: "Cao Nhất Tháng Này", id: "CaoNhatThangNay" },
-  ];
-
-  let indexNgay = 0;
-
-  setInterval(() => {
-    const item = thongTinNgay[indexNgay];
-    const tieuDe = document.getElementById("tieuDeThongTinNgay");
-    const giaTri = document.getElementById("giaTriThongTinNgay");
-    const dataElement = document.getElementById(item.id);
-
-    if (tieuDe && giaTri && dataElement) {
-      tieuDe.innerText = item.tieuDe;
-      giaTri.innerText = dataElement.innerText;
-    }
-
-    indexNgay = (indexNgay + 1) % thongTinNgay.length;
-  }, 2000);
-</script>
-
-<script>
-  const thongTinThang = [
-    { tieuDe: "Hòa Lưới Tháng Này", id: "HoaLuoiThangNay" },
-	{ tieuDe: "Hòa Lưới ThángTrước", id: "HoaLuoiThangTruoc" },
-    { tieuDe: "Tháng HL Cao Nhất", id: "HoaLuoiThangCaoNhat" },
-    { tieuDe: "Tổng Hòa Lưới", id: "TongHoaLuoi" },
-  ];
-
-  let indexThang = 0;
-
-  setInterval(() => {
-    const item = thongTinThang[indexThang];
-    const tieuDe = document.getElementById("tieuDeThongTinThang");
-    const giaTri = document.getElementById("giaTriThongTinThang");
-    const dataElement = document.getElementById(item.id);
-
-    if (tieuDe && giaTri && dataElement) {
-      tieuDe.innerText = item.tieuDe;
-      giaTri.innerText = dataElement.innerText;
-    }
-
-    indexThang = (indexThang + 1) % thongTinThang.length;
-  }, 2000);
-</script>
-
-
     <script>
-       var firebaseConfig = {		
+        var firebaseConfig = {		
 		apiKey: "AIzaSyAmSj1lQc3jNh-kz8UjGeqOpLaOcgb9MFs",
 		authDomain: "vung-f9614.firebaseapp.com",
 		databaseURL: "https://vung-f9614-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -195,16 +146,15 @@
 		
 			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
 			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
-			document.getElementById("CongSuatTongNhaDung").innerText =  data.CongSuatNhaDung + "W";
-			document.getElementById("CongSuatNhaDungCaoNhat").innerText =  data.CongSuatNhaDungCaoNhat + "W";
+			document.getElementById("CongSuatTongTai").innerText =  data.CongSuatTongTai + "W";
+			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
 			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
-			document.getElementById("HoaLuoiHomQua").innerText =  data.HoaLuoiHomQua + "kW";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
 			document.getElementById("CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
 			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
-			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatNhaDung - data.CongSuatHoaLuoi + "W";
-			let value = data.CongSuatNhaDung - data.CongSuatCanDot;
-			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating.." : value + "W";
+			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
+			let value = data.CongSuatTongTai - data.CongSuatCanDot;
+			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating..." : value + "W";
 			document.getElementById("DienAp").innerText = data.DienAp + "V";
 			document.getElementById("DienApCaoNhat").innerText = data.DienApCaoNhat + "V";
 			document.getElementById("DienApThapNhat").innerText = data.DienApThapNhat + "V";
@@ -213,15 +163,9 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
-			document.getElementById("Ver").innerText = data.Ver;
 			document.getElementById("pf").innerText = data.pf;
 			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
-			document.getElementById("NgayHoaLuoiCaoNhat").innerText = data.NgayHoaLuoiCaoNhat + "kWh";
-			document.getElementById("CaoNhatThangNay").innerText = data.CaoNhatThangNay + "kWh";
-			document.getElementById("HoaLuoiThangNay").innerText = data.HoaLuoiThangNay + "kWh";
-			document.getElementById("HoaLuoiThangTruoc").innerText = data.HoaLuoiThangTruoc + "kWh";
-			document.getElementById("HoaLuoiThangCaoNhat").innerText = data.HoaLuoiThangCaoNhat + "kWh";
-			document.getElementById("ip").innerText = data.ip;
+			document.getElementById("Ver").innerText = data.Ver;
 			updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -245,19 +189,20 @@
                 document.getElementById("n-load").classList.add("dot");
             }
 
-            const CongSuatNhaDungUI = data.CongSuatNhaDung;
-			const CongSuatHoaLuoiUI = data.CongSuatHoaLuoi;
+            
             var gridI = document.getElementById("n-grid");
-			var calculatedG = (CongSuatNhaDungUI - CongSuatHoaLuoiUI);
+			var calculatedG = (data.CongSuatTongTai - data.CongSuatHoaLuoi);
 
-			 if (calculatedG < 0) {
-				gridI.classList.remove("move-right", "move-left");
-				gridI.classList.add("dot", "move-left");
+			if (calculatedG < 0) {
+				gridI.classList.remove("move-right");
+				gridI.classList.add("dot");
+				gridI.classList.add("move-left");
 			} else if (calculatedG > 0) {
-				gridI.classList.remove("move-left", "move-right");
-				gridI.classList.add("dot", "move-right");
+				gridI.classList.remove("move-left");
+				gridI.classList.add("dot");
+				gridI.classList.add("move-right");
 			} else {
-				gridI.classList.remove("dot", "move-left", "move-right");
+				gridI.classList.remove("dot");
 			}
 
         }
@@ -309,7 +254,7 @@
 	</div>
 	<div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/server.png">
-<div id="notification">Quảng cáo sau 60 giây</div>
+	<div id="notification">Quảng cáo sau 60 giây</div>
 	</div>
 	<div id="overlay"></div>
 </div>
@@ -347,35 +292,27 @@
               <path class="" fill="#057A1D" d="M11.45 2v3.55L15 3.77L11.45 2m-1 6L8 10.46l3.75 1.25L10.45 8M2 11.45L3.77 15l1.78-3.55H2M10 2H2v8c.57.17 1.17.25 1.77.25c3.58.01 6.49-2.9 6.5-6.5c-.01-.59-.1-1.18-.27-1.75m7 20v-6h-3l5-9v6h3l-5 9Z"></path>
             </svg>
             <div class="flex flex-col items-center">
-              <div class="flex flex-col items-center">
               <p class="solar-color text-xl font-bold" id="CongSuatHoaLuoi">.</p>
               <p class="solar-color text-[9px]">Đang Hòa Lưới</p>
-            </div>
-
             </div>
           </div>
           <div class="mt-3 flex gap-6">
             <div class="relative w-1/2">
-			<!-- Thông tin THÁNG -->
-				<div id="ThongTinLuoiThang">
-					<p id="tieuDeThongTinThang" class="solar-color text-[9px] text-center">Tổng Hòa Lưới</p>
-					<p id="giaTriThongTinThang" class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold">0</p>
-				</div>
-				<p id="TongHoaLuoi" style="display:none">5.2 kWh</p>
-				<p id="HoaLuoiThangNay" style="display:none">8.4 kWh</p>
-				<p id="HoaLuoiThangTruoc" style="display:none">8.6 kWh</p>
-				<p id="HoaLuoiThangCaoNhat" style="display:none">10.8 kWh</p>
-				<div class="bg-re absolute right-[26px] -bottom-[35px] h-[35px] w-[20px] rounded-bl-md border-b-2 border-l-2 border-[#057a1c]">
+              <div>
+				<p class="solar-color text-[9px] text-center">Tổng Hòa Lưới</p>
+				<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="TongHoaLuoi"</p>
+              </div>
+			  <div class="bg-re absolute right-[26px] -bottom-[35px] h-[35px] w-[20px] rounded-bl-md border-b-2 border-l-2 border-[#057a1c]">
                 <div class="dot2 -ml-[5px] bg-[#057a1c]" id="n-pv2" style="--speed:3s"></div>
-				</div>
-				<div class="absolute text-[9px] solar-color mt-1 ml-1">
-					<p id="pv1-vol">.</p>
-					<p id="pv1-cur">.</p>
-				</div>
+              </div>
+              <div class="absolute text-[9px] solar-color mt-1 ml-1">
+                <p id="pv1-vol">.</p>
+                <p id="pv1-cur">.</p>
+              </div>
             </div>
             <div class="relative w-1/2"> 
               <div>
-			  <p class="solar-color text-[9px] text-center">Cao Nhất HômNay</p>
+			  <p class="solar-color text-[9px] text-center">Cao Nhất Hôm Nay</p>
 			 <p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiCaoNhat"</p>
               </div>
 			  
@@ -388,22 +325,36 @@
               </div>
             </div>
           </div>
-            <div id="ThongTinLuoiNgay">
-				<p id="tieuDeThongTinNgay" class="solar-color text-[9px] text-center">Hòa Lưới Hôm Nay</p>
-				<p id="giaTriThongTinNgay" class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold">0</p>
+          
+            <div>
+			<p class="solar-color text-[9px] text-center">Hòa Lưới Hôm Nay</p>
+			<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiHomNay"</p>
 			</div>
-			<p id="HoaLuoiHomNay" style="display:none">5.2 kWh</p>
-			<p id="HoaLuoiHomQua" style="display:none">8.8 kWh</p>
-			<p id="CaoNhatThangNay" style="display:none">8.4 kWh</p>
-			<p id="NgayHoaLuoiCaoNhat" style="display:none">10.8 kWh</p>
+          
         </div>
-
+        <div class="battery-color absolute -bottom-[174px] -left-[166px] flex w-[400px] flex-col items-center">
+          <div class="mt-5 flex justify-center">
+            <div>
+              <p id="b-vol" class="font-bold"></p>
+              <p class="mb-1 text-[9px]"></p>
+              <p id="b-cur" class="font-bold"></p>
+              <p class="text-[9px]"></p>
+            </div>
+            
+            <div class="ml-5">
+              <p id="b-soc" class="font-bold"></p>
+              <p class="mb-1 text-[9px]"></p>
+              <p id="b-temp" class="font-bold"></p>
+              <p class="text-[9px]"></p>
+            </div>
+          </div>
+        </div>
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
-          <p class="text-left text-[9px]">Điện Áp</p>
+          <p class="text-left text-[9px]">Điện Áp ~</p>
 		  <p class="text-left font-bold" id="DienAp">- V</p>
-          <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
+          <p class="text-left text-[9px]">Cao Nhất Hôm Nay ~</p>
 		  <p class="text-left font-bold" id="DienApCaoNhat">- V</p>
-          <p class="text-left text-[9px]">Thấp Nhất Hôm Nay</p>
+          <p class="text-left text-[9px]">Thấp Nhất Hôm Nay ~</p>
 		  <p class="text-left font-bold" id="DienApThapNhat">- V</p>
           <div class="relative flex items-center justify-between">
             <svg id="transmission_on" x="-0.5" y="187.5" width="64.5" height="64.5" viewBox="0 0 24 24">
@@ -418,14 +369,14 @@
           <p class="text-left text-[9px]">Tần Số</p>
 		  <p class="text-left font-bold" id="TanSo">- Hz</p>
         </div>
-        <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px]  items-center justify-between" >
+        <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
 		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay">- W</span></p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay" class="flash">- W</span></p>
 		  <p class="text-left text-[9px]">Tổng Đang Dùng</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongNhaDung">- W</span></p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTai" class="flash">- W</span></p>
 		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatNhaDungCaoNhat">- W</span></p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTaiCaoNhat" class="flash">- W</span></p>
           </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
 		  <p class="text-left text-[9px]">💡Công Suất Cần Đốt</p>
