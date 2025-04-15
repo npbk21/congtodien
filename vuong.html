@@ -162,8 +162,9 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("userId").innerText = data.userId;
-			json.set("pf", pf);
-			json.set("CongSuatCanDotCaoNhat", String(CongSuatCanDotCaoNhat, 0));
+			document.getElementById("pf").innerText = data.pf;
+			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
+			document.getElementById("Ver").innerText = data.Ver;
 			updateBatteryLevel(data.soc, data.b);
 
             if(data.p1 > 0){
@@ -244,15 +245,15 @@
     </div>
 	<div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
-        <p>ID: <span id="userId">6622266</span></p>
+        <p>ID: <span id="userId">6622266</span></p><p>Ver: <span id="Ver">1.0</span></p>
     </div>
     <div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
 		<p>Công suất đốt: <span id="CongSuatMachDot">Đang tải...</span></p> 
 	</div>
 	<div class="weather-item">
-		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/appointment-reminders.png">
-		<div id="notification">Quảng cáo sau 600 giây</div>
+		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/server.png">
+	<div id="notification">Quảng cáo sau 60 giây</div>
 	</div>
 	<div id="overlay"></div>
 </div>
