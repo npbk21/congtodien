@@ -11,8 +11,11 @@ Firebase<br>
 #Chisage<br>
 #LuxPower<br>
 #Dahai<br>
+#ThinkPower<br>
+#Solis<br>
 #ChintPower<br>
-#Lumentree
+#Lumentree<br>
+#Deye<br>
 #Fronius<br>
 #Solaredge<br>
 #Enphase<br>
