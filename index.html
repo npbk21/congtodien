@@ -74,6 +74,36 @@ const firebaseConfig = {
     appId: "1:123456789012:web:abcdef123456"
 };
 </pre>
+<li>Sau đó bạn thực hiện các bước dưới để nâng thời gian sử dụng Firebase (Testmode) từ 30 ngày lên bao nhiều năm tùy ý:</li>
+<pre>
+- Truy cập <a href="https://console.firebase.google.com">https://console.firebase.google.com</a>
+- Chọn project (dự án bạn vừa tạo).
+- Ở thanh menu bên trái, chọn "Firestore Database"
+- Chọn "Rules"
+- Ở dòng có nội dung: <span id="today-rule"></span>
+- Bản sửa thành: <span id="future-rule"></span>
+- Nhấn "Publish" để lưu thay đổi.
+- Vậy là chúng ta có thể sử dụng thêm 15 năm nữa.
+};
+</pre>
+
+<script>
+  const today = new Date();
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // tháng bắt đầu từ 0
+    const day = date.getDate();
+    return `allow read, write: if request.time < timestamp.date(${year}, ${month}, ${day});`;
+  };
+
+  const future = new Date(today);
+  future.setFullYear(future.getFullYear() + 15);
+
+  document.getElementById("today-rule").textContent = formatDate(today);
+  document.getElementById("future-rule").textContent = formatDate(future);
+</script>
+
 
 </div>
 </body></html>
