@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Biểu đồ Công suất Hòa lưới & Nhà dùng</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
+  <style>
+    button {
+      margin: 5px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Biểu đồ Công suất</h2>
+  <div>
+    <button onclick="loadData(2)">2 giờ</button>
+    <button onclick="loadData(6)">6 giờ</button>
+    <button onclick="loadData(12)">12 giờ</button>
+    <button onclick="loadData(24)">24 giờ</button>
+    <button onclick="resetZoom()">Xem mới nhất</button>
+  </div>
+  <canvas id="chart" width="1000" height="400"></canvas>
+
+  <script>
+    const channelID = "2942927"; 
+    const apiKey = "NC41IZYUNYI125RV"; 
+    let chart;
+    let timeLabels = [];
+    let hoaLuoiData = [];
+    let nhaDungData = [];
+    let resultsCount = 480;
+    let autoUpdate = true;
+
+    function createChart() {
+      chart = new Chart(document.getElementById("chart"), {
+        type: "line",
+        data: {
+          labels: timeLabels,
+          datasets: [
+            {
+              label: "Công suất Hòa lưới (W)",
+              data: hoaLuoiData,
+              borderColor: "blue",
+              backgroundColor: "rgba(0,0,255,0.1)",
+              borderWidth: 2,
+              pointRadius: 1,
+              fill: true,
+            },
+            {
+              label: "Công suất Nhà dùng (W)",
+              data: nhaDungData,
+              borderColor: "green",
+              backgroundColor: "rgba(0,255,0,0.1)",
+              borderWidth: 2,
+              pointRadius: 1,
+              fill: true,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          animation: false,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          plugins: {
+            zoom: {
+              pan: {
+                enabled: true,
+                mode: 'x',
+              },
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: true
+                },
+                mode: 'x',
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: "Thời gian" },
+              ticks: { autoSkip: true, maxTicksLimit: 10 }
+            },
+            y: {
+              beginAtZero: true,
+              title: { display: true, text: "Công suất (W)" }
+            }
+          }
+        }
+      });
+    }
+
+    function updateChart() {
+      chart.data.labels = timeLabels;
+      chart.data.datasets[0].data = hoaLuoiData;
+      chart.data.datasets[1].data = nhaDungData;
+      chart.update();
+    }
+
+    function loadData(hours) {
+      resultsCount = Math.floor((hours * 3600) / 15); // mỗi 15s một mẫu
+      fetch(`https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&results=${resultsCount}`)
+        .then(res => res.json())
+        .then(data => {
+          timeLabels = data.feeds.map(f => new Date(f.created_at).toLocaleTimeString());
+          hoaLuoiData = data.feeds.map(f => parseFloat(f.field1));
+          nhaDungData = data.feeds.map(f => parseFloat(f.field2));
+          if (!chart) createChart();
+          else updateChart();
+          autoUpdate = true;
+        });
+    }
+
+    function resetZoom() {
+      chart.resetZoom();
+      autoUpdate = true;
+    }
+
+    // Cập nhật mỗi 15s nếu đang xem realtime
+    setInterval(() => {
+      if (!autoUpdate) return;
+      fetch(`https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&results=1`)
+        .then(res => res.json())
+        .then(data => {
+          const f = data.feeds[0];
+          const time = new Date(f.created_at).toLocaleTimeString();
+          const hoa = parseFloat(f.field1);
+          const nha = parseFloat(f.field2);
+
+          if (!timeLabels.includes(time)) {
+            timeLabels.push(time);
+            hoaLuoiData.push(hoa);
+            nhaDungData.push(nha);
+
+            if (timeLabels.length > resultsCount) {
+              timeLabels.shift();
+              hoaLuoiData.shift();
+              nhaDungData.shift();
+            }
+
+            updateChart();
+          }
+        });
+    }, 30000);
+
+    document.getElementById('chart').addEventListener('wheel', () => { autoUpdate = false; });
+
+    // Mặc định tải 2 giờ đầu tiên
+    loadData(2);
+  </script>
+</body>
+</html>
