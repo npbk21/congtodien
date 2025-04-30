@@ -106,7 +106,7 @@
     }
 
     function loadData(hours) {
-      resultsCount = Math.floor((hours * 3600) / 15); // mỗi 15s một mẫu
+      resultsCount = Math.floor((hours * 3600) / 30);
       fetch(`https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&results=${resultsCount}`)
         .then(res => res.json())
         .then(data => {
@@ -153,7 +153,6 @@
 
     document.getElementById('chart').addEventListener('wheel', () => { autoUpdate = false; });
 
-    // Mặc định tải 2 giờ đầu tiên
     loadData(2);
   </script>
 </body>
