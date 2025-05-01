@@ -165,7 +165,7 @@
 			document.getElementById("pf").innerText = data.pf;
 			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
 			document.getElementById("Ver").innerText = data.Ver;
-			document.getElementById("wifiStrength").innerText = data.rssi + "dBm";
+			document.getElementById("rssi").innerText = data.rssi + "dBm";
 
 			updateBatteryLevel(data.soc, data.b);
 
@@ -243,7 +243,7 @@
     <div class="leftTT">
 	    <div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png">
-        <span id="date"></span><p>Wifi: <span id="wifiStrength">50</span></p>
+        <span id="date"></span><p>Wifi: <span id="rssi">50dBm</span></p>
     </div>
 	<div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
