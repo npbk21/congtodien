@@ -15,32 +15,36 @@
 <body>
   <h2>Biểu đồ Công suất</h2>
 
-<div>
-  <button onclick="loadData(2)">2 giờ</button>
-  <button onclick="loadData(6)">6 giờ</button>
-  <button onclick="loadData(12)">12 giờ</button>
-  <button onclick="loadData(24)">24 giờ</button>
-  <button onclick="window.location.href='https://congtodientu.xyz/vuong.html'">Biến Tần</button>
-</div>
-
-
-  <!-- Chọn 1 ngày -->
   <div>
-    <label>Chọn ngày: <input type="date" id="selectedDate"></label>
-    <button onclick="loadSelectedDate()">Xem dữ liệu</button>
+    <button onclick="loadData(2)">2 giờ</button>
+    <button onclick="loadData(6)">6 giờ</button>
+    <button onclick="loadData(12)">12 giờ</button>
+    <button onclick="loadData(24)">24 giờ</button>
+    <button onclick="window.location.href='https://congtodientu.xyz/vuong.html'">Biến Tần</button>
   </div>
 
+  <!-- Biểu đồ đường thời gian thực -->
   <canvas id="chart" width="1000" height="400"></canvas>
 
+  <!-- Biểu đồ cột field3 và field4 -->
+  <h3>Biểu đồ Số điện tiêu thụ & Hòa lưới theo giờ</h3>
+
+  <div>
+    <label>Chọn ngày: <input type="date" id="barDate"></label>
+    <button onclick="loadBarByDate()">Xem ngày</button>
+    <button onclick="loadBarByType('day')">Hôm nay</button>
+    <button onclick="loadBarByType('week')">7 ngày</button>
+    <button onclick="loadBarByType('month')">30 ngày</button>
+  </div>
+
+  <canvas id="barChart" width="1000" height="400"></canvas>
+
   <script>
-    const channelID = "2942927"; 
-    const apiKey = "NC41IZYUNYI125RV"; 
-    let chart;
-    let timeLabels = [];
-    let hoaLuoiData = [];
-    let nhaDungData = [];
-    let resultsCount = 480;
-    let autoUpdate = true;
+    const channelID = "2942927";
+    const apiKey = "NC41IZYUNYI125RV";
+    let chart, barChart;
+    let timeLabels = [], hoaLuoiData = [], nhaDungData = [];
+    let resultsCount = 480, autoUpdate = true;
 
     function createChart() {
       chart = new Chart(document.getElementById("chart"), {
@@ -71,36 +75,19 @@
         options: {
           responsive: true,
           animation: false,
-          interaction: {
-            mode: 'index',
-            intersect: false
-          },
           plugins: {
             zoom: {
-              pan: {
-                enabled: true,
-                mode: 'x',
-              },
+              pan: { enabled: true, mode: 'x' },
               zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true
-                },
-                mode: 'x',
+                wheel: { enabled: true },
+                pinch: { enabled: true },
+                mode: 'x'
               }
             }
           },
           scales: {
-            x: {
-              title: { display: true, text: "Thời gian" },
-              ticks: { autoSkip: true, maxTicksLimit: 10 }
-            },
-            y: {
-              beginAtZero: true,
-              title: { display: true, text: "Công suất (W)" }
-            }
+            x: { title: { display: true, text: "Thời gian" } },
+            y: { beginAtZero: true, title: { display: true, text: "Công suất (W)" } }
           }
         }
       });
@@ -115,44 +102,21 @@
 
     function loadData(hours) {
       const now = new Date();
-      const endTime = now.toISOString().split('.')[0].replace('T', '%20');
-      const startTime = new Date(now.getTime() - hours * 3600 * 1000)
-                         .toISOString().split('.')[0].replace('T', '%20');
-
-      fetchAndUpdate(startTime, endTime);
-    }
-
-    function loadSelectedDate() {
-      const date = document.getElementById('selectedDate').value;
-      if (!date) {
-        alert("Vui lòng chọn một ngày.");
-        return;
-      }
-
-      const startTime = `${date}T00:00:00`.replace('T', '%20');
-      const endTime = `${date}T23:59:59`.replace('T', '%20');
-
-      fetchAndUpdate(startTime, endTime);
+      const end = now.toISOString().split('.')[0].replace('T', '%20');
+      const start = new Date(now.getTime() - hours * 3600 * 1000).toISOString().split('.')[0].replace('T', '%20');
+      fetchAndUpdate(start, end);
     }
 
     function fetchAndUpdate(startTime, endTime) {
-      const url = `https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&start=${startTime}&end=${endTime}`;
-
-      fetch(url)
+      fetch(`https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&start=${startTime}&end=${endTime}`)
         .then(res => res.json())
         .then(data => {
           timeLabels = data.feeds.map(f => new Date(f.created_at).toLocaleString());
           hoaLuoiData = data.feeds.map(f => parseFloat(f.field1));
           nhaDungData = data.feeds.map(f => parseFloat(f.field2));
-          if (!chart) createChart();
-          else updateChart();
+          if (!chart) createChart(); else updateChart();
           autoUpdate = false;
         });
-    }
-
-    function resetZoom() {
-      chart.resetZoom();
-      autoUpdate = true;
     }
 
     setInterval(() => {
@@ -162,20 +126,13 @@
         .then(data => {
           const f = data.feeds[0];
           const time = new Date(f.created_at).toLocaleTimeString();
-          const hoa = parseFloat(f.field1);
-          const nha = parseFloat(f.field2);
+          const hoa = parseFloat(f.field1), nha = parseFloat(f.field2);
 
           if (!timeLabels.includes(time)) {
-            timeLabels.push(time);
-            hoaLuoiData.push(hoa);
-            nhaDungData.push(nha);
-
+            timeLabels.push(time); hoaLuoiData.push(hoa); nhaDungData.push(nha);
             if (timeLabels.length > resultsCount) {
-              timeLabels.shift();
-              hoaLuoiData.shift();
-              nhaDungData.shift();
+              timeLabels.shift(); hoaLuoiData.shift(); nhaDungData.shift();
             }
-
             updateChart();
           }
         });
@@ -183,7 +140,75 @@
 
     document.getElementById('chart').addEventListener('wheel', () => { autoUpdate = false; });
 
+    // ========== BIỂU ĐỒ CỘT ========== //
+    function createBarChart(labels, soDien, hoaLuoi) {
+      if (barChart) barChart.destroy();
+      barChart = new Chart(document.getElementById("barChart"), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Số điện tiêu thụ 1h (kWh)',
+              data: soDien,
+              backgroundColor: 'orange'
+            },
+            {
+              label: 'Số hòa lưới 1h (kWh)',
+              data: hoaLuoi,
+              backgroundColor: 'purple'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: { title: { display: true, text: 'Thời gian' } },
+            y: {
+              beginAtZero: true,
+              title: { display: true, text: 'Điện năng (kWh)' }
+            }
+          }
+        }
+      });
+    }
+
+    function loadBarByDate() {
+      const date = document.getElementById("barDate").value;
+      if (!date) return alert("Chọn ngày!");
+
+      const start = `${date}T00:00:00`.replace('T', '%20');
+      const end = `${date}T23:59:59`.replace('T', '%20');
+      fetchBarData(start, end);
+    }
+
+    function loadBarByType(type) {
+      const now = new Date();
+      let start = new Date();
+
+      if (type === 'day') start.setHours(0, 0, 0, 0);
+      else if (type === 'week') start.setDate(now.getDate() - 6);
+      else if (type === 'month') start.setDate(now.getDate() - 29);
+
+      const startStr = start.toISOString().split('.')[0].replace('T', '%20');
+      const endStr = now.toISOString().split('.')[0].replace('T', '%20');
+      fetchBarData(startStr, endStr);
+    }
+
+    function fetchBarData(start, end) {
+      fetch(`https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&start=${start}&end=${end}`)
+        .then(res => res.json())
+        .then(data => {
+          const labels = data.feeds.map(f => new Date(f.created_at).toLocaleString());
+          const soDien = data.feeds.map(f => parseFloat(f.field3 || 0));
+          const hoaLuoi = data.feeds.map(f => parseFloat(f.field4 || 0));
+          createBarChart(labels, soDien, hoaLuoi);
+        });
+    }
+
+    // Tải mặc định
     loadData(2);
+    loadBarByType('day');
   </script>
 </body>
 </html>
