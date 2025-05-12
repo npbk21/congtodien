@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Giám sát năng lượng mặt trời</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f0f8ff; }
+    h1 { color: #006699; }
+    table { border-collapse: collapse; width: 100%; max-width: 800px; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background-color: #e0f0ff; }
+    #error { color: red; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Dữ liệu sạc Mạnh Quân</h1>
+  <button onclick="window.location.href='https://congtodientu.xyz/vuong.html'">Biến Tần</button>
+  <div id="error"></div>
+  <table>
+    <thead>
+      <tr>
+        <th>Thông số</th>
+        <th>Giá trị</th>
+        <th>Đơn vị</th>
+      </tr>
+    </thead>
+    <tbody id="dataTable">
+      <!-- Dữ liệu sẽ được tạo một lần ở đây -->
+    </tbody>
+  </table>
+
+  <script>
+    const labels = [
+      { name: "Điện áp PV",     unit: "V" },
+      { name: "Dòng của PV",     unit: "A" },
+      { name: "Điện áp pin lưu trữ",unit: "V" },
+      { name: "Dòng của pin lưu trữ",unit: "A" },
+      { name: "Công suất PV",       unit: "W" },
+      { name: "KWh PV hôm nay",   unit: "kWh" },
+      { name: "KWh PV tổng",   unit: "kWh" },
+      { name: "Nhiệt độ thiết bị",    unit: "°C" }
+    ];
+
+    function createTable() {
+      const tbody = document.getElementById("dataTable");
+      labels.forEach((item, idx) => {
+        const row = document.createElement("tr");
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = item.name;
+
+        const valueCell = document.createElement("td");
+        valueCell.id = `value-${idx}`;
+        valueCell.textContent = "Đang tải...";
+
+        const unitCell = document.createElement("td");
+        unitCell.textContent = item.unit;
+
+        row.appendChild(nameCell);
+        row.appendChild(valueCell);
+        row.appendChild(unitCell);
+
+        tbody.appendChild(row);
+      });
+    }
+
+    async function fetchData() {
+      const url = "https://api.smartsolar.io.vn/Device/Status?deviceGuid=3005029";
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidnVvbmcyMzQiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3MzIiLCJqdGkiOiJmNjYxNzEwYy05ZWZjLTRiYzItYmExMy1iYjYxMGZiOGU5NGIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzQ5NjMxMDk4LCJpc3MiOiJodHRwczovL3NtYXJ0c29sYXIuaW8udm4iLCJhdWQiOiJodHRwczovL3NtYXJ0c29sYXIuaW8udm4ifQ.UIbR3qDdMDrsILSTqAEE0Qu4S8so3fQqpWDDy_fYiXQ";
+
+      document.getElementById('error').textContent = '';
+
+      try {
+        const resp = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type":  "application/json"
+          }
+        });
+
+        if (!resp.ok) {
+          throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
+        }
+
+        const json = await resp.json();
+
+        let streams = [];
+        if (Array.isArray(json.synthesisStreams) && json.synthesisStreams.length) {
+          streams = json.synthesisStreams;
+        } else if (json.lastMessage && Array.isArray(json.lastMessage.dataStreams)) {
+          streams = json.lastMessage.dataStreams;
+        } else {
+          throw new Error("Không tìm thấy dữ liệu hợp lệ.");
+        }
+
+        // Cập nhật từng ô giá trị mà không làm nhấp nháy
+        streams.forEach((stream, idx) => {
+          const val = stream?.value;
+          const text = (typeof val === 'number') ? val.toFixed(2) : "N/A";
+          const cell = document.getElementById(`value-${idx}`);
+          if (cell) {
+            cell.textContent = text;
+          }
+        });
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('error').textContent = "Lỗi: " + err.message;
+      }
+    }
+
+    window.onload = () => {
+      createTable();      // tạo bảng một lần duy nhất
+      fetchData();        // lấy dữ liệu lần đầu
+      setInterval(fetchData, 2000); // cập nhật giá trị mỗi 2 giây
+    };
+  </script>
+</body>
+</html>
