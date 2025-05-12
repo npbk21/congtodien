@@ -2,43 +2,48 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Giám sát năng lượng mặt trời</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
-      background: #f0f8ff;
-      font-size: 18px;
+      background: #d0f0c0; /* Màu nền xanh lá sáng */
     }
     h1 {
-      color: #006699;
-      font-size: 24px;
+      color: #1b5e20; /* Màu xanh lá đậm */
     }
     table {
       border-collapse: collapse;
       width: 100%;
       max-width: 800px;
       margin-top: 20px;
-      font-size: 18px;
     }
     th, td {
-      border: 1px solid #ccc;
-      padding: 12px;
+      border: 1px solid #83f789; /* Đường viền xanh lá đậm */
+      padding: 10px;
       text-align: left;
     }
     th {
-      background-color: #e0f0ff;
+      background-color: #81c784; /* Nền xanh lá sáng cho tiêu đề */
+    }
+    td {
+      background-color: #ffffff; /* Nền trắng cho dữ liệu */
     }
     #error {
-      color: red;
+      color: #c62828; /* Màu đỏ đậm cho lỗi */
       margin-top: 20px;
-      font-size: 18px;
     }
     button {
-      padding: 12px 20px;
-      font-size: 18px;
-      margin-top: 10px;
+      background-color: #43a047; /* Nền xanh lá đậm */
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #388e3c; /* Xanh lá đậm hơn khi hover */
     }
   </style>
 </head>
@@ -55,19 +60,19 @@
       </tr>
     </thead>
     <tbody id="dataTable">
-
+      <!-- Dữ liệu sẽ được tạo một lần ở đây -->
     </tbody>
   </table>
 
   <script>
     const labels = [
-      { name: "Điện áp PV",           unit: "V" },
-      { name: "Dòng của PV",          unit: "A" },
-      { name: "Điện áp pin lưu trữ",  unit: "V" },
-      { name: "Dòng của pin lưu trữ", unit: "A" },
-      { name: "Công suất PV",         unit: "W" },
-      { name: "KWh PV hôm nay",       unit: "kWh" },
-      { name: "KWh PV tổng",          unit: "kWh" },
+      { name: "Điện áp PV",     unit: "V" },
+      { name: "Dòng của PV",     unit: "A" },
+      { name: "Điện áp pin lưu trữ",unit: "V" },
+      { name: "Dòng của pin lưu trữ",unit: "A" },
+      { name: "Công suất PV",       unit: "W" },
+      { name: "KWh PV hôm nay",   unit: "kWh" },
+      { name: "KWh PV tổng",   unit: "kWh" },
       { name: "Nhiệt độ thiết bị",    unit: "°C" }
     ];
 
@@ -124,6 +129,7 @@
           throw new Error("Không tìm thấy dữ liệu hợp lệ.");
         }
 
+        // Cập nhật từng ô giá trị mà không làm nhấp nháy
         streams.forEach((stream, idx) => {
           const val = stream?.value;
           const text = (typeof val === 'number') ? val.toFixed(2) : "N/A";
@@ -140,9 +146,9 @@
     }
 
     window.onload = () => {
-      createTable();
-      fetchData();
-      setInterval(fetchData, 2000);
+      createTable();      // tạo bảng một lần duy nhất
+      fetchData();        // lấy dữ liệu lần đầu
+      setInterval(fetchData, 2000); // cập nhật giá trị mỗi 2 giây
     };
   </script>
 </body>
