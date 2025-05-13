@@ -140,7 +140,7 @@
   }
   window.onload = function () {
       connectFirebase();
-      scaleToFit();
+     // scaleToFit();
   };
   window.onresize = scaleToFit;
 
@@ -242,6 +242,14 @@
       setInterval(fetchData, 2000); // cập nhật giá trị mỗi 2 giây
     };
   </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    scaleToFit(); // chạy ngay khi DOM sẵn sàng
+  });
+
+  window.addEventListener("resize", scaleToFit); // vẫn giữ onresize
+</script>
+
 </head>
 <body >
 
