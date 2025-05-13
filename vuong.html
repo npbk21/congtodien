@@ -236,7 +236,93 @@
       });
   }
     </script>
-	
+	<script>
+    const labels = [
+      { name: "Điện áp PV",     unit: "V" },
+      { name: "Dòng của PV",     unit: "A" },
+      { name: "Điện áp lưu trữ(hoặc tải)",unit: "V" },
+      { name: "Dòng của lưu trữ(hoặc tải)",unit: "A" },
+      { name: "Công suất PV",       unit: "W" },
+      { name: "kWh PV hôm nay",   unit: "kWh" },
+      { name: "kWh PV tổng",   unit: "kWh" },
+      { name: "Nhiệt độ thiết bị",    unit: "°C" }
+    ];
+
+    function createTable() {
+      const tbody = document.getElementById("dataTable");
+      labels.forEach((item, idx) => {
+        const row = document.createElement("tr");
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = item.name;
+
+        const valueCell = document.createElement("td");
+        valueCell.id = `value-${idx}`;
+        valueCell.textContent = "Đang tải...";
+
+        const unitCell = document.createElement("td");
+        unitCell.textContent = item.unit;
+
+        row.appendChild(nameCell);
+        row.appendChild(valueCell);
+        row.appendChild(unitCell);
+
+        tbody.appendChild(row);
+      });
+    }
+
+    async function fetchData() {
+      const url = "https://api.smartsolar.io.vn/Device/Status?deviceGuid=3005029";
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidnVvbmcyMzQiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU3MzIiLCJqdGkiOiJmNjYxNzEwYy05ZWZjLTRiYzItYmExMy1iYjYxMGZiOGU5NGIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzQ5NjMxMDk4LCJpc3MiOiJodHRwczovL3NtYXJ0c29sYXIuaW8udm4iLCJhdWQiOiJodHRwczovL3NtYXJ0c29sYXIuaW8udm4ifQ.UIbR3qDdMDrsILSTqAEE0Qu4S8so3fQqpWDDy_fYiXQ";
+
+      document.getElementById('error').textContent = '';
+
+      try {
+        const resp = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type":  "application/json"
+          }
+        });
+
+        if (!resp.ok) {
+          throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
+        }
+
+        const json = await resp.json();
+
+        let streams = [];
+        if (Array.isArray(json.synthesisStreams) && json.synthesisStreams.length) {
+          streams = json.synthesisStreams;
+        } else if (json.lastMessage && Array.isArray(json.lastMessage.dataStreams)) {
+          streams = json.lastMessage.dataStreams;
+        } else {
+          throw new Error("Không tìm thấy dữ liệu hợp lệ.");
+        }
+
+        // Cập nhật từng ô giá trị mà không làm nhấp nháy
+        streams.forEach((stream, idx) => {
+          const val = stream?.value;
+          const text = (typeof val === 'number') ? val.toFixed(2) : "N/A";
+          const cell = document.getElementById(`value-${idx}`);
+          if (cell) {
+            cell.textContent = text;
+          }
+        });
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('error').textContent = "Lỗi: " + err.message;
+      }
+    }
+
+    window.onload = () => {
+      createTable();      // tạo bảng một lần duy nhất
+      fetchData();        // lấy dữ liệu lần đầu
+      setInterval(fetchData, 2000); // cập nhật giá trị mỗi 2 giây
+    };
+  </script>
 </head>
 <body >
   <div id="weather-containerTT">
@@ -281,7 +367,7 @@
     </div>
 	
 </div>
-
+<div class="container flex flex-col items-center justify-center" style="margin: 0 auto;">
 <div id="diagram-container" class="diagram-container grid h-[500px] place-items-center w-full" style="margin: 0 auto; padding-right: 10px;">
       <div class="relative rounded-lg">
         <div class="h-[100px] w-[70px] rounded-sm bg-amber-950">
@@ -295,13 +381,13 @@
             <div class="flex flex-col items-center">
               <p class="solar-color text-xl font-bold" id="CongSuatHoaLuoi">.</p>
               <p class="solar-color text-[9px]">Đang Hòa Lưới</p>
-            </div><span style=color:green><a href="https://congtodientu.xyz/vuongchart.html">Biểu Đồ📉</a></span><span style=color:green><a href="https://congtodientu.xyz/sacmq.html">Sạc MQ</a></span>
+            </div><span style=color:green><a href="https://congtodientu.xyz/vuongchart.html">Biểu Đồ📉</a></span>
           </div>
           <div class="mt-3 flex gap-6">
             <div class="relative w-1/2">
               <div>
 				<p class="solar-color text-[9px] text-center">Tổng Hòa Lưới</p>
-				<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="TongHoaLuoi"</p>
+				<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="TongHoaLuoi"></p>
               </div>
 			  <div class="bg-re absolute right-[26px] -bottom-[35px] h-[35px] w-[20px] rounded-bl-md border-b-2 border-l-2 border-[#057a1c]">
                 <div class="dot2 -ml-[5px] bg-[#057a1c]" id="n-pv2" style="--speed:3s"></div>
@@ -314,7 +400,7 @@
             <div class="relative w-1/2"> 
               <div>
 			  <p class="solar-color text-[9px] text-center">Cao Nhất Hôm Nay</p>
-			 <p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiCaoNhat"</p>
+			 <p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiCaoNhat"></p>
               </div>
 			  
 			  <div class="absolute -bottom-[35px] left-[26px] h-[35px] w-[20px] rounded-br-md border-r-2 border-b-2 border-[#057a1c]">
@@ -329,7 +415,7 @@
           
             <div>
 			<p class="solar-color text-[9px] text-center">Hòa Lưới Hôm Nay</p>
-			<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiHomNay"</p>
+			<p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiHomNay"></p>
 			</div>
           
         </div>
@@ -350,6 +436,25 @@
             </div>
           </div>
         </div>
+		<div class="battery-color absolute -bottom-[260px] -left-[166px] flex w-[400px] flex-col items-center">
+          
+		<div id="error"></div>
+  <table style="margin-top: 60px;">
+    <thead>
+      <tr>
+        <th>Sạc Mạnh Quân</th>
+        <th>Giá trị</th>
+        <th>Đơn vị</th>
+      </tr>
+    </thead>
+    <tbody id="dataTable">
+
+    </tbody>
+  </table>
+  	<p style="text-align: center; margin-top: 20px; font-size: 14px; color: #ccc;">
+        Thiết bị bám tải cho Micro Inverter và biến tần nội địa Nhật
+    </p>
+  </div>
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
           <p class="text-left text-[9px]">Điện Áp ~</p>
 		  <p class="text-left font-bold" id="DienAp">- V</p>
@@ -419,13 +524,46 @@
         </div>
       </div>
     </div>
-	<p style="text-align: center; margin-top: 20px; font-size: 14px; color: #ccc;">
-        Thiết bị bám tải cho Micro Inverter và biến tần nội địa Nhật
-    </p>
+
   </div>
 </body>
 </html>
 <style>
+#error {
+      color: #c62828;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      max-width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #2e7d32;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #81c784;
+    }
+
+    td {
+      background-color: #ffffff;
+    }
+
+    @media (max-width: 600px) {
+      table, th, td {
+        font-size: 16px;
+      }
+
+      th, td {
+        padding: 8px;
+      }
+    }
 /*! tailwindcss v4.0.6 | MIT License | https://tailwindcss.com */
 @layer theme, base, components, utilities;
 
