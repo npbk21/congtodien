@@ -10,47 +10,6 @@
     
 	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-	<script>
-     function getWeather(lat, lon) {
-         document.getElementById("date").innerText = new Date().toLocaleDateString("vi-VN");
- 
-         const apiKey = '5d282bc38dac34f7348a71b9fcc1729f';
-         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=vi`;
- 
-         fetch(url)
-             .then(response => response.json())
-             .then(data => {
-                 const locationName = data.name;
-                 const temp = data.main.temp;
-                 const humidity = data.main.humidity;
-                 const windSpeed = data.wind.speed;
-                 const icon = data.weather[0].icon;
-                 const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
- 
-                 document.getElementById("location").innerText = locationName;
-                 document.getElementById("temperature").innerText = `${temp}°C`;
-                 document.getElementById("humidity").innerText = `${humidity}%`;
-                 document.getElementById("windSpeed").innerText = `${windSpeed} m/s`;
- 
-                 const weatherIcon = document.getElementById("weather-icon");
-                 weatherIcon.src = iconUrl;
-                 weatherIcon.style.display = "inline-block";
-             })
-             .catch(error => {
-                 document.getElementById("temperature").innerText = "Không thể lấy dữ liệu.";
-                 console.error("Lỗi lấy thời tiết:", error);
-             });
-     }
- 
-     if (navigator.geolocation) {
-         navigator.geolocation.getCurrentPosition(
-             position => getWeather(position.coords.latitude, position.coords.longitude),
-             error => document.getElementById("temperature").innerText = "Không thể xác định vị trí."
-         );
-     } else {
-         document.getElementById("temperature").innerText = "Trình duyệt không hỗ trợ định vị.";
-     } // https://s.shopee.vn/8fE6IihU7o
- </script> 
 
 	
 <script>
@@ -301,7 +260,6 @@
           throw new Error("Không tìm thấy dữ liệu hợp lệ.");
         }
 
-        // Cập nhật từng ô giá trị mà không làm nhấp nháy
         streams.forEach((stream, idx) => {
           const val = stream?.value;
           const text = (typeof val === 'number') ? val.toFixed(2) : "N/A";
@@ -318,8 +276,8 @@
     }
 
     window.onload = () => {
-      createTable();      // tạo bảng một lần duy nhất
-      fetchData();        // lấy dữ liệu lần đầu
+      createTable();      
+      fetchData();        
       setInterval(fetchData, 2000); // cập nhật giá trị mỗi 2 giây
     };
   </script>
@@ -327,18 +285,11 @@
 <body >
   <div id="weather-containerTT">
     <div class="leftTT">
-	    <div class="weather-item">
-        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/calendar.png">
-        <span id="date"></span><p>Wifi: <span id="rssi">50dBm</span></p>
-    </div>
 	<div class="weather-item">
         <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
         <p>ID: <span id="userId">6622266</span></p><p>Ver: <span id="Ver">1.0</span></p>
     </div>
-    <div class="weather-item">
-		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
-		<p>Công suất đốt: <span id="CongSuatMachDot">Đang tải...</span></p> 
-	</div>
+
 	<div class="weather-item">
 		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/server.png">
 	<div id="notification">Quảng cáo sau 60 giây</div>
@@ -348,22 +299,14 @@
 
     
     <div class="rightTT">
-        <div class="weather-item">
-            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/marker.png">
-            <span id="location">Đang tải...</span>
-        </div>
-        <div class="weather-item">
-            <img id="weather-icon" src="" alt="Thời tiết" class="iconTT" style="display: none;">
-			<span id="temperature">Đang tải...</span> 
-        </div>
-        <div class="weather-item">
-            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/humidity.png">
-            <span id="humidity">Đang tải...</span>
-        </div>
-        <div class="weather-item">
-            <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/wind.png">
-            <span id="windSpeed">Đang tải...</span>
-        </div>
+	<div class="weather-item">
+	<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/wifi.png">
+	<p>Wifi: <span id="rssi">50dBm</span></p>
+	</div>
+    <div class="weather-item">
+		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
+		<p>Công suất đốt: <span id="CongSuatMachDot">Đang tải...</span></p> 
+	</div>
     </div>
 	
 </div>
