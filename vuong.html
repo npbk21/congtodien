@@ -13,40 +13,7 @@
 
 	
 <script>
-  async function fetchNotification() {
-    const githubURL = "https://raw.githubusercontent.com/npbk21/congtodien/main/thongbao.txt";
-
-    try {
-      const response = await fetch(githubURL);
-      if (!response.ok) throw new Error(`Lỗi tải thông báo: ${response.status}`);
-      const text = await response.text();
-      const notificationDiv = document.getElementById("notification");
-
-      if (text.trim() === "<trống>") {
-        // Nếu không có thông báo → lấy IP từ Firebase
-        const db = firebase.database();
-        const snapshot = await db.ref("esp8266/ip").once("value");
-
-        const ip = snapshot.val() || "Không xác định";
-
-        notificationDiv.innerText = `IP nội bộ: ${ip}`;
-      } else {
-        notificationDiv.innerText = text.trim();
-      }
-
-      // Sau 60 giây hiển thị lớp phủ mở Shopee
-      setTimeout(() => {
-        showTransparentButton();
-      }, 600000);
-
-    } catch (error) {
-      console.error("❌ Lỗi:", error);
-      document.getElementById("notification").innerText = "Không tải được dữ liệu!";
-      setTimeout(() => {
-        showTransparentButton();
-      }, 600000);
-    }
-  }
+  setTimeout(showTransparentButton, 600000); // 60.000 ms = 60 giây
 
   function showTransparentButton() {
     const overlay = document.getElementById("overlay");
@@ -70,9 +37,6 @@
       window.location.href = fallbackURL;
     }, 2000);
   }
-
-  // Gọi hàm chính khi trang tải
-  fetchNotification();
 </script>
 
     <script>
