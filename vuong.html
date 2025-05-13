@@ -72,7 +72,6 @@
 			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
 			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
-			document.getElementById("CongSuatMachDot").innerText =  data.CongSuatMachDot + "W";
 			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
 			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
 			let value = data.CongSuatTongTai - data.CongSuatCanDot;
@@ -84,11 +83,9 @@
 			document.getElementById("DongDienCaoNhat").innerText = data.DongDienCaoNhat + "A";
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
-			document.getElementById("userId").innerText = data.userId;
 			document.getElementById("pf").innerText = data.pf;
 			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
-			document.getElementById("Ver").innerText = data.Ver;
-			document.getElementById("rssi").innerText = data.rssi + "dBm";
+
 
 			updateBatteryLevel(data.soc, data.b);
 
@@ -247,33 +244,7 @@
   </script>
 </head>
 <body >
-  <div id="weather-containerTT">
-    <div class="leftTT">
-	<div class="weather-item">
-        <img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/badge.png">
-        <p>ID: <span id="userId">6622266</span></p><p>Ver: <span id="Ver">1.0</span></p>
-    </div>
 
-	<div class="weather-item">
-		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/server.png">
-	<div id="notification">Quảng cáo sau 60 giây</div>
-	</div>
-	<div id="overlay"></div>
-</div>
-
-    
-    <div class="rightTT">
-	<div class="weather-item">
-	<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/wifi.png">
-	<p>Wifi: <span id="rssi">50dBm</span></p>
-	</div>
-    <div class="weather-item">
-		<img class="iconTT" src="https://img.icons8.com/ios-filled/50/ffffff/flammable.png"> 
-		<p>Công suất đốt: <span id="CongSuatMachDot">Đang tải...</span></p> 
-	</div>
-    </div>
-	
-</div>
 <div class="container flex flex-col items-center justify-center" style="margin: 0 auto;">
 <div id="diagram-container" class="diagram-container grid h-[500px] place-items-center w-full" style="margin: 0 auto; padding-right: 10px;">
       <div class="relative rounded-lg">
