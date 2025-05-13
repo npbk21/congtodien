@@ -2,48 +2,73 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Giám sát năng lượng mặt trời</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
-      background: #d0f0c0; /* Màu nền xanh lá sáng */
+      margin: 10px;
+      padding: 0;
+      background: #d0f0c0;
+      font-size: 18px;
     }
+
     h1 {
-      color: #1b5e20; /* Màu xanh lá đậm */
+      color: #1b5e20;
+      text-align: center;
+      margin-bottom: 15px;
     }
+
+    button {
+      background-color: #43a047;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    button:hover {
+      background-color: #388e3c;
+    }
+
+    #error {
+      color: #c62828;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
     table {
-      border-collapse: collapse;
       width: 100%;
-      max-width: 800px;
-      margin-top: 20px;
+      border-collapse: collapse;
+      max-width: 100%;
     }
+
     th, td {
-      border: 1px solid #83f789; /* Đường viền xanh lá đậm */
+      border: 1px solid #2e7d32;
       padding: 10px;
       text-align: left;
     }
+
     th {
-      background-color: #81c784; /* Nền xanh lá sáng cho tiêu đề */
+      background-color: #81c784;
     }
+
     td {
-      background-color: #ffffff; /* Nền trắng cho dữ liệu */
+      background-color: #ffffff;
     }
-    #error {
-      color: #c62828; /* Màu đỏ đậm cho lỗi */
-      margin-top: 20px;
-    }
-    button {
-      background-color: #43a047; /* Nền xanh lá đậm */
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #388e3c; /* Xanh lá đậm hơn khi hover */
+
+    @media (max-width: 600px) {
+      table, th, td {
+        font-size: 16px;
+      }
+
+      th, td {
+        padding: 8px;
+      }
     }
   </style>
 </head>
