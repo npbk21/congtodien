@@ -189,6 +189,24 @@
 
         tbody.appendChild(row);
       });
+      const row = document.createElement("tr");
+
+      const nameCell = document.createElement("td");
+      nameCell.textContent = "Tiết kiệm";
+
+      const valueCell = document.createElement("td");
+      valueCell.id = "value-saving";
+      valueCell.textContent = "Đang tải...";
+
+      const unitCell = document.createElement("td");
+      unitCell.textContent = "vnđ";
+
+      row.appendChild(nameCell);
+      row.appendChild(valueCell);
+      row.appendChild(unitCell);
+
+      tbody.appendChild(row);
+
     }
 
     async function fetchData() {
@@ -229,6 +247,13 @@
             cell.textContent = text;
           }
         });
+		        // Lấy giá trị "kWh PV tổng" tại index 6
+        const totalKwhPV = parseFloat(document.getElementById("value-6")?.textContent || 0);
+        const saving = isNaN(totalKwhPV) ? 0 : totalKwhPV * 3466;
+        const savingCell = document.getElementById("value-saving");
+        if (savingCell) {
+          savingCell.textContent = saving.toLocaleString('vi-VN', { maximumFractionDigits: 0 });
+        }
 
       } catch (err) {
         console.error(err);
