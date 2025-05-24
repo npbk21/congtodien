@@ -5,23 +5,18 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-    }
-    h2, div {
-      padding-left: 10px;
-    }
-    canvas {
-      display: block;
-      width: 100vw !important;
-      height: 400px !important;
-    }
     button, input {
       margin: 5px;
       padding: 8px 12px;
       font-size: 14px;
+    }
+    #controls {
+      margin-top: 10px;
+      max-width: 1000px;
+    }
+    #controls label {
+      display: block;
+      margin: 6px 0;
     }
   </style>
 </head>
@@ -41,179 +36,223 @@
     <button onclick="loadSelectedDate()">Xem dữ liệu</button>
   </div>
 
-  <canvas id="chart"></canvas>
+  <canvas id="chart" width="1000" height="400"></canvas>
 
-<script>
-  const channelID = "2942927"; 
-  const apiKey = "NC41IZYUNYI125RV"; 
-  let chart;
-  let timeLabels = [];
-  let hoaLuoiData = [];
-  let nhaDungData = [];
-  let canDotData = [];
-  let resultsCount = 480;
-  let autoUpdate = true;
+  <!-- Thanh di chuyển pan nằm ngay dưới biểu đồ -->
+  <div id="controls">
+    <button onclick="zoomChart(1.2)">🔍 Zoom In</button>
+    <button onclick="zoomChart(0.8)">🔎 Zoom Out</button>
+    <button onclick="resetZoom()">Reset Zoom</button>
 
-  function createChart() {
-    const ctx = document.getElementById("chart").getContext("2d");
-    chart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: timeLabels,
-        datasets: [
-          {
-            label: "Công suất Hòa lưới (W)",
-            data: hoaLuoiData,
-            borderColor: "blue",
-            backgroundColor: "rgba(0,0,255,0.1)",
-            borderWidth: 2,
-            pointRadius: 1,
-            fill: true,
-          },
-          {
-            label: "Công suất Nhà dùng (W)",
-            data: nhaDungData,
-            borderColor: "green",
-            backgroundColor: "rgba(0,255,0,0.1)",
-            borderWidth: 2,
-            pointRadius: 1,
-            fill: true,
-          },
-          {
-            label: "Công suất Cần Đốt (W)",
-            data: canDotData,
-            borderColor: "red",
-            backgroundColor: "rgba(255,0,0,0.1)",
-            borderWidth: 2,
-            pointRadius: 1,
-            fill: true,
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        interaction: {
-          mode: 'index',
-          intersect: false
-        },
-        plugins: {
-          tooltip: {
-            enabled: true
-          },
-          zoom: {
-            pan: {
-              enabled: true,
-              mode: 'x',
+    <label>Pan ngang (X):
+      <input type="range" id="panX" min="-100" max="100" value="0" oninput="panChartX(this.value)">
+    </label>
+
+    <label>Pan dọc (Y):
+      <input type="range" id="panY" min="-100" max="100" value="0" oninput="panChartY(this.value)">
+    </label>
+  </div>
+
+  <script>
+    const channelID = "2942927";
+    const apiKey = "NC41IZYUNYI125RV";
+    let chart;
+    let timeLabels = [];
+    let hoaLuoiData = [];
+    let nhaDungData = [];
+    let canDotData = [];
+    let resultsCount = 480;
+    let autoUpdate = true;
+
+    // Biến lưu trạng thái pan hiện tại
+    let currentPanX = 0;
+    let currentPanY = 0;
+
+    function createChart() {
+      const ctx = document.getElementById("chart").getContext("2d");
+      chart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: timeLabels,
+          datasets: [
+            {
+              label: "Công suất Hòa lưới (W)",
+              data: hoaLuoiData,
+              borderColor: "blue",
+              backgroundColor: "rgba(0,0,255,0.1)",
+              borderWidth: 2,
+              pointRadius: 1,
+              fill: true,
             },
+            {
+              label: "Công suất Nhà dùng (W)",
+              data: nhaDungData,
+              borderColor: "green",
+              backgroundColor: "rgba(0,255,0,0.1)",
+              borderWidth: 2,
+              pointRadius: 1,
+              fill: true,
+            },
+            {
+              label: "Công suất Cần Đốt (W)",
+              data: canDotData,
+              borderColor: "red",
+              backgroundColor: "rgba(255,0,0,0.1)",
+              borderWidth: 2,
+              pointRadius: 1,
+              fill: true,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          animation: false,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          plugins: {
             zoom: {
-              wheel: {
+              pan: {
                 enabled: true,
+                mode: 'xy',
+                onPanComplete({chart}) {
+                  // Đồng bộ giá trị pan slider khi pan thủ công (nếu dùng chuột/touch)
+                  currentPanX = Math.round(chart.state.pan.x);
+                  currentPanY = Math.round(chart.state.pan.y);
+                  document.getElementById('panX').value = currentPanX;
+                  document.getElementById('panY').value = currentPanY;
+                  autoUpdate = false;
+                }
               },
-              pinch: {
-                enabled: true
-              },
-              mode: 'x',
+              zoom: {
+                wheel: { enabled: true },
+                pinch: { enabled: true },
+                mode: 'x'
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: "Thời gian" },
+              ticks: { autoSkip: true, maxTicksLimit: 10 }
+            },
+            y: {
+              beginAtZero: true,
+              title: { display: true, text: "Công suất (W)" }
             }
           }
-        },
-        scales: {
-          x: {
-            title: { display: true, text: "Thời gian" },
-            ticks: { autoSkip: true, maxTicksLimit: 10 }
-          },
-          y: {
-            beginAtZero: true,
-            title: { display: true, text: "Công suất (W)" }
-          }
         }
-      }
-    });
-  }
-
-  function updateChart() {
-    chart.data.labels = timeLabels;
-    chart.data.datasets[0].data = hoaLuoiData;
-    chart.data.datasets[1].data = nhaDungData;
-    chart.data.datasets[2].data = canDotData;
-    chart.update();
-  }
-
-  function loadData(hours) {
-    const now = new Date();
-    const endTime = now.toISOString().split('.')[0].replace('T', '%20');
-    const startTime = new Date(now.getTime() - hours * 3600 * 1000).toISOString().split('.')[0].replace('T', '%20');
-
-    fetchAndUpdate(startTime, endTime);
-  }
-
-  function loadSelectedDate() {
-    const date = document.getElementById('selectedDate').value;
-    if (!date) {
-      alert("Vui lòng chọn một ngày.");
-      return;
+      });
     }
 
-    const startTime = `${date}T00:00:00`.replace('T', '%20');
-    const endTime = `${date}T23:59:59`.replace('T', '%20');
+    function updateChart() {
+      chart.data.labels = timeLabels;
+      chart.data.datasets[0].data = hoaLuoiData;
+      chart.data.datasets[1].data = nhaDungData;
+      chart.data.datasets[2].data = canDotData;
+      chart.update();
+    }
 
-    fetchAndUpdate(startTime, endTime);
-  }
+    function loadData(hours) {
+      const now = new Date();
+      const endTime = now.toISOString().split('.')[0].replace('T', '%20');
+      const startTime = new Date(now.getTime() - hours * 3600 * 1000)
+        .toISOString().split('.')[0].replace('T', '%20');
+      fetchAndUpdate(startTime, endTime);
+    }
 
-  function fetchAndUpdate(startTime, endTime) {
-    const url = `https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&start=${startTime}&end=${endTime}`;
+    function loadSelectedDate() {
+      const date = document.getElementById('selectedDate').value;
+      if (!date) {
+        alert("Vui lòng chọn một ngày.");
+        return;
+      }
+      const startTime = `${date}T00:00:00`.replace('T', '%20');
+      const endTime = `${date}T23:59:59`.replace('T', '%20');
+      fetchAndUpdate(startTime, endTime);
+    }
 
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        timeLabels = data.feeds.map(f => new Date(f.created_at).toLocaleString());
-        hoaLuoiData = data.feeds.map(f => parseFloat(f.field1));
-        nhaDungData = data.feeds.map(f => parseFloat(f.field2));
-        canDotData = data.feeds.map(f => parseFloat(f.field3));
-        if (!chart) createChart();
-        else updateChart();
-        autoUpdate = false;
-      });
-  }
+    function fetchAndUpdate(startTime, endTime) {
+      const url = `https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&start=${startTime}&end=${endTime}`;
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          timeLabels = data.feeds.map(f => new Date(f.created_at).toLocaleString());
+          hoaLuoiData = data.feeds.map(f => parseFloat(f.field1));
+          nhaDungData = data.feeds.map(f => parseFloat(f.field2));
+          canDotData = data.feeds.map(f => parseFloat(f.field3));
+          if (!chart) createChart();
+          else updateChart();
+          autoUpdate = false;
+          resetPanSliders();
+        });
+    }
 
-  function resetZoom() {
-    chart.resetZoom();
-    autoUpdate = true;
-  }
+    function resetZoom() {
+      chart.resetZoom();
+      autoUpdate = true;
+      resetPanSliders();
+    }
 
-  setInterval(() => {
-    if (!autoUpdate) return;
-    fetch(`https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&results=1`)
-      .then(res => res.json())
-      .then(data => {
-        const f = data.feeds[0];
-        const time = new Date(f.created_at).toLocaleTimeString();
-        const hoa = parseFloat(f.field1);
-        const nha = parseFloat(f.field2);
-        const dot = parseFloat(f.field3);
+    function zoomChart(factor) {
+      chart.zoom(factor);
+      autoUpdate = false;
+    }
 
-        if (!timeLabels.includes(time)) {
-          timeLabels.push(time);
-          hoaLuoiData.push(hoa);
-          nhaDungData.push(nha);
-          canDotData.push(dot);
+    // Xử lý pan ngang
+    function panChartX(value) {
+      let dx = value - currentPanX;
+      chart.pan({x: dx, y: 0});
+      currentPanX = parseInt(value);
+      autoUpdate = false;
+    }
 
-          if (timeLabels.length > resultsCount) {
-            timeLabels.shift();
-            hoaLuoiData.shift();
-            nhaDungData.shift();
-            canDotData.shift();
+    // Xử lý pan dọc
+    function panChartY(value) {
+      let dy = value - currentPanY;
+      chart.pan({x: 0, y: dy});
+      currentPanY = parseInt(value);
+      autoUpdate = false;
+    }
+
+    function resetPanSliders() {
+      currentPanX = 0;
+      currentPanY = 0;
+      document.getElementById('panX').value = 0;
+      document.getElementById('panY').value = 0;
+    }
+
+    // Cập nhật dữ liệu tự động mỗi 30 giây
+    setInterval(() => {
+      if (!autoUpdate) return;
+      fetch(`https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&results=1`)
+        .then(res => res.json())
+        .then(data => {
+          const f = data.feeds[0];
+          const time = new Date(f.created_at).toLocaleTimeString();
+          const hoa = parseFloat(f.field1);
+          const nha = parseFloat(f.field2);
+          const dot = parseFloat(f.field3);
+          if (!timeLabels.includes(time)) {
+            timeLabels.push(time);
+            hoaLuoiData.push(hoa);
+            nhaDungData.push(nha);
+            canDotData.push(dot);
+            if (timeLabels.length > resultsCount) {
+              timeLabels.shift();
+              hoaLuoiData.shift();
+              nhaDungData.shift();
+              canDotData.shift();
+            }
+            updateChart();
           }
+        });
+    }, 30000);
 
-          updateChart();
-        }
-      });
-  }, 30000);
-
-  document.getElementById('chart').addEventListener('wheel', () => { autoUpdate = false; });
-
-  loadData(2);
-</script>
+    document.getElementById('chart').addEventListener('wheel', () => { autoUpdate = false; });
+    loadData(2);
+  </script>
 
 </body>
 </html>
