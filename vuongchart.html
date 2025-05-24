@@ -12,12 +12,12 @@
     }
     #controls {
       margin-top: 10px;
-      max-width: 1000px;
     }
-    #controls label {
-      display: block;
-      margin: 6px 0;
-    }
+	#panSlider {
+  width: 80vw; /* 80% chiều rộng viewport */
+  max-width: 100%; /* Không vượt quá container */
+}
+
   </style>
 </head>
 <body>
@@ -38,18 +38,14 @@
 
   <canvas id="chart" width="1000" height="400"></canvas>
 
-  <!-- Thanh di chuyển pan nằm ngay dưới biểu đồ -->
+  <!-- Điều khiển zoom/pan -->
   <div id="controls">
     <button onclick="zoomChart(1.2)">🔍 Zoom In</button>
     <button onclick="zoomChart(0.8)">🔎 Zoom Out</button>
     <button onclick="resetZoom()">Reset Zoom</button>
-
-    <label>Pan ngang (X):
-      <input type="range" id="panX" min="-100" max="100" value="0" oninput="panChartX(this.value)">
-    </label>
-
-    <label>Pan dọc (Y):
-      <input type="range" id="panY" min="-100" max="100" value="0" oninput="panChartY(this.value)">
+    <br>
+    <label>Pan trái/phải:
+      <input type="range" id="panSlider" min="-100" max="100" value="0" oninput="panChart(this.value)">
     </label>
   </div>
 
@@ -63,10 +59,6 @@
     let canDotData = [];
     let resultsCount = 480;
     let autoUpdate = true;
-
-    // Biến lưu trạng thái pan hiện tại
-    let currentPanX = 0;
-    let currentPanY = 0;
 
     function createChart() {
       const ctx = document.getElementById("chart").getContext("2d");
@@ -115,15 +107,7 @@
             zoom: {
               pan: {
                 enabled: true,
-                mode: 'xy',
-                onPanComplete({chart}) {
-                  // Đồng bộ giá trị pan slider khi pan thủ công (nếu dùng chuột/touch)
-                  currentPanX = Math.round(chart.state.pan.x);
-                  currentPanY = Math.round(chart.state.pan.y);
-                  document.getElementById('panX').value = currentPanX;
-                  document.getElementById('panY').value = currentPanY;
-                  autoUpdate = false;
-                }
+                mode: 'x'
               },
               zoom: {
                 wheel: { enabled: true },
@@ -185,45 +169,24 @@
           if (!chart) createChart();
           else updateChart();
           autoUpdate = false;
-          resetPanSliders();
         });
     }
 
     function resetZoom() {
       chart.resetZoom();
       autoUpdate = true;
-      resetPanSliders();
+      document.getElementById("panSlider").value = 0;
     }
 
     function zoomChart(factor) {
       chart.zoom(factor);
-      autoUpdate = false;
     }
 
-    // Xử lý pan ngang
-    function panChartX(value) {
-      let dx = value - currentPanX;
-      chart.pan({x: dx, y: 0});
-      currentPanX = parseInt(value);
-      autoUpdate = false;
+    function panChart(value) {
+      const panAmount = parseInt(value) * 5;
+      chart.pan({ x: panAmount });
     }
 
-    // Xử lý pan dọc
-    function panChartY(value) {
-      let dy = value - currentPanY;
-      chart.pan({x: 0, y: dy});
-      currentPanY = parseInt(value);
-      autoUpdate = false;
-    }
-
-    function resetPanSliders() {
-      currentPanX = 0;
-      currentPanY = 0;
-      document.getElementById('panX').value = 0;
-      document.getElementById('panY').value = 0;
-    }
-
-    // Cập nhật dữ liệu tự động mỗi 30 giây
     setInterval(() => {
       if (!autoUpdate) return;
       fetch(`https://api.thingspeak.com/channels/${channelID}/feeds.json?api_key=${apiKey}&results=1`)
