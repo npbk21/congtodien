@@ -5,6 +5,19 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1"></script>
   <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+    h2, div {
+      padding-left: 10px;
+    }
+    canvas {
+      display: block;
+      width: 100vw !important;
+      height: 400px !important;
+    }
     button, input {
       margin: 5px;
       padding: 8px 12px;
@@ -15,36 +28,35 @@
 <body>
   <h2>Biểu đồ Công suất</h2>
 
-<div>
-  <button onclick="loadData(2)">2 giờ</button>
-  <button onclick="loadData(6)">6 giờ</button>
-  <button onclick="loadData(12)">12 giờ</button>
-  <button onclick="loadData(24)">24 giờ</button>
-  <button onclick="window.location.href='https://congtodientu.xyz/vuong.html'">Biến Tần</button>
-</div>
+  <div>
+    <button onclick="loadData(2)">2 giờ</button>
+    <button onclick="loadData(6)">6 giờ</button>
+    <button onclick="loadData(12)">12 giờ</button>
+    <button onclick="loadData(24)">24 giờ</button>
+    <button onclick="window.location.href='https://congtodientu.xyz/vuong.html'">Biến Tần</button>
+  </div>
 
-
-  <!-- Chọn 1 ngày -->
   <div>
     <label>Chọn ngày: <input type="date" id="selectedDate"></label>
     <button onclick="loadSelectedDate()">Xem dữ liệu</button>
   </div>
 
-  <canvas id="chart" width="1000" height="400"></canvas>
+  <canvas id="chart"></canvas>
 
-  <script>
+<script>
   const channelID = "2942927"; 
   const apiKey = "NC41IZYUNYI125RV"; 
   let chart;
   let timeLabels = [];
   let hoaLuoiData = [];
   let nhaDungData = [];
-  let canDotData = []; // Dữ liệu field3
+  let canDotData = [];
   let resultsCount = 480;
   let autoUpdate = true;
 
   function createChart() {
-    chart = new Chart(document.getElementById("chart"), {
+    const ctx = document.getElementById("chart").getContext("2d");
+    chart = new Chart(ctx, {
       type: "line",
       data: {
         labels: timeLabels,
@@ -80,12 +92,15 @@
       },
       options: {
         responsive: true,
-        animation: false,
+        maintainAspectRatio: false,
         interaction: {
           mode: 'index',
           intersect: false
         },
         plugins: {
+          tooltip: {
+            enabled: true
+          },
           zoom: {
             pan: {
               enabled: true,
@@ -127,8 +142,7 @@
   function loadData(hours) {
     const now = new Date();
     const endTime = now.toISOString().split('.')[0].replace('T', '%20');
-    const startTime = new Date(now.getTime() - hours * 3600 * 1000)
-                       .toISOString().split('.')[0].replace('T', '%20');
+    const startTime = new Date(now.getTime() - hours * 3600 * 1000).toISOString().split('.')[0].replace('T', '%20');
 
     fetchAndUpdate(startTime, endTime);
   }
