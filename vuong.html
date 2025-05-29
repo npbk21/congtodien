@@ -74,7 +74,7 @@
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
 			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
 			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
-			let value = data.CongSuatTongTai - data.CongSuatCanDot;
+			let value = data.CongSuatTongTai - data.CongSuatDangDot;
 			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating..." : value + "W";
 			document.getElementById("DienAp").innerText = data.DienAp + "V";
 			document.getElementById("DienApCaoNhat").innerText = data.DienApCaoNhat + "V";
@@ -84,6 +84,7 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("pf").innerText = data.pf;
+			document.getElementById("CongSuatDangDot").innerText = data.CongSuatDangDot + "W";
 			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
 
 
@@ -264,7 +265,7 @@
     window.onload = () => {
       createTable();      
       fetchData();        
-      setInterval(fetchData, 1000); // cập nhật giá trị mỗi 2 giây
+      setInterval(fetchData, 1000); // cập nhật giá trị mỗi 1 giây
     };
   </script>
   <script>
@@ -350,7 +351,7 @@
 		<div class="battery-color absolute -bottom-[260px] -left-[166px] flex w-[400px] flex-col items-center">
           
 		<div id="error"></div>
-  <table style="margin-top: 60px;">
+  <table style="margin-top: 100px;">
     <thead>
       <tr>
         <th>Sạc Mạnh Quân (40A)</th>
@@ -363,7 +364,7 @@
     </tbody>
   </table>
   	<p style="text-align: center; margin-top: 10px; font-size: 15px; color: #c62828;">
-        Thiết bị bám tải cho Micro Inverter và biến tần nội địa Nhật.<br>Zalo 0971282336.
+        Thiết bị bám tải cho Micro Inverter và biến tần nội địa Nhật.<br>Zalo: 0971282336
     </p>
   </div>
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
@@ -392,14 +393,15 @@
 		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay" class="flash">- W</span></p>
 		  <p class="text-left text-[9px]">Tổng Công Suất</p>
 		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTai" class="flash">- W</span></p>
-		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTaiCaoNhat" class="flash">- W</span></p>
-          </div>
-          <div class="relative flex flex-col items-center justify-center gap-1">
+		  </div>
+          <div  class="relative flex flex-col items-center justify-center gap-1">
 		  <p class="text-left text-[9px]">💡Công Suất Cần Đốt</p>
 		  <p class="text-left font-bold" id="CongSuatCanDot">- W</p>
+		  <p class="text-left text-[9px]">💡Đang Đốt Thực Tế</p>
+		  <p class="text-left font-bold" id="CongSuatDangDot">- W</p>
 		  <p class="text-left text-[9px]">💡Đã Đốt Cao Nhất</p>
 		  <p class="text-left font-bold" id="CongSuatCanDotCaoNhat">- W</p>
+		  
 			<div class="relative my-4 flex items-center justify-between">
               <svg id="essen" viewBox="0 0 24 24" x="402" y="177.5" width="79" height="79">
                 <defs>
@@ -417,9 +419,10 @@
             </div>
 			<p class="text-left text-[9px]">Công Suất Nhà Dùng</p>
 		  <p class="text-left font-bold" id="CongSuatNhaDung">- W</p>
+		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
+		  <p class="text-left font-bold" id="CongSuatTongTaiCaoNhat"></p>
 		  <p class="text-left text-[9px]">Hệ Số Công Suất</p>
 		  <p class="text-left font-bold" id="pf"></p>
-			
           </div>
         </div>
   
