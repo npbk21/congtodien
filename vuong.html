@@ -72,7 +72,6 @@
 			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
 			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
-			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
 			document.getElementById("CongSuatDangDot").innerText = data.CongSuatDangDot + "W";
 			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
 			let value = data.CongSuatTongTai - data.CongSuatDangDot;
@@ -85,7 +84,7 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("pf").innerText = data.pf;
-			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
+			document.getElementById("CongSuatDangDotCaoNhat").innerText = data.CongSuatDangDotCaoNhat + "W";
 
 
 			updateBatteryLevel(data.soc, data.b);
@@ -393,14 +392,14 @@
 		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay" class="flash">- W</span></p>
 		  <p class="text-left text-[9px]">Tổng Công Suất</p>
 		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTai" class="flash">- W</span></p>
+		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
+		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTaiCaoNhat" class="flash">- W</span></p>
 		  </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
 		  <p class="text-left text-[9px]">💡Công Suất Đang Đốt</p>
 		  <p class="text-left font-bold" id="CongSuatDangDot">- W</p>
-		  <p class="text-left text-[9px]">💡Công Suất Cần Đốt</p>
-		  <p class="text-left font-bold" id="CongSuatCanDot">- W</p>
 		  <p class="text-left text-[9px]">💡Đã Đốt Cao Nhất</p>
-		  <p class="text-left font-bold" id="CongSuatCanDotCaoNhat">- W</p>
+		  <p class="text-left font-bold" id="CongSuatDangDotCaoNhat">- W</p>
 			<div class="relative my-4 flex items-center justify-between">
               <svg id="essen" viewBox="0 0 24 24" x="402" y="177.5" width="79" height="79">
                 <defs>
@@ -418,8 +417,6 @@
             </div>
 			<p class="text-left text-[9px]">Công Suất Nhà Dùng</p>
 		  <p class="text-left font-bold" id="CongSuatNhaDung">- W</p>
-		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-		  <p class="text-left font-bold" id="CongSuatTongTaiCaoNhat">- W</p>
 		  <p class="text-left text-[9px]">Hệ Số Công Suất</p>
 		  <p class="text-left font-bold" id="pf"></p>
 			
