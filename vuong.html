@@ -52,7 +52,7 @@
       firebase.initializeApp(firebaseConfig);
 
       var dotTaiStatus = false;
-
+	  var NangCapStatus = false;
     // Lắng nghe dữ liệu điện từ node /esp8266/DuLieu
     firebase.database().ref("/esp8266/DuLieu").on("value", function(snapshot) {
       var data = snapshot.val();
@@ -70,6 +70,15 @@
       }
     });
 
+// Lắng nghe trạng thái Nâng Cấp từ node riêng /esp8266/NangCap
+    firebase.database().ref("/esp8266/NangCap").on("value", function(snapshot) {
+      var NangCap = snapshot.val();
+      if (NangCap && typeof NangCap.NangCapisRunning !== 'undefined') {
+        NangCapStatus = NangCap.NangCapisRunning;
+        document.getElementById("TrangThaiNangCap").innerText = NangCapStatus ? "Nâng Cấp: BẬT" : "Nâng Cấp: TẮT";
+      }
+    });
+	
 	function TrangThaiDotTai() {
       dotTaiStatus = !dotTaiStatus;
       var updates = { DotTaiisRunning: dotTaiStatus };
@@ -82,6 +91,17 @@
         });
     }
 
+	function TrangThaiNangCap() {
+      NangCapStatus = !NangCapStatus;
+      var updates = { NangCapisRunning: NangCapStatus };
+      firebase.database().ref("/esp8266/NangCap").update(updates)
+        .then(() => {
+          console.log("Trạng thái Nâng Cấp đã được cập nhật:", NangCapStatus);
+        })
+        .catch((error) => {
+          console.error("Lỗi khi cập nhật trạng thái:", error);
+        });
+    }
 
 
 function updateUI(data) {
@@ -101,9 +121,10 @@ function updateUI(data) {
 			document.getElementById("DienApThapNhat").innerText = data.DienApThapNhat + "V";
 			document.getElementById("DongDien").innerText = data.DongDien + "A";
 			document.getElementById("DongDienCaoNhat").innerText = data.DongDienCaoNhat + "A";
-			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
+			// document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("pf").innerText = data.pf;
+			document.getElementById("Ver").innerText = "Ver:" + data.Ver;
 			// document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
 
 
@@ -383,7 +404,7 @@ function updateUI(data) {
     </tbody>
   </table>
   	<p style="text-align: center; margin-top: 10px; font-size: 15px; color: #c62828;">
-        Thiết bị bám tải cho Micro Inverter và biến tần nội địa Nhật.<br>Zalo 0971282336.
+        Thiết bị bám tải cho Micro Inverter và biến tần nội địa Nhật.<br>Zalo 0971282336<br> <p id ="Ver">Ver 1.0</p>.
     </p>
   </div>
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
@@ -403,8 +424,8 @@ function updateUI(data) {
           <p class="text-left font-bold" id="DongDien">- A</p>
           <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
 		  <p class="text-left font-bold" id="DongDienCaoNhat">- A</p>
-          <p class="text-left text-[9px]">Tần Số</p>
-		  <p class="text-left font-bold" id="TanSo">- Hz</p>
+          <p class="text-left text-[9px]">Hệ Số Công Suất</p>
+		  <p class="text-left font-bold" id="pf"></p>
         </div>
         <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
@@ -439,9 +460,7 @@ function updateUI(data) {
             </div>
 			<p class="text-left text-[9px]">Công Suất Nhà Dùng</p>
 		  <p class="text-left font-bold" id="CongSuatNhaDung">- W</p>
-		  <p class="text-left text-[9px]">Hệ Số Công Suất</p>
-		  <p class="text-left font-bold" id="pf"></p>
-			
+		  <button id="TrangThaiNangCap" onclick="TrangThaiNangCap()">Nâng Cấp: TẮT</button>
           </div>
         </div>
   
