@@ -51,21 +51,41 @@
       };
       firebase.initializeApp(firebaseConfig);
 
-      var sensorRef = firebase.database().ref("/esp8266");
+      var dotTaiStatus = false;
 
-      sensorRef.on("value", function(snapshot) {
-		var data = snapshot.val();
-			if (data) {
-				updateUI(data);
-			}
-		}, function(error) {
-		console.error("Lỗi khi lấy dữ liệu: " + error.code);
-	   });
-	   
-        
+    // Lắng nghe dữ liệu điện từ node /esp8266/DuLieu
+    firebase.database().ref("/esp8266/DuLieu").on("value", function(snapshot) {
+      var data = snapshot.val();
+      if (data) {
+        updateUI(data);
+      }
+    });
 
-        function updateUI(data) {
-		
+    // Lắng nghe trạng thái Đẩy Lưới từ node riêng /esp8266/DotTai
+    firebase.database().ref("/esp8266/DotTai").on("value", function(snapshot) {
+      var dotTai = snapshot.val();
+      if (dotTai && typeof dotTai.DotTaiisRunning !== 'undefined') {
+        dotTaiStatus = dotTai.DotTaiisRunning;
+        document.getElementById("TrangThaiDayLuoi").innerText = dotTaiStatus ? "Đẩy Lưới: TẮT" : "Đẩy Lưới: BẬT";
+      }
+    });
+
+	function TrangThaiDotTai() {
+      dotTaiStatus = !dotTaiStatus;
+      var updates = { DotTaiisRunning: dotTaiStatus };
+      firebase.database().ref("/esp8266/DotTai").update(updates)
+        .then(() => {
+          console.log("Trạng thái Đẩy Lưới đã được cập nhật:", dotTaiStatus);
+        })
+        .catch((error) => {
+          console.error("Lỗi khi cập nhật trạng thái:", error);
+        });
+    }
+
+
+
+function updateUI(data) {
+
 			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
 			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
 			document.getElementById("CongSuatTongTai").innerText =  data.CongSuatTongTai + "W";
@@ -84,7 +104,7 @@
 			document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("pf").innerText = data.pf;
-			document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
+			// document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
 
 
 			updateBatteryLevel(data.soc, data.b);
@@ -146,7 +166,7 @@
 
   function connectFirebase() {
 
-      var dataRef = firebase.database().ref("/esp8266");
+      var dataRef = firebase.database().ref("/esp8266/DuLieu");
       dataRef.on("value", function(snapshot) {
           var data = snapshot.val();
           console.log("Firebase data:", data);
@@ -350,7 +370,7 @@
 		<div class="battery-color absolute -bottom-[260px] -left-[166px] flex w-[400px] flex-col items-center">
           
 		<div id="error"></div>
-  <table style="margin-top: 100px;">
+  <table style="margin-top: 60px;">
     <thead>
       <tr>
         <th>Sạc Mạnh Quân (40A)</th>
@@ -363,7 +383,7 @@
     </tbody>
   </table>
   	<p style="text-align: center; margin-top: 10px; font-size: 15px; color: #c62828;">
-        Thiết bị bám tải cho Micro Inverter và biến tần nội địa Nhật.<br>Zalo: 0971282336
+        Thiết bị bám tải cho Micro Inverter và biến tần nội địa Nhật.<br>Zalo 0971282336.
     </p>
   </div>
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
@@ -393,13 +413,15 @@
 		  <p class="text-left text-[9px]">Tổng Công Suất</p>
 		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTai" class="flash">- W</span></p>
 		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTaiCaoNhat" class="flash">- W</span></p>
-		  </div>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTaiCaoNhat" class="flash">- W</span></p>
+          </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
 		  <p class="text-left text-[9px]">💡Công Suất Cần Đốt</p>
 		  <p class="text-left font-bold" id="CongSuatCanDot">- W</p>
-		  <p class="text-left text-[9px]">💡Cần Đốt Cao Nhất</p>
+		  <button id="TrangThaiDayLuoi" onclick="TrangThaiDotTai()">Đẩy Lưới: TẮT</button>
+		<!--  <p class="text-left text-[9px]">💡Đã Đốt Cao Nhất</p>
 		  <p class="text-left font-bold" id="CongSuatCanDotCaoNhat">- W</p>
+		  -->
 			<div class="relative my-4 flex items-center justify-between">
               <svg id="essen" viewBox="0 0 24 24" x="402" y="177.5" width="79" height="79">
                 <defs>
