@@ -52,7 +52,6 @@
       firebase.initializeApp(firebaseConfig);
 
       var dotTaiStatus = false;
-	  var NangCapStatus = false;
     // Lắng nghe dữ liệu điện từ node /esp8266/DuLieu
     firebase.database().ref("/esp8266/DuLieu").on("value", function(snapshot) {
       var data = snapshot.val();
@@ -69,15 +68,6 @@
         document.getElementById("TrangThaiDayLuoi").innerText = dotTaiStatus ? "Đẩy Lưới: TẮT" : "Đẩy Lưới: BẬT";
       }
     });
-
-// Lắng nghe trạng thái Nâng Cấp từ node riêng /esp8266/NangCap
-    firebase.database().ref("/esp8266/NangCap").on("value", function(snapshot) {
-      var NangCap = snapshot.val();
-      if (NangCap && typeof NangCap.NangCapisRunning !== 'undefined') {
-        NangCapStatus = NangCap.NangCapisRunning;
-        document.getElementById("TrangThaiNangCap").innerText = NangCapStatus ? "Nâng Cấp: BẬT" : "Nâng Cấp: TẮT";
-      }
-    });
 	
 	function TrangThaiDotTai() {
       dotTaiStatus = !dotTaiStatus;
@@ -85,18 +75,6 @@
       firebase.database().ref("/esp8266/DotTai").update(updates)
         .then(() => {
           console.log("Trạng thái Đẩy Lưới đã được cập nhật:", dotTaiStatus);
-        })
-        .catch((error) => {
-          console.error("Lỗi khi cập nhật trạng thái:", error);
-        });
-    }
-
-	function TrangThaiNangCap() {
-      NangCapStatus = !NangCapStatus;
-      var updates = { NangCapisRunning: NangCapStatus };
-      firebase.database().ref("/esp8266/NangCap").update(updates)
-        .then(() => {
-          console.log("Trạng thái Nâng Cấp đã được cập nhật:", NangCapStatus);
         })
         .catch((error) => {
           console.error("Lỗi khi cập nhật trạng thái:", error);
@@ -429,8 +407,6 @@ function updateUI(data) {
         </div>
         <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
-		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="SoHomNay" class="flash">- W</span></p>
 		  <p class="text-left text-[9px]">Tổng Công Suất</p>
 		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTai" class="flash">- W</span></p>
 		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
@@ -460,7 +436,8 @@ function updateUI(data) {
             </div>
 			<p class="text-left text-[9px]">Công Suất Nhà Dùng</p>
 		  <p class="text-left font-bold" id="CongSuatNhaDung">- W</p>
-		  <button id="TrangThaiNangCap" onclick="TrangThaiNangCap()">Nâng Cấp: TẮT</button>
+		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
+		  <p class="text-left font-bold" id="SoHomNay">- kWh</p>
           </div>
         </div>
   
