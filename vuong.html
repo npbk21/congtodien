@@ -65,7 +65,7 @@
       var dotTai = snapshot.val();
       if (dotTai && typeof dotTai.DotTaiisRunning !== 'undefined') {
         dotTaiStatus = dotTai.DotTaiisRunning;
-        document.getElementById("TrangThaiDayLuoi").innerText = dotTaiStatus ? "Đẩy Lưới: TẮT" : "Đẩy Lưới: BẬT";
+        document.getElementById("TrangThaiDayLuoi").innerText = dotTaiStatus ? "Đẩy lưới: tắt" : "Đẩy lưới: bật";
       }
     });
 	
@@ -415,7 +415,7 @@ function updateUI(data) {
           <div class="relative flex flex-col items-center justify-center gap-1">
 		  <p class="text-left text-[9px]">💡Công Suất Cần Đốt</p>
 		  <p class="text-left font-bold" id="CongSuatCanDot">- W</p>
-		  <button id="TrangThaiDayLuoi" onclick="TrangThaiDotTai()">Đẩy Lưới: TẮT</button>
+		  <button id="TrangThaiDayLuoi" onclick="TrangThaiDotTai()">Đẩy lưới: tắt</button>
 		<!--  <p class="text-left text-[9px]">💡Đã Đốt Cao Nhất</p>
 		  <p class="text-left font-bold" id="CongSuatCanDotCaoNhat">- W</p>
 		  -->
