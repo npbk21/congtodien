@@ -85,7 +85,7 @@
 function updateUI(data) {
 
 			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
-			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
+			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W " + (data.CongSuatHoaLuoi/data.CongSuatTongTai)*100 + "%";
 			document.getElementById("CongSuatTongTai").innerText =  data.CongSuatTongTai + "W";
 			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
 			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
