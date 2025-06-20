@@ -51,7 +51,7 @@
       };
       firebase.initializeApp(firebaseConfig);
 
-      var dotTaiStatus = false;
+      var hoaLuoiStatus = false;
     // Lắng nghe dữ liệu điện từ node /esp8266/DuLieu
     firebase.database().ref("/esp8266/DuLieu").on("value", function(snapshot) {
       var data = snapshot.val();
@@ -60,21 +60,21 @@
       }
     });
 
-    // Lắng nghe trạng thái Đẩy Lưới từ node riêng /esp8266/DotTai
-    firebase.database().ref("/esp8266/DotTai").on("value", function(snapshot) {
-      var dotTai = snapshot.val();
-      if (dotTai && typeof dotTai.DotTaiisRunning !== 'undefined') {
-        dotTaiStatus = dotTai.DotTaiisRunning;
-        document.getElementById("TrangThaiDayLuoi").innerText = dotTaiStatus ? "Đẩy lưới: tắt" : "Đẩy lưới: bật";
+    // Lắng nghe trạng thái Hòa Lưới từ node riêng /esp8266/HoaLuoi
+    firebase.database().ref("/esp8266/HoaLuoi").on("value", function(snapshot) {
+      var hoaLuoi = snapshot.val();
+      if (hoaLuoi && typeof hoaLuoi.HoaLuoiisRunning !== 'undefined') {
+        hoaLuoiStatus = hoaLuoi.HoaLuoiisRunning;
+        document.getElementById("TrangThaiHoaLuoi").innerText = hoaLuoiStatus ? "Hòa lưới: bật" : "Hòa lưới: tắt";
       }
     });
 	
-	function TrangThaiDotTai() {
-      dotTaiStatus = !dotTaiStatus;
-      var updates = { DotTaiisRunning: dotTaiStatus };
-      firebase.database().ref("/esp8266/DotTai").update(updates)
+	function TrangThaiHoaLuoi() {
+      hoaLuoiStatus = !hoaLuoiStatus;
+      var updates = { HoaLuoiisRunning: hoaLuoiStatus };
+      firebase.database().ref("/esp8266/HoaLuoi").update(updates)
         .then(() => {
-          console.log("Trạng thái Đẩy Lưới đã được cập nhật:", dotTaiStatus);
+          console.log("Trạng thái Hòa Lưới đã được cập nhật:", hoaLuoiStatus);
         })
         .catch((error) => {
           console.error("Lỗi khi cập nhật trạng thái:", error);
@@ -86,25 +86,19 @@ function updateUI(data) {
 
 			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
 			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W " + Math.round((data.CongSuatHoaLuoi/data.CongSuatTongTai)*100) + "%";
-			document.getElementById("CongSuatTongTai").innerText =  data.CongSuatTongTai + "W";
 			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
 			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
-			document.getElementById("CongSuatCanDot").innerText = data.CongSuatCanDot + "W";
+			document.getElementById("CongSuatCanDot").innerText = "0W";
 			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
-			let value = data.CongSuatTongTai - data.CongSuatCanDot;
-			document.getElementById("CongSuatNhaDung").innerText = (value < 0) ? "Updating..." : value + "W";
+			document.getElementById("CongSuatNhaDung").innerText = data.CongSuatTongTai + "W";
 			document.getElementById("DienAp").innerText = data.DienAp + "V";
 			document.getElementById("DienApCaoNhat").innerText = data.DienApCaoNhat + "V";
 			document.getElementById("DienApThapNhat").innerText = data.DienApThapNhat + "V";
 			document.getElementById("DongDien").innerText = data.DongDien + "A";
 			document.getElementById("DongDienCaoNhat").innerText = data.DongDienCaoNhat + "A";
-			// document.getElementById("TanSo").innerText = data.TanSo + "Hz";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("pf").innerText = data.pf;
-			// document.getElementById("Ver").innerText = "Ver:" + data.Ver;
-			// document.getElementById("CongSuatCanDotCaoNhat").innerText = data.CongSuatCanDotCaoNhat + "W";
-
 
 			updateBatteryLevel(data.soc, data.b);
 
@@ -287,15 +281,13 @@ function updateUI(data) {
         </div>
         <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
-		  <p class="text-left text-[9px]">Tổng Công Suất</p>
-		  <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTai" class="flash">- W</span></p>
-		  <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatTongTaiCaoNhat" class="flash">- W</span></p>
+		  <p class="text-left text-[9px]">Công Suất Đang Dùng</p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatNhaDung" class="flash">- W</span></p>
           </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
 		  <p class="text-left text-[9px]">💡Công Suất Cần Đốt</p>
 		  <p class="text-left font-bold" id="CongSuatCanDot">- W</p>
-		  <button id="TrangThaiDayLuoi" onclick="TrangThaiDotTai()">Đẩy lưới: tắt</button>
+		  <button id="TrangThaiHoaLuoi" onclick="TrangThaiHoaLuoi()">Hòa lưới: tắt</button>
 		<!--  <p class="text-left text-[9px]">💡Đã Đốt Cao Nhất</p>
 		  <p class="text-left font-bold" id="CongSuatCanDotCaoNhat">- W</p>
 		  -->
@@ -314,8 +306,8 @@ function updateUI(data) {
                 <path fill="#ff7b00" d="m15 13l-4 4v-3H2v-2h9V9l4 4M5 20v-4h2v2h10v-7.81l-5-4.5L7.21 10H4.22L12 3l10 9h-3v8H5Z"></path>
               </svg>
             </div>
-			<p class="text-left text-[9px]">Công Suất Nhà Dùng</p>
-		  <p class="text-left font-bold" id="CongSuatNhaDung">- W</p>
+			<p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
+		  <p class="text-left font-bold" id="CongSuatTongTaiCaoNhat">- W</p>
 		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
 		  <p class="text-left font-bold" id="SoHomNay">- kWh</p>
           </div>
