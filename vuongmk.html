@@ -52,6 +52,7 @@
       firebase.initializeApp(firebaseConfig);
 
       var hoaLuoiStatus = false;
+	  var phatHienStatus = false;
     // Lắng nghe dữ liệu điện từ node /esp8266/DuLieu
     firebase.database().ref("/esp8266/DuLieu").on("value", function(snapshot) {
       var data = snapshot.val();
@@ -68,6 +69,27 @@
         document.getElementById("TrangThaiHoaLuoi").innerText = hoaLuoiStatus ? "Hòa lưới: bật" : "Hòa lưới: tắt";
       }
     });
+	
+	// Lắng nghe trạng thái Phát Hiện từ node riêng /esp8266/PhatHien
+    firebase.database().ref("/esp8266/PhatHien").on("value", function(snapshot) {
+      var phatHien = snapshot.val();
+      if (phatHien && typeof phatHien.PhatHienNguoiisRunning !== 'undefined') {
+        phatHienStatus = phatHien.PhatHienNguoiisRunning;
+        document.getElementById("TrangThaiPhatHien").innerText = phatHienStatus ? "Phát hiện: bật" : "Phát hiện: tắt";
+      }
+    });
+	
+	function TrangThaiPhatHien() {
+      phatHienStatus = !phatHienStatus;
+      var updates = { PhatHienNguoiisRunning: phatHienStatus };
+      firebase.database().ref("/esp8266/PhatHien").update(updates)
+        .then(() => {
+          console.log("Trạng thái Phát Hiện đã được cập nhật:", phatHienStatus);
+        })
+        .catch((error) => {
+          console.error("Lỗi khi cập nhật trạng thái:", error);
+        });
+    }
 	
 	function TrangThaiHoaLuoi() {
       hoaLuoiStatus = !hoaLuoiStatus;
@@ -89,7 +111,6 @@ function updateUI(data) {
 			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
 			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
-			document.getElementById("CongSuatCanDot").innerText = "0W";
 			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
 			document.getElementById("CongSuatNhaDung").innerText = data.CongSuatTongTai + "W";
 			document.getElementById("DienAp").innerText = data.DienAp + "V";
@@ -285,12 +306,9 @@ function updateUI(data) {
           <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatNhaDung" class="flash">- W</span></p>
           </div>
           <div class="relative flex flex-col items-center justify-center gap-1">
-		  <p class="text-left text-[9px]">💡Công Suất Cần Đốt</p>
-		  <p class="text-left font-bold" id="CongSuatCanDot">- W</p>
 		  <button id="TrangThaiHoaLuoi" onclick="TrangThaiHoaLuoi()">Hòa lưới: tắt</button>
-		<!--  <p class="text-left text-[9px]">💡Đã Đốt Cao Nhất</p>
-		  <p class="text-left font-bold" id="CongSuatCanDotCaoNhat">- W</p>
-		  -->
+		  <button id="TrangThaiPhatHien" onclick="TrangThaiPhatHien()">Phát hiện: tắt</button>
+		  
 			<div class="relative my-4 flex items-center justify-between">
               <svg id="essen" viewBox="0 0 24 24" x="402" y="177.5" width="79" height="79">
                 <defs>
