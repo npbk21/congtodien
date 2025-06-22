@@ -107,7 +107,7 @@
 function updateUI(data) {
 
 			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
-			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W " + Math.round((data.CongSuatHoaLuoi/data.CongSuatTongTai)*100) + "%";
+			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W ";
 			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
 			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
@@ -275,10 +275,6 @@ function updateUI(data) {
 		<div class="battery-color absolute -bottom-[260px] -left-[166px] flex w-[400px] flex-col items-center">
           
 		<div id="error"></div>
-  
-  	<p style="text-align: center; margin-top: 70px; font-size: 15px; color: #c62828;">
-        Thiết bị bám tải cho Micro Inverter và biến tần nội địa Nhật.<br>Zalo: 0971.282.336<br>
-    </p>
   </div>
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
           <p class="text-left text-[9px]">Điện Áp ~</p>
