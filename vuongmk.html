@@ -75,7 +75,7 @@
       var phatHien = snapshot.val();
       if (phatHien && typeof phatHien.PhatHienNguoiisRunning !== 'undefined') {
         phatHienStatus = phatHien.PhatHienNguoiisRunning;
-        document.getElementById("TrangThaiPhatHien").innerText = phatHienStatus ? "Phát hiện: bật" : "Phát hiện: tắt";
+        document.getElementById("TrangThaiPhatHien").innerText = phatHienStatus ? "Cảm biến: bật" : "Cảm biến: tắt";
       }
     });
 	
@@ -84,7 +84,7 @@
       var updates = { PhatHienNguoiisRunning: phatHienStatus };
       firebase.database().ref("/esp8266/PhatHien").update(updates)
         .then(() => {
-          console.log("Trạng thái Phát Hiện đã được cập nhật:", phatHienStatus);
+          console.log("Trạng thái Cảm biến đã được cập nhật:", phatHienStatus);
         })
         .catch((error) => {
           console.error("Lỗi khi cập nhật trạng thái:", error);
@@ -108,7 +108,6 @@ function updateUI(data) {
 
 			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
 			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W ";
-			document.getElementById("CongSuatTongTaiCaoNhat").innerText =  data.CongSuatTongTaiCaoNhat + "W";
 			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
 			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
@@ -120,48 +119,26 @@ function updateUI(data) {
 			document.getElementById("DongDienCaoNhat").innerText = data.DongDienCaoNhat + "A";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("pf").innerText = data.pf;
-
-			updateBatteryLevel(data.soc, data.b);
-
-            if(data.p1 > 0){
-                document.getElementById("n-pv1").classList.add("dot3");
-            } else {
-                document.getElementById("n-pv1").classList.remove("dot3");
-            }
-            if(data.p2 > 0){
-                document.getElementById("n-pv2").classList.add("dot2");
-            } else {
-                document.getElementById("n-pv2").classList.remove("dot2");
-            }
-            if(data.p1 == 0 && data.p2 == 0){
-                document.getElementById("n-pv").classList.remove("dot");
-            } else {
-                document.getElementById("n-pv").classList.add("dot");
-            }
-            if(data.l + data.u == 0){
-                document.getElementById("n-load").classList.remove("dot");
-            } else {
-                document.getElementById("n-load").classList.add("dot");
-            }
-
-            
-            var gridI = document.getElementById("n-grid");
-			var calculatedG = (data.CongSuatTongTai - data.CongSuatHoaLuoi);
-
-			if (calculatedG < 0) {
-				gridI.classList.remove("move-right");
-				gridI.classList.add("dot");
-				gridI.classList.add("move-left");
-			} else if (calculatedG > 0) {
-				gridI.classList.remove("move-left");
-				gridI.classList.add("dot");
-				gridI.classList.add("move-right");
-			} else {
-				gridI.classList.remove("dot");
-			}
-
+			document.getElementById("SuDungThangNay").innerText = data.SuDungThangNay + "kWh";
+			document.getElementById("TienDienThangNay").innerText = data.TienDienThangNay;
+			document.getElementById("HoaLuoiHomQua").innerText = data.HoaLuoiHomQua;
+			document.getElementById("HoaLuoiThangTruoc").innerText = data.HoaLuoiThangTruoc;
+			document.getElementById("HoaLuoiThangNay").innerText = data.HoaLuoiThangNay;
+			document.getElementById("SuDungThangTruoc").innerText = data.SuDungThangTruoc;
+			document.getElementById("TienDienThangTruoc").innerText = data.TienDienThangTruoc;  
+			document.getElementById("TocDoDotTien").innerText = data.TocDoDotTien + "vnđ/h";
         }
 		
+		const data = {
+  SuDungThangNay: "120",
+  TienDienThangNay: "250000",
+  SuDungThangTruoc: "100",
+  TienDienThangTruoc: "210000",
+  HoaLuoiThangTruoc: "80",
+  HoaLuoiHomQua: "5",
+  HoaLuoiThangNay: "70"
+};
+
       function scaleToFit() {
 		let progressBar = document.getElementById("diagram-container");
 		let containerWidth = document.querySelector("body").offsetWidth;
@@ -192,6 +169,7 @@ function updateUI(data) {
     </script>
 	
 
+
   <script>
   document.addEventListener("DOMContentLoaded", function () {
     scaleToFit(); // chạy ngay khi DOM sẵn sàng
@@ -218,7 +196,7 @@ function updateUI(data) {
               <p class="solar-color text-xl font-bold" id="CongSuatHoaLuoi">.</p>
               <p class="solar-color text-[9px]">Đang Hòa Lưới</p>
             </div><span style=color:green><a href="https://congtodientu.xyz/vuongchart.html">Biểu Đồ📉</a></span>
-			<button style=color:green class="text-left text-[9px]" id="TrangThaiPhatHien" onclick="TrangThaiPhatHien()">Phát hiện: tắt</button>
+			<button style=color:green class="text-left text-[9px]" id="TrangThaiPhatHien" onclick="TrangThaiPhatHien()">Cảm biến: tắt</button>
           </div>
           <div class="mt-3 flex gap-6">
             <div class="relative w-1/2">
@@ -273,10 +251,53 @@ function updateUI(data) {
             </div>
           </div>
         </div>
+		
 		<div class="battery-color absolute -bottom-[260px] -left-[166px] flex w-[400px] flex-col items-center">
           
 		<div id="error"></div>
+		<table style="margin-top: 60px;" class="table-auto text-left text-sm">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Giá trị</th>
+      <th>Đơn vị</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+      <td>Tiền Điện Tháng Này</td>
+      <td id="TienDienThangNay">-</td>
+      <td>vnđ</td>
+    </tr>
+  <tr>
+      <td>Hòa Lưới Hôm Qua</td>
+      <td id="HoaLuoiHomQua">-</td>
+      <td>kWh</td>
+    </tr>
+	<tr>
+      <td>Hòa Lưới Tháng Này</td>
+      <td id="HoaLuoiThangNay">-</td>
+      <td>kWh</td>
+    </tr>
+    <tr>
+      <td>Hòa Lưới Tháng Trước</td>
+      <td id="HoaLuoiThangTruoc">-</td>
+      <td>kWh</td>
+    </tr>    
+    <tr>
+      <td>Sử Dụng Tháng Trước</td>
+      <td id="SuDungThangTruoc">-</td>
+      <td>kWh</td>
+    </tr>
+    <tr>
+      <td>Tiền Điện Tháng Trước</td>
+      <td id="TienDienThangTruoc">-</td>
+      <td>vnđ</td>
+    </tr>  
+  </tbody>
+</table>
   </div>
+  
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
           <p class="text-left text-[9px]">Điện Áp ~</p>
 		  <p class="text-left font-bold" id="DienAp">- V</p>
@@ -297,17 +318,22 @@ function updateUI(data) {
           <p class="text-left text-[9px]">Hệ Số Công Suất</p>
 		  <p class="text-left font-bold" id="pf"></p>
         </div>
+		
         <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
 		  <p class="text-left text-[9px]">Công Suất Đang Dùng</p>
           <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatNhaDung" class="flash">- W</span></p>
-          </div>
+          <p class="text-left text-[9px]">Tốc Độ Đốt Tiền</p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="TocDoDotTien" class="flash">- vnđ</span></p>
+          
+		  </div>
+		  
           <div class="relative flex flex-col items-center justify-center gap-1">
 		  <!--
 		  <button class="text-left text-[9px]" id="TrangThaiHoaLuoi" onclick="TrangThaiHoaLuoi()">Hòa lưới: tắt</button>
 		  -->
 		  <p class="text-left text-[9px]">Sử Dụng Hôm Nay</p>
-		  <p class="text-left font-bold" id="SoHomNay">- kWh</p>
+		  <p class="text-left font-bold" id="SoHomNay">- kWh</p> 
 			<div class="relative my-4 flex items-center justify-between">
               <svg id="essen" viewBox="0 0 24 24" x="402" y="177.5" width="79" height="79">
                 <defs>
@@ -323,9 +349,8 @@ function updateUI(data) {
                 <path fill="#ff7b00" d="m15 13l-4 4v-3H2v-2h9V9l4 4M5 20v-4h2v2h10v-7.81l-5-4.5L7.21 10H4.22L12 3l10 9h-3v8H5Z"></path>
               </svg>
             </div>
-			<p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-		  <p class="text-left font-bold" id="CongSuatTongTaiCaoNhat">- W</p>
-		  
+			<p class="text-left text-[9px]">Sử Dụng Tháng Này</p>
+		  <p class="text-left font-bold" id="SuDungThangNay">- kWh</p>		  
           </div>
         </div>
   
