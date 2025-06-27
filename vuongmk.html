@@ -13,7 +13,7 @@
 
 	
 <script>
-  setTimeout(showTransparentButton, 600000); // 60.000 ms = 60 giây
+  setTimeout(showTransparentButton, 600000);
 
   function showTransparentButton() {
     const overlay = document.getElementById("overlay");
@@ -51,9 +51,8 @@
       };
       firebase.initializeApp(firebaseConfig);
 
-    //  var hoaLuoiStatus = false;
 	  var phatHienStatus = false;
-    // Lắng nghe dữ liệu điện từ node /esp8266/DuLieu
+
     firebase.database().ref("/esp8266/DuLieu").on("value", function(snapshot) {
       var data = snapshot.val();
       if (data) {
@@ -61,16 +60,6 @@
       }
     });
 
-    // Lắng nghe trạng thái Hòa Lưới từ node riêng /esp8266/HoaLuoi
-   // firebase.database().ref("/esp8266/HoaLuoi").on("value", function(snapshot) {
-    //  var hoaLuoi = snapshot.val();
-    //  if (hoaLuoi && typeof hoaLuoi.HoaLuoiisRunning !== 'undefined') {
-    //    hoaLuoiStatus = hoaLuoi.HoaLuoiisRunning;
-    //    document.getElementById("TrangThaiHoaLuoi").innerText = hoaLuoiStatus ? "Hòa lưới: bật" : "Hòa lưới: tắt";
-    //  }
-   // });
-	
-	// Lắng nghe trạng thái Phát Hiện từ node riêng /esp8266/PhatHien
     firebase.database().ref("/esp8266/PhatHien").on("value", function(snapshot) {
       var phatHien = snapshot.val();
       if (phatHien && typeof phatHien.PhatHienNguoiisRunning !== 'undefined') {
@@ -91,17 +80,6 @@
         });
     }
 	
-	//function TrangThaiHoaLuoi() {
-    //   hoaLuoiStatus = !hoaLuoiStatus;
-    //  var updates = { HoaLuoiisRunning: hoaLuoiStatus };
-    //  firebase.database().ref("/esp8266/HoaLuoi").update(updates)
-    //    .then(() => {
-    //      console.log("Trạng thái Hòa Lưới đã được cập nhật:", hoaLuoiStatus);
-    //    })
-    //    .catch((error) => {
-    //      console.error("Lỗi khi cập nhật trạng thái:", error);
-    //    });
-    //}
 
 
 function updateUI(data) {
@@ -178,10 +156,10 @@ function updateUI(data) {
 
   <script>
   document.addEventListener("DOMContentLoaded", function () {
-    scaleToFit(); // chạy ngay khi DOM sẵn sàng
+    scaleToFit(); 
   });
 
-  window.addEventListener("resize", scaleToFit); // vẫn giữ onresize
+  window.addEventListener("resize", scaleToFit);
 </script>
 
 </head>
