@@ -84,9 +84,8 @@
 
 function updateUI(data) {
 
-			document.getElementById("HoaLuoiCaoNhat").innerText = data.HoaLuoiCaoNhat + "W";
-			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W ";
-			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kW";
+			document.getElementById("CongSuatHoaLuoi").innerText = data.CongSuatHoaLuoi + "W";
+			document.getElementById("HoaLuoiHomNay").innerText =  data.HoaLuoiHomNay + "kWh";
 			document.getElementById("SoHomNay").innerText =  data.SoHomNay + "kWh";
 			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatNhaDung - data.CongSuatHoaLuoi + "W";
 			document.getElementById("CongSuatNhaDung").innerText = data.CongSuatNhaDung + "W";
@@ -97,13 +96,11 @@ function updateUI(data) {
 			document.getElementById("TienDienThangNay").innerText = data.TienDienThangNay;
 			document.getElementById("HoaLuoiHomQua").innerText = data.HoaLuoiHomQua;
 			document.getElementById("HoaLuoiThangTruoc").innerText = data.HoaLuoiThangTruoc;
-			document.getElementById("HoaLuoiThangNay").innerText = data.HoaLuoiThangNay;
+			document.getElementById("HoaLuoiThangNay").innerText = data.HoaLuoiThangNay + "kWh";
 			document.getElementById("SuDungThangTruoc").innerText = data.SuDungThangTruoc;
 			document.getElementById("TienDienThangTruoc").innerText = data.TienDienThangTruoc;  
 			document.getElementById("TocDoDotTien").innerText = data.TocDoDotTien + "vnđ/h";
-			document.getElementById("NgayHoaLuoiCaoNhat").innerText = data.NgayHoaLuoiCaoNhat;
 			document.getElementById("ThangHoaLuoiCaoNhat").innerText = data.ThangHoaLuoiCaoNhat;
-			document.getElementById("NgayHoaLuoiCaoNhatThangNay").innerText = data.NgayHoaLuoiCaoNhatThangNay;
 			document.getElementById("TienGiamDuoc").innerText = data.TienGiamDuoc;
 			document.getElementById("TongTienHoaLuoiThuDuoc").innerText = data.TongTienHoaLuoiThuDuoc;
         }
@@ -116,10 +113,7 @@ function updateUI(data) {
 			HoaLuoiThangTruoc: "80",
 			TienGiamDuoc: "1000000",
 			HoaLuoiHomQua: "5",
-			HoaLuoiThangNay: "70",
-			NgayHoaLuoiCaoNhatThangNay: "8",
 			ThangHoaLuoiCaoNhat: "240",
-			NgayHoaLuoiCaoNhat: "9",
 			TongTienHoaLuoiThuDuoc: "100000000",
 };
 
@@ -198,8 +192,8 @@ function updateUI(data) {
             </div>
             <div class="relative w-1/2"> 
               <div>
-			  <p class="solar-color text-[9px] text-center">Cao Nhất Hôm Nay</p>
-			 <p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiCaoNhat"></p>
+			  <p class="solar-color text-[9px] text-center">Hòa Lưới Tháng Này</p>
+			 <p class="solar-color rounded-sm border-[1px] border-[#057a1c] py-1 text-center font-bold" id="HoaLuoiThangNay"></p>
               </div>
 			  
 			  <div class="absolute -bottom-[35px] left-[26px] h-[35px] w-[20px] rounded-br-md border-r-2 border-b-2 border-[#057a1c]">
@@ -263,24 +257,9 @@ function updateUI(data) {
       <td id="HoaLuoiHomQua">-</td>
       <td>kWh</td>
     </tr>
-	<tr>
-      <td>Hòa Lưới Tháng Này</td>
-      <td id="HoaLuoiThangNay">-</td>
-      <td>kWh</td>
-    </tr>
     <tr>
       <td>Hòa Lưới Tháng Trước</td>
       <td id="HoaLuoiThangTruoc">-</td>
-      <td>kWh</td>
-    </tr>
-	<tr>
-      <td>Ngày Hòa Lưới Cao Nhất Tháng Này</td>
-      <td id="NgayHoaLuoiCaoNhatThangNay">-</td>
-      <td>kWh</td>
-    </tr> 
-	<tr>
-      <td>Ngày Hòa Lưới Cao Nhất Ghi Nhận</td>  
-      <td id="NgayHoaLuoiCaoNhat">-</td>
       <td>kWh</td>
     </tr>
 <tr>
@@ -323,9 +302,9 @@ function updateUI(data) {
         <div class="home-color absolute -top-[50px] -right-[203px] flex h-[200px] items-center justify-between" style="padding-right: 10px;">
           <div>
 		  <p class="text-left text-[9px]">Công Suất Đang Dùng</p>
-          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatNhaDung" class="flash">- W</span></p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="CongSuatNhaDung">- W</span></p>
           <p class="text-left text-[9px]">Tốc Độ Đốt Tiền</p>
-          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="TocDoDotTien" class="flash">- vnđ</span></p>
+          <p class="solar-color home-color w-[80px] rounded-sm border-[1px] border-[#ff7b00] py-1 text-center font-bold" style="width: 80px;"><span id="TocDoDotTien">- vnđ</span></p>
           
 		  </div>
 		  
