@@ -127,16 +127,25 @@ function updateUI(data) {
 			document.getElementById("SuDungThangTruoc").innerText = data.SuDungThangTruoc;
 			document.getElementById("TienDienThangTruoc").innerText = data.TienDienThangTruoc;  
 			document.getElementById("TocDoDotTien").innerText = data.TocDoDotTien + "vnđ/h";
+			document.getElementById("NgayHoaLuoiCaoNhat").innerText = data.NgayHoaLuoiCaoNhat;
+			document.getElementById("ThangHoaLuoiCaoNhat").innerText = data.ThangHoaLuoiCaoNhat;
+			document.getElementById("NgayHoaLuoiCaoNhatThangNay").innerText = data.NgayHoaLuoiCaoNhatThangNay;
+			document.getElementById("TienGiamDuoc").innerText = data.TienGiamDuoc;
         }
 		
 		const data = {
-  SuDungThangNay: "120",
-  TienDienThangNay: "250000",
-  SuDungThangTruoc: "100",
-  TienDienThangTruoc: "210000",
-  HoaLuoiThangTruoc: "80",
-  HoaLuoiHomQua: "5",
-  HoaLuoiThangNay: "70"
+			SuDungThangNay: "120",
+			TienDienThangNay: "250000",
+			SuDungThangTruoc: "100",
+			TienDienThangTruoc: "210000",
+			HoaLuoiThangTruoc: "80",
+			TienGiamDuoc: "1000000",
+			HoaLuoiHomQua: "5",
+			HoaLuoiThangNay: "70",
+			NgayHoaLuoiCaoNhatThangNay: "8",
+			ThangHoaLuoiCaoNhat: "240",
+			NgayHoaLuoiCaoNhat: "9"
+			
 };
 
       function scaleToFit() {
@@ -263,13 +272,13 @@ function updateUI(data) {
       <th>Đơn vị</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody> 
   <tr>
-      <td>Tiền Điện Tháng Này</td>
-      <td id="TienDienThangNay">-</td>
+      <td>Tiền Giảm Được Realtime</td>
+      <td id="TienGiamDuoc">-</td>
       <td>vnđ</td>
     </tr>
-  <tr>
+    <tr>
       <td>Hòa Lưới Hôm Qua</td>
       <td id="HoaLuoiHomQua">-</td>
       <td>kWh</td>
@@ -283,7 +292,27 @@ function updateUI(data) {
       <td>Hòa Lưới Tháng Trước</td>
       <td id="HoaLuoiThangTruoc">-</td>
       <td>kWh</td>
-    </tr>    
+    </tr>
+<tr>
+      <td>Ngày Hòa Lưới Cao Nhất</td>  
+      <td id="NgayHoaLuoiCaoNhat">-</td>
+      <td>kWh</td>
+    </tr>
+	<tr>
+      <td>Ngày Hòa Lưới Cao Nhất Tháng Này</td>
+      <td id="NgayHoaLuoiCaoNhatThangNay">-</td>
+      <td>kWh</td>
+    </tr> 
+<tr>
+      <td>Tháng Hòa Lưới Cao Nhất</td>
+      <td id="ThangHoaLuoiCaoNhat">-</td>
+      <td>kWh</td>
+    </tr>
+  <tr>
+      <td>Tiền Điện Tháng Này</td>
+      <td id="TienDienThangNay">-</td>
+      <td>vnđ</td>
+    </tr>   
     <tr>
       <td>Sử Dụng Tháng Trước</td>
       <td id="SuDungThangTruoc">-</td>
