@@ -113,10 +113,8 @@ function updateUI(data) {
 			document.getElementById("CongSuatLayLuoi").innerText = data.CongSuatTongTai - data.CongSuatHoaLuoi + "W";
 			document.getElementById("CongSuatNhaDung").innerText = data.CongSuatTongTai + "W";
 			document.getElementById("DienAp").innerText = data.DienAp + "V";
-			document.getElementById("DienApCaoNhat").innerText = data.DienApCaoNhat + "V";
 			document.getElementById("DienApThapNhat").innerText = data.DienApThapNhat + "V";
 			document.getElementById("DongDien").innerText = data.DongDien + "A";
-			document.getElementById("DongDienCaoNhat").innerText = data.DongDienCaoNhat + "A";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("pf").innerText = data.pf;
 			document.getElementById("SuDungThangNay").innerText = data.SuDungThangNay + "kWh";
@@ -131,6 +129,7 @@ function updateUI(data) {
 			document.getElementById("ThangHoaLuoiCaoNhat").innerText = data.ThangHoaLuoiCaoNhat;
 			document.getElementById("NgayHoaLuoiCaoNhatThangNay").innerText = data.NgayHoaLuoiCaoNhatThangNay;
 			document.getElementById("TienGiamDuoc").innerText = data.TienGiamDuoc;
+			document.getElementById("TongTienHoaLuoiThuDuoc").innerText = data.TongTienHoaLuoiThuDuoc;
         }
 		
 		const data = {
@@ -144,8 +143,8 @@ function updateUI(data) {
 			HoaLuoiThangNay: "70",
 			NgayHoaLuoiCaoNhatThangNay: "8",
 			ThangHoaLuoiCaoNhat: "240",
-			NgayHoaLuoiCaoNhat: "9"
-			
+			NgayHoaLuoiCaoNhat: "9",
+			TongTienHoaLuoiThuDuoc: "100000000",
 };
 
       function scaleToFit() {
@@ -264,7 +263,7 @@ function updateUI(data) {
 		<div class="battery-color absolute -bottom-[260px] -left-[166px] flex w-[400px] flex-col items-center">
           
 		<div id="error"></div>
-		<table style="margin-top: 60px;" class="table-auto text-left text-sm">
+		<table style="margin-top: 40px;" class="table-auto text-left text-sm">
   <thead>
     <tr>
       <th></th>
@@ -274,10 +273,15 @@ function updateUI(data) {
   </thead>
   <tbody> 
   <tr>
-      <td>Tiền Giảm Được Realtime</td>
+      <td>Tiền Giảm Được Tháng Này</td>
       <td id="TienGiamDuoc">-</td>
       <td>vnđ</td>
     </tr>
+	  <tr>
+      <td>Tiền Điện Tháng Này</td>
+      <td id="TienDienThangNay">-</td>
+      <td>vnđ</td>
+    </tr>  
     <tr>
       <td>Hòa Lưới Hôm Qua</td>
       <td id="HoaLuoiHomQua">-</td>
@@ -294,7 +298,7 @@ function updateUI(data) {
       <td>kWh</td>
     </tr>
 <tr>
-      <td>Ngày Hòa Lưới Cao Nhất</td>  
+      <td>Ngày Hòa Lưới Cao Nhất Ghi Nhận</td>  
       <td id="NgayHoaLuoiCaoNhat">-</td>
       <td>kWh</td>
     </tr>
@@ -307,12 +311,7 @@ function updateUI(data) {
       <td>Tháng Hòa Lưới Cao Nhất</td>
       <td id="ThangHoaLuoiCaoNhat">-</td>
       <td>kWh</td>
-    </tr>
-  <tr>
-      <td>Tiền Điện Tháng Này</td>
-      <td id="TienDienThangNay">-</td>
-      <td>vnđ</td>
-    </tr>   
+    </tr> 
     <tr>
       <td>Sử Dụng Tháng Trước</td>
       <td id="SuDungThangTruoc">-</td>
@@ -322,7 +321,12 @@ function updateUI(data) {
       <td>Tiền Điện Tháng Trước</td>
       <td id="TienDienThangTruoc">-</td>
       <td>vnđ</td>
-    </tr>  
+    </tr> 
+	<tr>
+      <td>Tổng Tiền Hòa Lưới</td>
+      <td id="TongTienHoaLuoiThuDuoc">-</td>
+      <td>vnđ</td>
+    </tr>
   </tbody>
 </table>
   </div>
@@ -330,8 +334,6 @@ function updateUI(data) {
         <div class="grid-color absolute -top-[50px] -left-[180px] flex h-[200px] flex-col justify-center">
           <p class="text-left text-[9px]">Điện Áp ~</p>
 		  <p class="text-left font-bold" id="DienAp">- V</p>
-          <p class="text-left text-[9px]">Cao Nhất Hôm Nay ~</p>
-		  <p class="text-left font-bold" id="DienApCaoNhat">- V</p>
           <p class="text-left text-[9px]">Thấp Nhất Hôm Nay ~</p>
 		  <p class="text-left font-bold" id="DienApThapNhat">- V</p>
           <div class="relative flex items-center justify-between">
@@ -342,8 +344,6 @@ function updateUI(data) {
           </div>
 		  <p class="text-left text-[9px]">Dòng Điện</p>
           <p class="text-left font-bold" id="DongDien">- A</p>
-          <p class="text-left text-[9px]">Cao Nhất Hôm Nay</p>
-		  <p class="text-left font-bold" id="DongDienCaoNhat">- A</p>
           <p class="text-left text-[9px]">Hệ Số Công Suất</p>
 		  <p class="text-left font-bold" id="pf"></p>
         </div>
