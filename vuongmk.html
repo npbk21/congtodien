@@ -100,7 +100,6 @@ function updateUI(data) {
 			document.getElementById("SuDungThangTruoc").innerText = data.SuDungThangTruoc;
 			document.getElementById("TienDienThangTruoc").innerText = data.TienDienThangTruoc;  
 			document.getElementById("TocDoDotTien").innerText = data.TocDoDotTien + "vnđ/h";
-			document.getElementById("ThangHoaLuoiCaoNhat").innerText = data.ThangHoaLuoiCaoNhat;
 			document.getElementById("TienGiamDuoc").innerText = data.TienGiamDuoc;
 			document.getElementById("TongTienHoaLuoiThuDuoc").innerText = data.TongTienHoaLuoiThuDuoc;
         }
@@ -113,7 +112,6 @@ function updateUI(data) {
 			HoaLuoiThangTruoc: "80",
 			TienGiamDuoc: "1000000",
 			HoaLuoiHomQua: "5",
-			ThangHoaLuoiCaoNhat: "240",
 			TongTienHoaLuoiThuDuoc: "100000000",
 };
 
@@ -262,11 +260,6 @@ function updateUI(data) {
       <td id="HoaLuoiThangTruoc">-</td>
       <td>kWh</td>
     </tr>
-<tr>
-      <td>Tháng Hòa Lưới Cao Nhất</td>
-      <td id="ThangHoaLuoiCaoNhat">-</td>
-      <td>kWh</td>
-    </tr> 
     <tr>
       <td>Sử Dụng Tháng Trước</td>
       <td id="SuDungThangTruoc">-</td>
