@@ -93,6 +93,24 @@ function updateUI(data) {
 			document.getElementById("DongDien").innerText = data.DongDien + "A";
 			document.getElementById("TongHoaLuoi").innerText = data.TongHoaLuoi + "kWh";
 			document.getElementById("SuDungThangNay").innerText = data.SuDungThangNay + "kWh";
+			if (data.SuDungThangNay <= 50) {
+			document.getElementById("Bac").innerText = "1: 1984";
+			}
+			if ((50 < data.SuDungThangNay) && (data.SuDungThangNay <= 100)) {
+			document.getElementById("Bac").innerText = "2: 2050";
+			}
+			if ((100 < data.SuDungThangNay) && (data.SuDungThangNay <= 200)) {
+			document.getElementById("Bac").innerText = "3: 2380";
+			}
+			if ((200 < data.SuDungThangNay) && (data.SuDungThangNay <= 300)) {
+			document.getElementById("Bac").innerText = "4: 2998";
+			}
+			if ((300 < data.SuDungThangNay) && (data.SuDungThangNay <= 400)) {
+			document.getElementById("Bac").innerText = "5: 3350";
+			}
+			if (data.SuDungThangNay > 400){
+			document.getElementById("Bac").innerText = "6: 3460";
+			}
 			document.getElementById("TienDienThangNay").innerText = data.TienDienThangNay;
 			document.getElementById("HoaLuoiHomQua").innerText = data.HoaLuoiHomQua;
 			document.getElementById("HoaLuoiThangTruoc").innerText = data.HoaLuoiThangTruoc;
@@ -113,6 +131,7 @@ function updateUI(data) {
 			TienGiamDuoc: "1000000",
 			HoaLuoiHomQua: "5",
 			TongTienHoaLuoiThuDuoc: "100000000",
+			Bac: "Bậc1: 1984",
 };
 
       function scaleToFit() {
@@ -240,7 +259,7 @@ function updateUI(data) {
     </tr>
   </thead>
   <tbody> 
-  <tr>
+	<tr>
       <td>Tiền Giảm Được Tháng Này</td>
       <td id="TienGiamDuoc">-</td>
       <td>vnđ</td>
@@ -249,7 +268,12 @@ function updateUI(data) {
       <td>Tiền Điện Tháng Này</td>
       <td id="TienDienThangNay">-</td>
       <td>vnđ</td>
-    </tr>  
+    </tr>
+	<tr>
+      <td>Đang sử dụng giá bậc</td>
+      <td id="Bac">-</td>
+      <td>vnđ/kWh</td>
+    </tr>	
     <tr>
       <td>Hòa Lưới Hôm Qua</td>
       <td id="HoaLuoiHomQua">-</td>
