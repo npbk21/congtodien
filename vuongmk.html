@@ -119,6 +119,7 @@ function updateUI(data) {
 			document.getElementById("TienDienThangTruoc").innerText = data.TienDienThangTruoc;  
 			document.getElementById("TocDoDotTien").innerText = data.TocDoDotTien + "vnđ/h";
 			document.getElementById("TienGiamDuoc").innerText = data.TienGiamDuoc;
+			document.getElementById("ChiSoCongTo").innerText = data.ChiSoCongTo;
 			document.getElementById("TongTienHoaLuoiThuDuoc").innerText = data.TongTienHoaLuoiThuDuoc;
         }
 		
@@ -132,6 +133,7 @@ function updateUI(data) {
 			HoaLuoiHomQua: "5",
 			TongTienHoaLuoiThuDuoc: "100000000",
 			Bac: "Bậc1: 1984",
+			ChiSoCongTo: "12345",
 };
 
       function scaleToFit() {
@@ -293,6 +295,11 @@ function updateUI(data) {
       <td>Tiền Điện Tháng Trước</td>
       <td id="TienDienThangTruoc">-</td>
       <td>vnđ</td>
+    </tr> 
+	<tr>
+      <td>Chỉ Số Công Tơ EVN</td>
+      <td id="ChiSoCongTo">-</td>
+      <td>kWh</td>
     </tr> 
 	<tr>
       <td>Tổng Tiền Hòa Lưới</td>
