@@ -3,96 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công cụ kiểm tra Link Affiliate Shopee (v2)</title>
+    <title>Trình giải mã liên kết</title>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f6f9;
+            font-family: sans-serif;
+            margin: 2em;
+            background-color: #f4f4f9;
             color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
         }
         .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 2em;
             background-color: #fff;
-            padding: 30px 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 90%;
-            max-width: 500px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         h1 {
-            color: #ee4d2d; /* Shopee Orange */
-            margin-bottom: 20px;
-        }
-        p {
-            color: #555;
-            margin-bottom: 25px;
+            color: #0056b3;
         }
         input[type="text"] {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
+            padding: 10px;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
         button {
-            background-color: #ee4d2d;
+            padding: 10px 20px;
+            background-color: #007bff;
             color: white;
             border: none;
-            padding: 14px 25px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 16px;
         }
         button:hover {
-            background-color: #d73a19;
+            background-color: #0056b3;
         }
-        #result {
-            margin-top: 25px;
-            font-size: 14px;
-            color: #007bff;
+        #results {
+            margin-top: 1.5em;
+            padding: 1em;
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            word-wrap: break-word;
+        }
+        #full-link-title, #affiliate-id-title {
+            font-weight: bold;
+            color: #343a40;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Công cụ kiểm tra Link Affiliate Shopee</h1>
-        <p>Dán link rút gọn của Shopee (ví dụ: https://s.shopee.vn/...) vào ô dưới đây để kiểm tra link gốc và ID affiliate một cách an toàn.</p>
-        <input type="text" id="shortUrlInput" placeholder="Dán link Shopee vào đây...">
-        <button onclick="checkLink()">Kiểm tra Link An Toàn</button>
-        <div id="result"></div>
+        <h1>Giải mã liên kết rút gọn</h1>
+        <p>Dán một liên kết rút gọn vào ô bên dưới và nhấn "Giải mã" để xem liên kết đầy đủ và ID affiliate (nếu có).</p>
+        
+        <input type="text" id="short-url" placeholder="Dán liên kết rút gọn vào đây (ví dụ: bit.ly/...)">
+        <button onclick="unshortenUrl()">Giải mã</button>
+
+        <div id="results" style="display:none;">
+            <p id="full-link-title">Liên kết đầy đủ:</p>
+            <p id="full-link"></p>
+            <p id="affiliate-id-title">ID Affiliate (tham số trong URL):</p>
+            <p id="affiliate-id">Không tìm thấy.</p>
+        </div>
     </div>
 
     <script>
-        function checkLink() {
-            const shortUrlInput = document.getElementById('shortUrlInput');
-            const resultDiv = document.getElementById('result');
-            const shortUrl = shortUrlInput.value.trim();
-
+        function unshortenUrl() {
+            const shortUrl = document.getElementById('short-url').value;
             if (!shortUrl) {
-                resultDiv.style.color = 'red';
-                resultDiv.innerText = 'Vui lòng nhập link cần kiểm tra!';
+                alert('Vui lòng nhập một liên kết rút gọn.');
                 return;
             }
 
-            // ĐÃ THAY THẾ DỊCH VỤ: Sử dụng checkshorturl.com
-            const expanderServiceUrl = 'https://checkshorturl.com/expand.php?url=';
-            const finalUrl = expanderServiceUrl + encodeURIComponent(shortUrl);
+            // Sử dụng API của unshorten.it (lưu ý rằng API này có thể không ổn định)
+            // Chúng ta sẽ sử dụng một proxy CORS để tránh lỗi trình duyệt
+            const apiUrl = `https://api.allorigins.win/raw?url=http://api.unshorten.it/simple/${encodeURIComponent(shortUrl)}`;
 
-            // Mở tab mới để người dùng xem kết quả một cách an toàn
-            window.open(finalUrl, '_blank');
-            
-            resultDiv.style.color = 'green';
-            resultDiv.innerText = 'Đã mở tab mới để kiểm tra. Vui lòng xem kết quả ở tab đó.';
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Không thể kết nối đến dịch vụ giải mã.');
+                    }
+                    return response.text();
+                })
+                .then(fullUrl => {
+                    document.getElementById('full-link').textContent = fullUrl;
+                    
+                    // Cố gắng tìm ID affiliate trong các tham số của URL
+                    try {
+                        const urlParams = new URL(fullUrl).searchParams;
+                        let affiliateId = "Không tìm thấy tham số affiliate phổ biến.";
+                        
+                        // Các tham số affiliate phổ biến
+                        const affParams = ['affid', 'aff_id', 'affiliate_id', 'ref', 'referral', 'tag'];
+                        
+                        for (const param of affParams) {
+                            if (urlParams.has(param)) {
+                                affiliateId = `Tìm thấy tham số '${param}': ${urlParams.get(param)}`;
+                                break;
+                            }
+                        }
+                        document.getElementById('affiliate-id').textContent = affiliateId;
+
+                    } catch (e) {
+                        document.getElementById('affiliate-id').textContent = 'Không thể phân tích URL để tìm ID affiliate.';
+                    }
+
+                    document.getElementById('results').style.display = 'block';
+                })
+                .catch(error => {
+                    alert('Đã xảy ra lỗi: ' + error.message);
+                });
         }
     </script>
 
