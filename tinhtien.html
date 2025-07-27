@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tính Tiền Điện Tiết Kiệm Được</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial; padding: 20px; background-color: #f2f2f2; }
+    h2 { color: #333; }
+    input, button { padding: 10px; font-size: 16px; margin-top: 10px; width: 100%; }
+    .result { margin-top: 20px; font-size: 18px; color: green; font-weight: bold; }
+    .details { margin-top: 15px; font-size: 16px; color: #333; line-height: 1.5; background: #fff; padding: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+
+  <h2>Tính tiền điện giảm được nhờ hòa lưới</h2>
+
+  <label>⚡ Số điện hòa lưới (kWh):</label>
+  <input type="number" id="hoaLuoi" step="0.01" placeholder="VD: 50.5">
+
+  <label>🏠 Số điện nhà bạn đã sử dụng trong tháng (kWh):</label>
+  <input type="number" id="dienNha" step="0.01" placeholder="VD: 300">
+
+  <button onclick="tinhGiamTienDien()">Tính số tiền tiết kiệm</button>
+
+  <div class="result" id="ketQua"></div>
+  <div class="details" id="dienGiai"></div>
+
+  <script>
+    function tinhGiamTienDien() {
+      let hoaLuoi = parseFloat(document.getElementById("hoaLuoi").value);
+      let suDung = parseFloat(document.getElementById("dienNha").value);
+
+      if (isNaN(hoaLuoi) || isNaN(suDung) || hoaLuoi < 0 || suDung <= 0) {
+        document.getElementById("ketQua").innerText = "⚠️ Vui lòng nhập số hợp lệ.";
+        document.getElementById("dienGiai").innerText = "";
+        return;
+      }
+
+      const bac = [
+        { gioiHan: 50, gia: 1984 },
+        { gioiHan: 50, gia: 2050 },
+        { gioiHan: 100, gia: 2380 },
+        { gioiHan: 100, gia: 2998 },
+        { gioiHan: 100, gia: 3350 },
+        { gioiHan: 9999, gia: 3460 }
+      ];
+
+      let conLai = suDung;
+      let soKWhDaDung = [0, 0, 0, 0, 0, 0];
+      let bacCaoNhatDaDung = -1;
+      let TienGiamDuoc = 0;
+      let dienGiai = "";
+
+      for (let i = 0; i < bac.length; i++) {
+        if (conLai > 0) {
+          let dung = Math.min(conLai, bac[i].gioiHan);
+          soKWhDaDung[i] = dung;
+          conLai -= dung;
+          if (dung > 0) bacCaoNhatDaDung = i;
+        }
+      }
+
+      let hoaLuoiNguyen = Math.floor(hoaLuoi);
+      let hoaLuoiLe = hoaLuoi - hoaLuoiNguyen;
+      let hoaLuoiConLai = hoaLuoiNguyen;
+
+      let giamTheoBac = [0, 0, 0, 0, 0, 0];
+
+      for (let i = 5; i >= 0 && hoaLuoiConLai > 0; i--) {
+        let tru = Math.min(soKWhDaDung[i], hoaLuoiConLai);
+        TienGiamDuoc += tru * bac[i].gia;
+        giamTheoBac[i] = tru;
+        hoaLuoiConLai -= tru;
+      }
+
+      if (hoaLuoiLe > 0 && bacCaoNhatDaDung >= 0) {
+        TienGiamDuoc += hoaLuoiLe * bac[bacCaoNhatDaDung].gia;
+        giamTheoBac[bacCaoNhatDaDung] += hoaLuoiLe;
+      }
+
+      dienGiai += "<strong>📊 Số điện hòa lưới được trừ theo từng bậc:</strong><br>";
+      for (let i = 0; i < giamTheoBac.length; i++) {
+        if (giamTheoBac[i] > 0) {
+          dienGiai += `• Bậc ${i + 1} (${bac[i].gia}đ/kWh): ${giamTheoBac[i].toFixed(2)} kWh → ${Math.round(giamTheoBac[i] * bac[i].gia).toLocaleString("vi-VN")} VND<br>`;
+        }
+      }
+
+      let truocVAT = TienGiamDuoc;
+      TienGiamDuoc *= 1.08;
+      let tienVAT = TienGiamDuoc - truocVAT;
+
+      dienGiai += `<br>💵 Tổng trước VAT: ${Math.round(truocVAT).toLocaleString("vi-VN")} VND`;
+      dienGiai += `<br>🧾 Thuế VAT (8%): ${Math.round(tienVAT).toLocaleString("vi-VN")} VND`;
+      dienGiai += `<br><br><strong>✅ Tổng tiết kiệm: ${Math.round(TienGiamDuoc).toLocaleString("vi-VN")} VND</strong>`;
+
+      document.getElementById("ketQua").innerText =
+        "💰 Tiền điện tiết kiệm được: " + Math.round(TienGiamDuoc).toLocaleString("vi-VN") + " VND";
+
+      document.getElementById("dienGiai").innerHTML = dienGiai;
+    }
+  </script>
+
+</body>
+</html>
