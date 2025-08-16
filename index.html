@@ -55,9 +55,35 @@ Video chạy thực tế khả năng đốt công suất dư thừa (Giao diện
 <img width="50%" src="flash4.jpg"></img><br><br>
 <li>Sau khi nạp xong phần mềm, bạn cấp nguồn cho thiết bị, và truy cập vào wifi <span style=color:red>0971282336</span> do thiết bị phát ra.</li><br><br>
 <img width="50%" src="KetNoi.PNG"></img><br><br>
-<li>Rồi mở trình duyệt web truy cập <span style=color:red>1.2.3.4</span><br><br>
+<li>Rồi mở trình duyệt web truy cập <span style=color:red>192.168.4.1</span><br><br>
 <img width="50%" src="ChonWifi.jpg"></img><br>
 <li>Vậy là đã kết nối thiết bị với wifi nhà bạn thành công</li>
+<h1>Hướng Dẫn Nhập Lệnh Điều Khiển</h1>
+Bạn kết nối với wifi <span style=color:blue>0971282336</span> do thiết bị phát ra. <br>
+Dùng trình duyệt web truy cập <span style=color:blue>192.168.4.1</span><br>
+Để thiết bị hoạt động đúng theo mong muốn của bạn, vui lòng nhập các lệnh dưới.<br>
+<li>Lệnh chạy lần đầu</li>
+- Nhập <span style=color:blue>chaylandau</span> rồi bấm gửi để thiết bị tự cấu hình các thông số mặc định.<br>
+- Cần chờ thiết bị khởi động lại.<br>
+<li>Lệnh ngày chốt số</li>
+- Nhập <span style=color:blue>ngaychotso</span><span style=color:red>XX</span> (xx là ngày mà EVN ghi chỉ số điện hàng tháng, ví dụ ngaychotso25).
+<li>Lệnh công suất mạch đốt</li>
+- Nhập <span style=color:blue>congsuatmachdot</span><span style=color:red>600</span> (nếu bạn muốn đốt công suất dư thừa max là 600, hoặc bao nhiêu tuỳ ý)<br>
+- Lưu ý lắp số lượng bóng đèn sợi đốt có công suất tương ứng với công suất đã nhập lệnh.<br>
+- Nếu đốt với công suất lớn hơn 600w, vui lòng thay triac theo hướng dẫn trong hình.
+<li>Lệnh công suất đốt</li>
+Lệnh này dùng để kiểm tra mạch đốt có đốt đúng với công suất mong muốn hay không.<br>
+Bạn sẽ cần lắp đồng hồ 6 thông số để đo, và cần lắp đủ số lượng bóng đèn theo thiết lập congsuatmachdot ở trên.<br>
+- Nhập lệnh <span style=color:blue>congsuatdot</span><span style=color:red>200</span> mạch sẽ điều khiển đốt với công suất 200w, hoặc bao nhiêu tuỳ ý, và hãy kiểm tra đồng hồ đo xem giá trị có sai số hay không.
+<li>Lệnh công suất hoà lưới</li>
+Lệnh này dùng để giả lập công suất hoà lưới, nhằm test thử xem hệ thống đã hoạt động hay chưa.<br>
+Tay vì phải đợi trời có nắng to để công suất hoà lưới dư thừa, thì bạn có thể test ngay tỏng đêm.<br>
+- Nhập <span style=color:blue>congsuathoaluoi</span><span style=color:red>300</span> (lúc này thiết bị sẽ mặc định có 300w từ hoà lưới, hoặc bao nhiêu tuỳ ý).<br>
+- Muốn tắt giả lập hoà lưới nhập <span style=color:blue>khoidonglai</span>
+<li> Nhập lệnh để cấu hình theo dõi qua Firebase</li>
+Khi đã tạo Project Firebase thành công, sẽ nhập các giá trị như sau.<br>
+- Nhập lệnh <span style=color:blue>key</span><span style=color:red>AIzaSyXXX-XXXXXX</span> (chính là giá trị của apiKey: "AIzaSyXXX-XXXXXX")<br>
+- Nhập lệnh <span style=color:blue>data</span><span style=color:red>https://your-project-id-default-rtdb.firebaseio.com</span> (chính là giá trị của databaseURL: "https://your-project-id-default-rtdb.firebaseio.com")
 <h1>Hướng Dẫn Tạo Project Firebase Và Lấy Thông Tin Cần Thiết</h1>
 <li>Video hướng dẫn chỉ 5 phút.</li>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/O0YqwYbSqSY?si=4LLBY2wE4Hb3ROx6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
