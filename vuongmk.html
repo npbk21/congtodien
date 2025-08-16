@@ -113,6 +113,7 @@ function updateUI(data) {
 			}
 			document.getElementById("TienDienThangNay").innerText = data.TienDienThangNay;
 			document.getElementById("HoaLuoiHomQua").innerText = data.HoaLuoiHomQua;
+			document.getElementById("SoHomQua").innerText = data.SoHomQua;
 			document.getElementById("HoaLuoiThangTruoc").innerText = data.HoaLuoiThangTruoc;
 			document.getElementById("HoaLuoiThangNay").innerText = data.HoaLuoiThangNay + "kWh";
 			document.getElementById("SuDungThangTruoc").innerText = data.SuDungThangTruoc;
@@ -132,6 +133,7 @@ function updateUI(data) {
 			HoaLuoiHomQua: "5",
 			TongTienHoaLuoiThuDuoc: "100000000",
 			Bac: "Bậc1: 1984",
+			SoHomQua: "20",
 };
 
       function scaleToFit() {
@@ -273,6 +275,11 @@ function updateUI(data) {
       <td>Đang Sử Dụng Giá Bậc</td>
       <td id="Bac">-</td>
       <td>vnđ/kWh</td>
+    </tr>
+	<tr>
+      <td>Sử Dụng Hôm Qua</td>
+      <td id="SoHomQua">-</td>
+      <td>kWh</td>
     </tr>	
     <tr>
       <td>Hòa Lưới Hôm Qua</td>
