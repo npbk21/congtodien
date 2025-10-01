@@ -1,109 +1,267 @@
 <!DOCTYPE html>
-<html lang="vi" translate="no">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Language" content="vi">
-  <meta name="google" content="notranslate">
-  <title>Tính Tiền Điện Tiết Kiệm Được</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f2f2f2; }
-    h2 { color: #333; }
-    input, button { padding: 10px; font-size: 16px; margin-top: 10px; width: 100%; }
-    .result { margin-top: 20px; font-size: 18px; color: green; font-weight: bold; }
-    .details { margin-top: 15px; font-size: 16px; color: #333; line-height: 1.5; background: #fff; padding: 10px; border-radius: 5px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công Cụ Chèn TimeMark - Font Giống Ảnh</title>
+    <style>
+        /* --- CSS CƠ BẢN --- */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif; /* Thử font gần giống */
+            padding: 20px;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- PHẦN INPUT VÀ ĐIỀU KHIỂN --- */
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .controls label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .controls input[type="text"] {
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .controls button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .controls button:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- PHẦN HIỂN THỊ ẢNH/CANVAS --- */
+        .image-display {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            border: 1px dashed #ccc;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        /* Ẩn Canvas lúc ban đầu */
+        #output-canvas {
+            display: none; 
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+        }
+
+        /* Hiển thị Placeholder */
+        #placeholder {
+            width: 100%;
+            height: 300px;
+            line-height: 300px;
+            color: #aaa;
+            font-size: 1.2em;
+        }
+
+        #download-link {
+            display: none;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #28a745; /* Màu xanh lá cây cho tải về */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        #download-link:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
 
-  <h2>Tính tiền điện giảm được từ hòa lưới</h2>
+    <h1>Công Cụ Chèn TimeMark</h1>
 
-  <label>⚡ Số điện hòa lưới (kWh):</label>
-  <input type="number" id="hoaLuoi" step="0.01" placeholder="VD: 50.5">
+    <div class="controls">
+        <input type="file" id="image-file-input" accept="image/*">
+        
+        <label for="input-time">Thời gian (VD: 12:26 | 01 Oct 2025 | Wed):</label>
+        <input type="text" id="input-time" value="12:26 | 01 Oct 2025 | Wed">
 
-  <label>🏠 Tổng số điện nhà bạn đã sử dụng trong tháng (hoà lưới + lấy lưới) (kWh):</label>
-  <input type="number" id="dienNha" step="0.01" placeholder="VD: 300">
+        <label for="input-address">Địa chỉ (VD: ĐT. 356, Đông Hải 2, Hải An, Hải Phòng):</label>
+        <input type="text" id="input-address" value="ĐT. 356, Đông Hải 2, Hải An, Hải Phòng">
 
-  <button onclick="tinhGiamTienDien()">Tính số tiền tiết kiệm</button>
+        <label for="input-logo">Logo/Watermark (VD: TimeMark):</label>
+        <input type="text" id="input-logo" value="TimeMark">
 
-  <div class="result" id="ketQua"></div>
-  <div class="details" id="dienGiai"></div>
+        <button id="process-button">Chèn Thông tin và Xem Ảnh</button>
+        <a id="download-link" href="#" download="timemark_image.png">Tải Ảnh Đã Chèn Về</a>
+    </div>
 
-  <script>
-    function tinhGiamTienDien() {
-      let hoaLuoi = parseFloat(document.getElementById("hoaLuoi").value);
-      let suDung = parseFloat(document.getElementById("dienNha").value);
+    <div class="image-display">
+        <canvas id="output-canvas"></canvas>
+        <div id="placeholder">Tải ảnh lên để bắt đầu</div>
+    </div>
 
-      if (isNaN(hoaLuoi) || isNaN(suDung) || hoaLuoi < 0 || suDung <= 0) {
-        document.getElementById("ketQua").innerText = "⚠️ Vui lòng nhập số hợp lệ.";
-        document.getElementById("dienGiai").innerText = "";
-        return;
-      }
 
-      const bac = [
-        { gioiHan: 50, gia: 1984 },
-        { gioiHan: 50, gia: 2050 },
-        { gioiHan: 100, gia: 2380 },
-        { gioiHan: 100, gia: 2998 },
-        { gioiHan: 100, gia: 3350 },
-        { gioiHan: 9999, gia: 3460 }
-      ];
+    <script>
+        const fileInput = document.getElementById('image-file-input');
+        const canvas = document.getElementById('output-canvas');
+        const ctx = canvas.getContext('2d');
+        const placeholder = document.getElementById('placeholder');
+        const processButton = document.getElementById('process-button');
+        const downloadLink = document.getElementById('download-link');
+        
+        let originalImage = null;
 
-      let conLai = suDung;
-      let soKWhDaDung = [0, 0, 0, 0, 0, 0];
-      let bacCaoNhatDaDung = -1;
-      let TienGiamDuoc = 0;
-      let dienGiai = "";
+        // Bắt sự kiện tải file
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    originalImage = new Image();
+                    originalImage.onload = () => {
+                        // Thiết lập kích thước canvas bằng kích thước ảnh gốc
+                        canvas.width = originalImage.width;
+                        canvas.height = originalImage.height;
 
-      for (let i = 0; i < bac.length; i++) {
-        if (conLai > 0) {
-          let dung = Math.min(conLai, bac[i].gioiHan);
-          soKWhDaDung[i] = dung;
-          conLai -= dung;
-          if (dung > 0) bacCaoNhatDaDung = i;
+                        // Ẩn placeholder và hiện canvas
+                        placeholder.style.display = 'none';
+                        canvas.style.display = 'block';
+                        
+                        // Kích hoạt nút Xử lý
+                        processButton.disabled = false;
+                        
+                        // Vẽ ảnh gốc lên canvas ban đầu
+                        drawCanvas();
+                    };
+                    originalImage.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Xử lý nút Chèn
+        processButton.addEventListener('click', drawCanvas);
+
+        function drawCanvas() {
+            if (!originalImage) return;
+
+            // 1. Vẽ lại ảnh gốc lên canvas
+            ctx.drawImage(originalImage, 0, 0);
+
+            // 2. Lấy dữ liệu từ ô nhập
+            const timeDateDayInput = document.getElementById('input-time').value;
+            const addressText = document.getElementById('input-address').value;
+            const logoText = document.getElementById('input-logo').value;
+
+            // Phân tách chuỗi thời gian, ngày, thứ
+            const parts = timeDateDayInput.split('|').map(p => p.trim());
+            const timePart = parts[0] || "12:26";
+            const datePart = parts[1] || "01 Oct 2025";
+            const dayPart = parts[2] || "Wed";
+
+            // --- CÀI ĐẶT THÔNG SỐ VẼ ---
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
+            const basePadding = canvasWidth * 0.03; // Khoảng cách đệm cơ bản (3% chiều rộng ảnh)
+            const fontSizeRatio = canvasWidth / 720; // Hệ số điều chỉnh kích thước chữ dựa trên ảnh mẫu (ảnh mẫu khoảng 720px chiều rộng)
+
+            // Thiết lập đổ bóng chữ (Text Shadow)
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+            ctx.shadowBlur = 4 * fontSizeRatio;
+            ctx.shadowOffsetX = 1 * fontSizeRatio;
+            ctx.shadowOffsetY = 1 * fontSizeRatio;
+            
+            ctx.fillStyle = 'white'; // Màu chữ
+            ctx.textBaseline = 'alphabetic'; // Đảm bảo căn chỉnh baseline nhất quán
+
+            // ------------------------------------------
+            // A. VẼ PHẦN THỜI GIAN, NGÀY VÀ THỨ (Góc dưới trái)
+            // ------------------------------------------
+            
+            // 1. VẼ THỜI GIAN LỚN (VD: 12:26)
+            ctx.font = `bold ${Math.round(60 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`; // Tăng kích thước font cho giờ
+            ctx.letterSpacing = '-1px'; // Giảm khoảng cách chữ cho font đậm để gần giống ảnh
+            ctx.textAlign = 'left';
+            
+            // Tính toán vị trí Y cho dòng thời gian lớn
+            const timeLineHeight = 60 * fontSizeRatio; // Chiều cao ước tính của dòng chữ lớn
+            const initialYOffset = canvasHeight - basePadding; // Vị trí Y ban đầu từ đáy
+            const timeY = initialYOffset - (15 * fontSizeRatio); // Vị trí Y cuối cùng cho thời gian, dịch lên một chút
+
+            ctx.fillText(timePart, basePadding, timeY);
+
+            // 2. VẼ NGÀY (VD: 01 Oct 2025)
+            ctx.font = `${Math.round(18 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`;
+            ctx.letterSpacing = 'normal'; // Reset letter-spacing
+            const dateY = timeY + (25 * fontSizeRatio); // Dưới thời gian một khoảng
+            ctx.fillText(datePart, basePadding, dateY);
+
+            // 3. VẼ THỨ (VD: Wed)
+            ctx.font = `${Math.round(18 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`;
+            const dayY = dateY + (20 * fontSizeRatio); // Dưới ngày một khoảng
+            ctx.fillText(dayPart, basePadding, dayY);
+            
+            // ------------------------------------------
+            // B. VẼ ĐỊA CHỈ (Góc dưới trái, dưới các thông tin khác)
+            // ------------------------------------------
+            ctx.font = `${Math.round(18 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`;
+            ctx.letterSpacing = 'normal';
+            const addressY = canvasHeight - (basePadding - (30 * fontSizeRatio)); // Vị trí Y cho địa chỉ
+            ctx.fillText(addressText, basePadding, addressY);
+
+            // ------------------------------------------
+            // C. VẼ LOGO/WATERMARK (Góc dưới phải)
+            // ------------------------------------------
+            ctx.textAlign = 'right';
+            
+            // 1. VẼ CHỮ LOGO LỚN
+            ctx.font = `bold ${Math.round(20 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`;
+            ctx.letterSpacing = 'normal'; // Reset letter-spacing
+            const logoY = canvasHeight - (basePadding + (10 * fontSizeRatio)); // Vị trí Y cho dòng logo lớn
+            ctx.fillText(logoText, canvasWidth - basePadding, logoY);
+            
+            // 2. VẼ DÒNG CHỮ NHỎ "100% Chân thực"
+            ctx.font = `${Math.round(14 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`;
+            const authenticityY = canvasHeight - (basePadding - (10 * fontSizeRatio)); // Vị trí Y cho dòng xác thực
+            ctx.fillText('100% Chân thực', canvasWidth - basePadding, authenticityY);
+
+            // --- KẾT THÚC VẼ ---
+            // Xóa Shadow để không ảnh hưởng đến giao diện khác
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+            ctx.letterSpacing = 'normal'; // Đặt lại về mặc định
+
+            // Cập nhật link tải về
+            const dataURL = canvas.toDataURL('image/png'); // Tạo ảnh PNG
+            downloadLink.href = dataURL;
+            downloadLink.style.display = 'inline-block';
         }
-      }
-
-      let hoaLuoiNguyen = Math.floor(hoaLuoi);
-      let hoaLuoiLe = hoaLuoi - hoaLuoiNguyen;
-      let hoaLuoiConLai = hoaLuoiNguyen;
-
-      let giamTheoBac = [0, 0, 0, 0, 0, 0];
-
-      for (let i = 5; i >= 0 && hoaLuoiConLai > 0; i--) {
-        let tru = Math.min(soKWhDaDung[i], hoaLuoiConLai);
-        TienGiamDuoc += tru * bac[i].gia;
-        giamTheoBac[i] = tru;
-        hoaLuoiConLai -= tru;
-      }
-
-      if (hoaLuoiLe > 0 && bacCaoNhatDaDung >= 0) {
-        TienGiamDuoc += hoaLuoiLe * bac[bacCaoNhatDaDung].gia;
-        giamTheoBac[bacCaoNhatDaDung] += hoaLuoiLe;
-      }
-
-      dienGiai += "<strong>📊 Số điện hòa lưới được trừ theo từng bậc:</strong><br>";
-      for (let i = 0; i < giamTheoBac.length; i++) {
-        if (giamTheoBac[i] > 0) {
-          dienGiai += `• Bậc ${i + 1} (${bac[i].gia}đ/kWh): ${giamTheoBac[i].toFixed(2)} kWh → ${Math.round(giamTheoBac[i] * bac[i].gia).toLocaleString("vi-VN")} VND<br>`;
-        }
-      }
-
-      let truocVAT = TienGiamDuoc;
-      TienGiamDuoc *= 1.08;
-      let tienVAT = TienGiamDuoc - truocVAT;
-
-      dienGiai += `<br>💵 Tổng trước VAT: ${Math.round(truocVAT).toLocaleString("vi-VN")} VND`;
-      dienGiai += `<br>🧾 Thuế VAT (8%): ${Math.round(tienVAT).toLocaleString("vi-VN")} VND`;
-      dienGiai += `<br><br><strong>✅ Tổng tiết kiệm: ${Math.round(TienGiamDuoc).toLocaleString("vi-VN")} VND</strong>`;
-
-      document.getElementById("ketQua").innerText =
-        "💰 Tiền điện tiết kiệm được: " + Math.round(TienGiamDuoc).toLocaleString("vi-VN") + " VND";
-
-      document.getElementById("dienGiai").innerHTML = dienGiai;
-    }
-  </script>
-
+    </script>
 </body>
 </html>
-
