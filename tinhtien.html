@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công Cụ Chèn TimeMark - Font Giống Ảnh</title>
+    <title>Công Cụ Chèn TimeMark - Chuẩn 1920x2560</title>
     <style>
         /* --- CSS CƠ BẢN --- */
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif; /* Thử font gần giống */
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             padding: 20px;
             background-color: #f4f4f4;
             display: flex;
@@ -58,7 +58,7 @@
         /* --- PHẦN HIỂN THỊ ẢNH/CANVAS --- */
         .image-display {
             width: 100%;
-            max-width: 600px;
+            max-width: 400px; /* Giới hạn kích thước hiển thị trên web */
             text-align: center;
             border: 1px dashed #ccc;
             background-color: #fff;
@@ -66,7 +66,6 @@
             border-radius: 8px;
         }
         
-        /* Ẩn Canvas lúc ban đầu */
         #output-canvas {
             display: none; 
             max-width: 100%;
@@ -74,7 +73,6 @@
             border: 1px solid #ddd;
         }
 
-        /* Hiển thị Placeholder */
         #placeholder {
             width: 100%;
             height: 300px;
@@ -87,37 +85,36 @@
             display: none;
             margin-top: 10px;
             padding: 10px 15px;
-            background-color: #28a745; /* Màu xanh lá cây cho tải về */
+            background-color: #28a745;
             color: white;
             border: none;
             border-radius: 4px;
             text-decoration: none;
             transition: background-color 0.3s;
         }
-
-        #download-link:hover {
-            background-color: #218838;
-        }
     </style>
 </head>
 <body>
 
-    <h1>Công Cụ Chèn TimeMark</h1>
+    <h1>Công Cụ Chèn TimeMark - Chuẩn 1920x2560</h1>
 
     <div class="controls">
         <input type="file" id="image-file-input" accept="image/*">
         
-        <label for="input-time">Thời gian (VD: 12:26 | 01 Oct 2025 | Wed):</label>
-        <input type="text" id="input-time" value="12:26 | 01 Oct 2025 | Wed">
+        <label for="input-time">Thời gian (VD: 12:26):</label>
+        <input type="text" id="input-time" value="12:26">
 
-        <label for="input-address">Địa chỉ (VD: ĐT. 356, Đông Hải 2, Hải An, Hải Phòng):</label>
+        <label for="input-date">Ngày (VD: 01 Oct, 2025):</label>
+        <input type="text" id="input-date" value="01 Oct, 2025">
+
+        <label for="input-day">Thứ (VD: Wed):</label>
+        <input type="text" id="input-day" value="Wed">
+
+        <label for="input-address">Địa chỉ (Góc dưới trái):</label>
         <input type="text" id="input-address" value="ĐT. 356, Đông Hải 2, Hải An, Hải Phòng">
 
-        <label for="input-logo">Logo/Watermark (VD: TimeMark):</label>
-        <input type="text" id="input-logo" value="TimeMark">
-
-        <button id="process-button">Chèn Thông tin và Xem Ảnh</button>
-        <a id="download-link" href="#" download="timemark_image.png">Tải Ảnh Đã Chèn Về</a>
+        <button id="process-button">Chèn Thông tin và Xem Ảnh (1920x2560)</button>
+        <a id="download-link" href="#" download="timemark_1920x2560.png">Tải Ảnh Đã Chèn Về (PNG)</a>
     </div>
 
     <div class="image-display">
@@ -135,6 +132,10 @@
         const downloadLink = document.getElementById('download-link');
         
         let originalImage = null;
+        
+        // Kích thước chuẩn hóa
+        const TARGET_WIDTH = 1920;
+        const TARGET_HEIGHT = 2560;
 
         // Bắt sự kiện tải file
         fileInput.addEventListener('change', (event) => {
@@ -144,18 +145,16 @@
                 reader.onload = (e) => {
                     originalImage = new Image();
                     originalImage.onload = () => {
-                        // Thiết lập kích thước canvas bằng kích thước ảnh gốc
-                        canvas.width = originalImage.width;
-                        canvas.height = originalImage.height;
+                        // Thiết lập kích thước canvas về kích thước chuẩn hóa
+                        canvas.width = TARGET_WIDTH;
+                        canvas.height = TARGET_HEIGHT;
 
-                        // Ẩn placeholder và hiện canvas
                         placeholder.style.display = 'none';
                         canvas.style.display = 'block';
                         
-                        // Kích hoạt nút Xử lý
                         processButton.disabled = false;
                         
-                        // Vẽ ảnh gốc lên canvas ban đầu
+                        // Vẽ ảnh gốc (đã resize) lên canvas
                         drawCanvas();
                     };
                     originalImage.src = e.target.result;
@@ -170,95 +169,93 @@
         function drawCanvas() {
             if (!originalImage) return;
 
-            // 1. Vẽ lại ảnh gốc lên canvas
-            ctx.drawImage(originalImage, 0, 0);
+            // 1. Vẽ lại ảnh gốc (resize) lên canvas
+            // Hàm drawImage(image, dx, dy, dw, dh)
+            ctx.drawImage(originalImage, 0, 0, TARGET_WIDTH, TARGET_HEIGHT);
 
             // 2. Lấy dữ liệu từ ô nhập
-            const timeDateDayInput = document.getElementById('input-time').value;
-            const addressText = document.getElementById('input-address').value;
-            const logoText = document.getElementById('input-logo').value;
-
-            // Phân tách chuỗi thời gian, ngày, thứ
-            const parts = timeDateDayInput.split('|').map(p => p.trim());
-            const timePart = parts[0] || "12:26";
-            const datePart = parts[1] || "01 Oct 2025";
-            const dayPart = parts[2] || "Wed";
-
-            // --- CÀI ĐẶT THÔNG SỐ VẼ ---
-            const canvasWidth = canvas.width;
-            const canvasHeight = canvas.height;
-            const basePadding = canvasWidth * 0.03; // Khoảng cách đệm cơ bản (3% chiều rộng ảnh)
-            const fontSizeRatio = canvasWidth / 720; // Hệ số điều chỉnh kích thước chữ dựa trên ảnh mẫu (ảnh mẫu khoảng 720px chiều rộng)
-
-            // Thiết lập đổ bóng chữ (Text Shadow)
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
-            ctx.shadowBlur = 4 * fontSizeRatio;
-            ctx.shadowOffsetX = 1 * fontSizeRatio;
-            ctx.shadowOffsetY = 1 * fontSizeRatio;
+            const timePart = document.getElementById('input-time').value.trim() || "12:00";
+            const datePart = document.getElementById('input-date').value.trim() || "01 Jan, 2025";
+            const dayPart = document.getElementById('input-day').value.trim() || "Wed";
+            const addressText = document.getElementById('input-address').value.trim() || "Địa chỉ";
             
-            ctx.fillStyle = 'white'; // Màu chữ
-            ctx.textBaseline = 'alphabetic'; // Đảm bảo căn chỉnh baseline nhất quán
+            const logoTextLine1 = "TimeMark";
+            const logoTextLine2 = "100% Chân thực";
+
+            // --- CÀI ĐẶT THÔNG SỐ VẼ (Dựa trên kích thước 1920x2560) ---
+            const PADDING = 70; // Khoảng đệm từ lề dưới và lề trái/phải
+            
+            // Thiết lập đổ bóng chữ (Text Shadow) giống ảnh mẫu
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
+            
+            ctx.fillStyle = 'white';
+            ctx.textBaseline = 'alphabetic'; 
 
             // ------------------------------------------
-            // A. VẼ PHẦN THỜI GIAN, NGÀY VÀ THỨ (Góc dưới trái)
+            // A. VẼ PHẦN THỜI GIAN VÀ NGÀY/THỨ (Góc dưới trái)
             // ------------------------------------------
+            
+            // Tọa độ Y ban đầu cho nhóm văn bản lớn (tính từ trên xuống)
+            const BASE_Y = TARGET_HEIGHT - PADDING;
             
             // 1. VẼ THỜI GIAN LỚN (VD: 12:26)
-            ctx.font = `bold ${Math.round(60 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`; // Tăng kích thước font cho giờ
-            ctx.letterSpacing = '-1px'; // Giảm khoảng cách chữ cho font đậm để gần giống ảnh
+            ctx.font = `bold 160px 'Helvetica Neue', Arial, sans-serif`; // Kích thước và độ đậm giống ảnh
+            ctx.letterSpacing = '-3px'; // Giảm khoảng cách chữ cho font đậm
             ctx.textAlign = 'left';
             
-            // Tính toán vị trí Y cho dòng thời gian lớn
-            const timeLineHeight = 60 * fontSizeRatio; // Chiều cao ước tính của dòng chữ lớn
-            const initialYOffset = canvasHeight - basePadding; // Vị trí Y ban đầu từ đáy
-            const timeY = initialYOffset - (15 * fontSizeRatio); // Vị trí Y cuối cùng cho thời gian, dịch lên một chút
+            const timeY = BASE_Y - 200; // Đẩy lên cao hơn
+            ctx.fillText(timePart, PADDING, timeY);
+            
+            // Đo chiều rộng của giờ để đặt ngày/thứ
+            const timeWidth = ctx.measureText(timePart).width;
 
-            ctx.fillText(timePart, basePadding, timeY);
-
-            // 2. VẼ NGÀY (VD: 01 Oct 2025)
-            ctx.font = `${Math.round(18 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`;
+            // 2. VẼ NGÀY VÀ THỨ (Bên phải giờ)
+            ctx.font = `18px 'Helvetica Neue', Arial, sans-serif`;
             ctx.letterSpacing = 'normal'; // Reset letter-spacing
-            const dateY = timeY + (25 * fontSizeRatio); // Dưới thời gian một khoảng
-            ctx.fillText(datePart, basePadding, dateY);
 
-            // 3. VẼ THỨ (VD: Wed)
-            ctx.font = `${Math.round(18 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`;
-            const dayY = dateY + (20 * fontSizeRatio); // Dưới ngày một khoảng
-            ctx.fillText(dayPart, basePadding, dayY);
+            // Dòng Ngày (01 Oct, 2025)
+            const dateY = timeY - 90; // Vị trí Y căn giữa theo giờ
+            ctx.fillText(datePart, PADDING + timeWidth + 40, dateY);
+            
+            // Dòng Thứ (Wed)
+            const dayY = dateY + 30; // Dưới Ngày một khoảng
+            ctx.fillText(dayPart, PADDING + timeWidth + 40, dayY);
             
             // ------------------------------------------
-            // B. VẼ ĐỊA CHỈ (Góc dưới trái, dưới các thông tin khác)
+            // B. VẼ ĐỊA CHỈ (Góc dưới trái, dưới thời gian)
             // ------------------------------------------
-            ctx.font = `${Math.round(18 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`;
-            ctx.letterSpacing = 'normal';
-            const addressY = canvasHeight - (basePadding - (30 * fontSizeRatio)); // Vị trí Y cho địa chỉ
-            ctx.fillText(addressText, basePadding, addressY);
+            ctx.font = `24px 'Helvetica Neue', Arial, sans-serif`; // Kích thước địa chỉ
+            const addressY = BASE_Y; 
+            ctx.fillText(addressText, PADDING, addressY);
+
 
             // ------------------------------------------
             // C. VẼ LOGO/WATERMARK (Góc dưới phải)
             // ------------------------------------------
             ctx.textAlign = 'right';
             
-            // 1. VẼ CHỮ LOGO LỚN
-            ctx.font = `bold ${Math.round(20 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`;
-            ctx.letterSpacing = 'normal'; // Reset letter-spacing
-            const logoY = canvasHeight - (basePadding + (10 * fontSizeRatio)); // Vị trí Y cho dòng logo lớn
-            ctx.fillText(logoText, canvasWidth - basePadding, logoY);
+            // 1. VẼ CHỮ LOGO LỚN (TimeMark)
+            ctx.font = `bold 30px 'Helvetica Neue', Arial, sans-serif`;
+            const logoY = BASE_Y - 40; 
+            ctx.fillText(logoTextLine1, TARGET_WIDTH - PADDING, logoY);
             
-            // 2. VẼ DÒNG CHỮ NHỎ "100% Chân thực"
-            ctx.font = `${Math.round(14 * fontSizeRatio)}px 'Helvetica Neue', Arial, sans-serif`;
-            const authenticityY = canvasHeight - (basePadding - (10 * fontSizeRatio)); // Vị trí Y cho dòng xác thực
-            ctx.fillText('100% Chân thực', canvasWidth - basePadding, authenticityY);
+            // 2. VẼ DÒNG CHỮ NHỎ (100% Chân thực)
+            ctx.font = `24px 'Helvetica Neue', Arial, sans-serif`;
+            const authenticityY = BASE_Y; 
+            ctx.fillText(logoTextLine2, TARGET_WIDTH - PADDING, authenticityY);
 
             // --- KẾT THÚC VẼ ---
-            // Xóa Shadow để không ảnh hưởng đến giao diện khác
+            // Xóa Shadow và Reset
             ctx.shadowBlur = 0;
             ctx.shadowOffsetX = 0;
             ctx.shadowOffsetY = 0;
-            ctx.letterSpacing = 'normal'; // Đặt lại về mặc định
+            ctx.letterSpacing = 'normal';
 
             // Cập nhật link tải về
-            const dataURL = canvas.toDataURL('image/png'); // Tạo ảnh PNG
+            const dataURL = canvas.toDataURL('image/png');
             downloadLink.href = dataURL;
             downloadLink.style.display = 'inline-block';
         }
