@@ -3,100 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công Cụ Chèn TimeMark - Chuẩn 1920x2560</title>
+    <title>Công Cụ Chèn TimeMark - Tinh Chỉnh Font</title>
     <style>
-        /* --- CSS CƠ BẢN --- */
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* --- PHẦN INPUT VÀ ĐIỀU KHIỂN --- */
-        .controls {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .controls label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        .controls input[type="text"] {
-            width: calc(100% - 10px);
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .controls button {
-            margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .controls button:hover {
-            background-color: #0056b3;
-        }
-
-        /* --- PHẦN HIỂN THỊ ẢNH/CANVAS --- */
-        .image-display {
-            width: 100%;
-            max-width: 400px; /* Giới hạn kích thước hiển thị trên web */
-            text-align: center;
-            border: 1px dashed #ccc;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        
-        #output-canvas {
-            display: none; 
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-        }
-
-        #placeholder {
-            width: 100%;
-            height: 300px;
-            line-height: 300px;
-            color: #aaa;
-            font-size: 1.2em;
-        }
-
-        #download-link {
-            display: none;
-            margin-top: 10px;
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
+        /* CSS tương tự như trước */
+        body { font-family: 'Arial', sans-serif; padding: 20px; background-color: #f4f4f4; display: flex; flex-direction: column; align-items: center; }
+        .controls { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 20px; width: 100%; max-width: 600px; }
+        .controls label { display: block; margin-top: 10px; font-weight: bold; }
+        .controls input[type="text"] { width: calc(100% - 10px); padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        .controls button { margin-top: 20px; padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s; }
+        .controls button:hover { background-color: #0056b3; }
+        .image-display { width: 100%; max-width: 400px; text-align: center; border: 1px dashed #ccc; background-color: #fff; padding: 10px; border-radius: 8px; }
+        #output-canvas { display: none; max-width: 100%; height: auto; border: 1px solid #ddd; }
+        #placeholder { width: 100%; height: 300px; line-height: 300px; color: #aaa; font-size: 1.2em; }
+        #download-link { display: none; margin-top: 10px; padding: 10px 15px; background-color: #28a745; color: white; border: none; border-radius: 4px; text-decoration: none; transition: background-color 0.3s; }
     </style>
 </head>
 <body>
 
-    <h1>Công Cụ Chèn TimeMark - Chuẩn 1920x2560</h1>
+    <h1>Công Cụ Chèn TimeMark - Tinh Chỉnh</h1>
 
     <div class="controls">
         <input type="file" id="image-file-input" accept="image/*">
@@ -114,7 +38,7 @@
         <input type="text" id="input-address" value="ĐT. 356, Đông Hải 2, Hải An, Hải Phòng">
 
         <button id="process-button">Chèn Thông tin và Xem Ảnh (1920x2560)</button>
-        <a id="download-link" href="#" download="timemark_1920x2560.png">Tải Ảnh Đã Chèn Về (PNG)</a>
+        <a id="download-link" href="#" download="timemark_final.png">Tải Ảnh Đã Chèn Về (PNG)</a>
     </div>
 
     <div class="image-display">
@@ -139,22 +63,18 @@
 
         // Bắt sự kiện tải file
         fileInput.addEventListener('change', (event) => {
+            // ... (Phần tải file và resize không thay đổi) ...
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     originalImage = new Image();
                     originalImage.onload = () => {
-                        // Thiết lập kích thước canvas về kích thước chuẩn hóa
                         canvas.width = TARGET_WIDTH;
                         canvas.height = TARGET_HEIGHT;
-
                         placeholder.style.display = 'none';
                         canvas.style.display = 'block';
-                        
                         processButton.disabled = false;
-                        
-                        // Vẽ ảnh gốc (đã resize) lên canvas
                         drawCanvas();
                     };
                     originalImage.src = e.target.result;
@@ -170,12 +90,11 @@
             if (!originalImage) return;
 
             // 1. Vẽ lại ảnh gốc (resize) lên canvas
-            // Hàm drawImage(image, dx, dy, dw, dh)
             ctx.drawImage(originalImage, 0, 0, TARGET_WIDTH, TARGET_HEIGHT);
 
             // 2. Lấy dữ liệu từ ô nhập
-            const timePart = document.getElementById('input-time').value.trim() || "12:00";
-            const datePart = document.getElementById('input-date').value.trim() || "01 Jan, 2025";
+            const timePart = document.getElementById('input-time').value.trim() || "12:26";
+            const datePart = document.getElementById('input-date').value.trim() || "01 Oct, 2025";
             const dayPart = document.getElementById('input-day').value.trim() || "Wed";
             const addressText = document.getElementById('input-address').value.trim() || "Địa chỉ";
             
@@ -183,11 +102,12 @@
             const logoTextLine2 = "100% Chân thực";
 
             // --- CÀI ĐẶT THÔNG SỐ VẼ (Dựa trên kích thước 1920x2560) ---
-            const PADDING = 70; // Khoảng đệm từ lề dưới và lề trái/phải
+            const PADDING_X = 70;  // Khoảng đệm từ lề trái/phải
+            const PADDING_BOTTOM = 70; // Khoảng đệm từ lề dưới
             
-            // Thiết lập đổ bóng chữ (Text Shadow) giống ảnh mẫu
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
-            ctx.shadowBlur = 10;
+            // Cài đặt Shadow: Đậm hơn và nổi bật hơn
+            ctx.shadowColor = 'rgba(0, 0, 0, 1)'; // Shadow màu đen đậm
+            ctx.shadowBlur = 15; // Tăng độ mờ
             ctx.shadowOffsetX = 3;
             ctx.shadowOffsetY = 3;
             
@@ -198,38 +118,40 @@
             // A. VẼ PHẦN THỜI GIAN VÀ NGÀY/THỨ (Góc dưới trái)
             // ------------------------------------------
             
-            // Tọa độ Y ban đầu cho nhóm văn bản lớn (tính từ trên xuống)
-            const BASE_Y = TARGET_HEIGHT - PADDING;
-            
             // 1. VẼ THỜI GIAN LỚN (VD: 12:26)
-            ctx.font = `bold 160px 'Helvetica Neue', Arial, sans-serif`; // Kích thước và độ đậm giống ảnh
-            ctx.letterSpacing = '-3px'; // Giảm khoảng cách chữ cho font đậm
+            ctx.font = `bold 160px 'Arial', sans-serif`; // Font lớn và đậm
+            ctx.letterSpacing = '-3px'; // Giảm khoảng cách chữ
             ctx.textAlign = 'left';
             
-            const timeY = BASE_Y - 200; // Đẩy lên cao hơn
-            ctx.fillText(timePart, PADDING, timeY);
+            // Vị trí Y cho thời gian: Đặt thời gian lên cao hơn một chút so với địa chỉ
+            const TIME_Y = TARGET_HEIGHT - PADDING_BOTTOM - 180; 
+            ctx.fillText(timePart, PADDING_X, TIME_Y);
             
-            // Đo chiều rộng của giờ để đặt ngày/thứ
+            // Đo chiều rộng của giờ để đặt ngày/thứ ngay cạnh
             const timeWidth = ctx.measureText(timePart).width;
+            
+            // Vị trí X bắt đầu cho Ngày/Thứ (ngay cạnh giờ)
+            const DATE_DAY_X = PADDING_X + timeWidth + 40; 
 
             // 2. VẼ NGÀY VÀ THỨ (Bên phải giờ)
-            ctx.font = `18px 'Helvetica Neue', Arial, sans-serif`;
-            ctx.letterSpacing = 'normal'; // Reset letter-spacing
-
-            // Dòng Ngày (01 Oct, 2025)
-            const dateY = timeY - 90; // Vị trí Y căn giữa theo giờ
-            ctx.fillText(datePart, PADDING + timeWidth + 40, dateY);
+            ctx.font = `20px 'Arial', sans-serif`; // Font nhỏ hơn cho ngày
+            ctx.letterSpacing = 'normal';
             
-            // Dòng Thứ (Wed)
-            const dayY = dateY + 30; // Dưới Ngày một khoảng
-            ctx.fillText(dayPart, PADDING + timeWidth + 40, dayY);
+            // Dòng Ngày (01 Oct, 2025): Căn giữa dọc theo phần số lớn của giờ
+            const DATE_Y = TIME_Y - 90; 
+            ctx.fillText(datePart, DATE_DAY_X, DATE_Y);
+            
+            // Dòng Thứ (Wed): Dưới Ngày một chút
+            const DAY_Y = DATE_Y + 30; 
+            ctx.fillText(dayPart, DATE_DAY_X, DAY_Y);
             
             // ------------------------------------------
             // B. VẼ ĐỊA CHỈ (Góc dưới trái, dưới thời gian)
             // ------------------------------------------
-            ctx.font = `24px 'Helvetica Neue', Arial, sans-serif`; // Kích thước địa chỉ
-            const addressY = BASE_Y; 
-            ctx.fillText(addressText, PADDING, addressY);
+            ctx.font = `24px 'Arial', sans-serif`; 
+            ctx.letterSpacing = 'normal';
+            const ADDRESS_Y = TARGET_HEIGHT - PADDING_BOTTOM; 
+            ctx.fillText(addressText, PADDING_X, ADDRESS_Y);
 
 
             // ------------------------------------------
@@ -238,17 +160,16 @@
             ctx.textAlign = 'right';
             
             // 1. VẼ CHỮ LOGO LỚN (TimeMark)
-            ctx.font = `bold 30px 'Helvetica Neue', Arial, sans-serif`;
-            const logoY = BASE_Y - 40; 
-            ctx.fillText(logoTextLine1, TARGET_WIDTH - PADDING, logoY);
+            ctx.font = `bold 30px 'Arial', sans-serif`;
+            const LOGO_Y = TARGET_HEIGHT - PADDING_BOTTOM - 40; // Đặt lên cao hơn địa chỉ
+            ctx.fillText(logoTextLine1, TARGET_WIDTH - PADDING_X, LOGO_Y);
             
             // 2. VẼ DÒNG CHỮ NHỎ (100% Chân thực)
-            ctx.font = `24px 'Helvetica Neue', Arial, sans-serif`;
-            const authenticityY = BASE_Y; 
-            ctx.fillText(logoTextLine2, TARGET_WIDTH - PADDING, authenticityY);
+            ctx.font = `24px 'Arial', sans-serif`;
+            const AUTH_Y = TARGET_HEIGHT - PADDING_BOTTOM; // Căn thẳng hàng với Địa chỉ
+            ctx.fillText(logoTextLine2, TARGET_WIDTH - PADDING_X, AUTH_Y);
 
             // --- KẾT THÚC VẼ ---
-            // Xóa Shadow và Reset
             ctx.shadowBlur = 0;
             ctx.shadowOffsetX = 0;
             ctx.shadowOffsetY = 0;
