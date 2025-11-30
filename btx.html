@@ -8,16 +8,30 @@
   <style>
     body{font-family:Arial,Helvetica,sans-serif; margin:20px; background:#f7f7f7;}
     h2{text-align:center}
+    .controls {text-align:center; margin-bottom:12px;}
+    .btn {background:#2d9cdb;color:#fff;border:none;padding:8px 12px;border-radius:6px;margin:0 6px;cursor:pointer;}
+    .btn.active {background:#1b6f9a;}
     .card {background:white; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:16px; margin-bottom:16px;}
     .grid {display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:12px;}
     .info-box {padding:12px; text-align:center; border-radius:6px; background:#fff; border:1px solid #eee;}
     .info-box h3 {margin:8px 0 4px; font-size:18px;}
     .info-box p {margin:0; font-size:14px; color:#555;}
     #canvasWrap {height:360px;}
+    @media (max-width:480px) { #canvasWrap {height:260px;} .btn{padding:6px 8px; margin:4px;} }
   </style>
 </head>
 <body>
   <h2>Theo Dõi Dữ Liệu BTX</h2>
+
+  <div class="controls card">
+    <span>Khoảng thời gian: </span>
+    <button class="btn" data-hours="2" id="btn2">2 giờ</button>
+    <button class="btn" data-hours="4" id="btn4">4 giờ</button>
+    <button class="btn" data-hours="6" id="btn6">6 giờ</button>
+    <button class="btn" data-hours="8" id="btn8">8 giờ</button>
+    <button class="btn" data-hours="10" id="btn10">10 giờ</button>
+    <div style="margin-top:8px;color:#666;font-size:13px;">Dữ liệu được cập nhật mỗi 30s.</div>
+  </div>
 
   <div class="card" id="chartCard">
     <div id="canvasWrap">
@@ -29,19 +43,19 @@
     <div class="grid">
       <div class="info-box">
         <h3 id="val_temp">--</h3>
-        <p>Nhiệt độ Chip</p>
+        <p>Nhiệt độ Chip (°C)</p>
       </div>
       <div class="info-box">
         <h3 id="val_vrtemp">--</h3>
-        <p>Nhiệt Độ IC Điện Áp</p>
+        <p>Nhiệt Độ IC Điện Áp (°C)</p>
       </div>
       <div class="info-box">
         <h3 id="val_freq">--</h3>
-        <p>Tần Số CPU</p>
+        <p>Tần Số CPU (MHz)</p>
       </div>
       <div class="info-box">
         <h3 id="val_volt">--</h3>
-        <p>Điện Áp CPU</p>
+        <p>Điện Áp CPU (V)</p>
       </div>
     </div>
   </div>
@@ -50,19 +64,32 @@
   const CHANNEL_ID = '3187244';
   const READ_API_KEY = 'V9AVUWJB5I9K32D4';
 
-  // Số point lấy về
-  const RESULTS = 100;
+  const RESULTS = 8000;
 
-  function buildApiUrl() {
-    let url = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?results=${RESULTS}`;
-    if (READ_API_KEY && READ_API_KEY.length > 0) {
-      url += `&api_key=${READ_API_KEY}`;
+  let currentHours = 1;
+
+  let hashChartInstance = null;
+
+  function buildApiUrl(hours) {
+
+    const now = new Date();
+    const startDate = new Date(now.getTime() - hours * 3600 * 1000);
+    function fmt(d) {
+      const yyyy = d.getUTCFullYear();
+      const mm = String(d.getUTCMonth()+1).padStart(2,'0');
+      const dd = String(d.getUTCDate()).padStart(2,'0');
+      const hh = String(d.getUTCHours()).padStart(2,'0');
+      const min = String(d.getUTCMinutes()).padStart(2,'0');
+      const ss = String(d.getUTCSeconds()).padStart(2,'0');
+      return `${yyyy}-${mm}-${dd}%20${hh}:${min}:${ss}`; // URL-encoded space
     }
+    let url = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?results=${RESULTS}&start=${fmt(startDate)}`;
+    if (READ_API_KEY && READ_API_KEY.length > 0) url += `&api_key=${READ_API_KEY}`;
     return url;
   }
 
-  async function fetchData() {
-    const url = buildApiUrl();
+  async function fetchDataFor(hours) {
+    const url = buildApiUrl(hours);
     try {
       const res = await fetch(url);
       if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -74,6 +101,88 @@
     }
   }
 
+  function fmtNumberSafe(value, decimals) {
+    if (value === null || value === undefined || value === '' ) return '--';
+    const n = Number(value);
+    if (!isFinite(n)) return '--';
+    return n.toFixed(decimals);
+  }
+
+  function fmtVoltageFromThingSpeak(valString) {
+    if (valString === null || valString === undefined || valString === '') return '--';
+    const n = Number(valString);
+    if (!isFinite(n)) return '--';
+    return (n / 1000).toFixed(2);
+  }
+
+  function updateInfoBoxes(lastTemp, lastVr, lastFreq, lastVolt) {
+    document.getElementById('val_temp').innerText   = lastTemp ? fmtNumberSafe(lastTemp, 1) : '--';
+    document.getElementById('val_vrtemp').innerText = lastVr ? fmtNumberSafe(lastVr, 1) : '--';
+    document.getElementById('val_freq').innerText   = lastFreq ? fmtNumberSafe(lastFreq, 0) : '--';
+    document.getElementById('val_volt').innerText   = lastVolt ? fmtVoltageFromThingSpeak(lastVolt) : '--';
+  }
+
+  function renderChart(labels, dataPoints) {
+    if (hashChartInstance) {
+      hashChartInstance.data.labels = labels;
+      hashChartInstance.data.datasets[0].data = dataPoints;
+      hashChartInstance.update();
+      return;
+    }
+
+    const ctx = document.getElementById('hashChart').getContext('2d');
+    hashChartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Hashrate',
+          data: dataPoints,
+          fill: true,
+          tension: 0.2,
+          pointRadius: 2,
+          borderWidth: 1.5
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            display: true,
+            title: { display: true, text: 'Time' },
+            ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 12 }
+          },
+          y: {
+            display: true,
+            title: { display: true, text: 'Hashrate' },
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                const n = Number(value);
+                if (!isFinite(n)) return value;
+                return n.toFixed(1);
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const v = context.parsed.y;
+                if (!isFinite(v)) return 'Hashrate: --';
+                return 'Hashrate: ' + Number(v).toFixed(1);
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+
   function parseAndPlot(data) {
     if (!data || !data.feeds) return;
     const feeds = data.feeds;
@@ -81,14 +190,13 @@
     const labels = [];
     const hrData = [];
 
-    let lastTemp = '--', lastVr = '--', lastFreq = '--', lastVolt = '--';
+    let lastTemp = null, lastVr = null, lastFreq = null, lastVolt = null;
 
     for (let i = 0; i < feeds.length; i++) {
       const f = feeds[i];
-
       let t = f.created_at ? new Date(f.created_at) : new Date();
       labels.push(t.toLocaleTimeString());
-      let v1 = parseFloat(f.field1);
+      const v1 = parseFloat(f.field1);
       hrData.push(isNaN(v1) ? null : v1);
 
       if (f.field2 && f.field2 !== '') lastTemp = f.field2;
@@ -97,58 +205,34 @@
       if (f.field5 && f.field5 !== '') lastVolt = f.field5;
     }
 
-    document.getElementById('val_temp').innerText = lastTemp;
-    document.getElementById('val_vrtemp').innerText = lastVr;
-    document.getElementById('val_freq').innerText = lastFreq;
-    document.getElementById('val_volt').innerText = lastVolt;
-
-    if (window.hashChartInstance) {
-      window.hashChartInstance.data.labels = labels;
-      window.hashChartInstance.data.datasets[0].data = hrData;
-      window.hashChartInstance.update();
-    } else {
-      const ctx = document.getElementById('hashChart').getContext('2d');
-      window.hashChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Hashrate',
-            data: hrData,
-            fill: true,
-            tension: 0.2,
-            pointRadius: 2
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            x: {
-              display: true,
-              title: { display: true, text: 'Time' }
-            },
-            y: {
-              display: true,
-              title: { display: true, text: 'Hashrate' },
-              beginAtZero: true
-            }
-          },
-          plugins: {
-            legend: { display: false }
-          }
-        }
-      });
-    }
+    updateInfoBoxes(lastTemp, lastVr, lastFreq, lastVolt);
+    renderChart(labels, hrData);
   }
 
-  async function refreshLoop() {
-    const data = await fetchData();
+  async function refreshForHours(hours) {
+
+    document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+    const activeBtn = document.querySelector(`.btn[data-hours="${hours}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    const data = await fetchDataFor(hours);
     parseAndPlot(data);
   }
 
-  refreshLoop();
-  setInterval(refreshLoop, 15000);
+  document.addEventListener('DOMContentLoaded', () => {
+    const btns = document.querySelectorAll('.btn');
+    btns.forEach(b => {
+      b.addEventListener('click', () => {
+        const h = Number(b.getAttribute('data-hours'));
+        currentHours = h;
+        refreshForHours(h);
+      });
+    });
+
+    refreshForHours(currentHours);
+
+    setInterval(() => refreshForHours(currentHours), 30000);
+  });
 </script>
 </body>
 </html>
