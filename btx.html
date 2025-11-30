@@ -17,6 +17,8 @@
     .info-box h3 {margin:8px 0 4px; font-size:18px;}
     .info-box p {margin:0; font-size:14px; color:#555;}
     #canvasWrap {height:360px;}
+    .freq-normal { color: #1b6f9a; font-weight:600; } /* xanh */
+    .freq-overload { color: #d33; font-weight:700; } /* đỏ */
     @media (max-width:480px) { #canvasWrap {height:260px;} .btn{padding:6px 8px; margin:4px;} }
   </style>
 </head>
@@ -25,12 +27,12 @@
 
   <div class="controls card">
     <span>Khoảng thời gian: </span>
-    <button class="btn" data-hours="2" id="btn2">2 giờ</button>
-    <button class="btn" data-hours="4" id="btn4">4 giờ</button>
-    <button class="btn" data-hours="6" id="btn6">6 giờ</button>
-    <button class="btn" data-hours="8" id="btn8">8 giờ</button>
-    <button class="btn" data-hours="10" id="btn10">10 giờ</button>
-    <div style="margin-top:8px;color:#666;font-size:13px;">Dữ liệu được cập nhật mỗi 30s.</div>
+    <button class="btn" data-hours="1" id="btn2">1 giờ</button>
+    <button class="btn" data-hours="2" id="btn4">2 giờ</button>
+    <button class="btn" data-hours="3" id="btn6">3 giờ</button>
+    <button class="btn" data-hours="4" id="btn8">4 giờ</button>
+    <button class="btn" data-hours="5" id="btn10">5 giờ</button>
+    <div style="margin-top:8px;color:#666;font-size:13px;">Dữ liệu được cập nhật mỗi 30s, và ép xung tự động.</div>
   </div>
 
   <div class="card" id="chartCard">
@@ -50,7 +52,7 @@
         <p>Nhiệt Độ IC Điện Áp (°C)</p>
       </div>
       <div class="info-box">
-        <h3 id="val_freq">--</h3>
+        <h3 id="val_freq" class="freq-normal">--</h3>
         <p>Tần Số CPU (MHz)</p>
       </div>
       <div class="info-box">
@@ -65,13 +67,13 @@
   const READ_API_KEY = 'V9AVUWJB5I9K32D4';
 
   const RESULTS = 8000;
-
-  let currentHours = 1;
-
+  let currentHours = 1; // mặc định 1 giờ (button 1h)
   let hashChartInstance = null;
 
-  function buildApiUrl(hours) {
+  // baseline
+  const BASE_FREQ = 625; // 625 MHz = 100%
 
+  function buildApiUrl(hours) {
     const now = new Date();
     const startDate = new Date(now.getTime() - hours * 3600 * 1000);
     function fmt(d) {
@@ -81,7 +83,7 @@
       const hh = String(d.getUTCHours()).padStart(2,'0');
       const min = String(d.getUTCMinutes()).padStart(2,'0');
       const ss = String(d.getUTCSeconds()).padStart(2,'0');
-      return `${yyyy}-${mm}-${dd}%20${hh}:${min}:${ss}`; // URL-encoded space
+      return `${yyyy}-${mm}-${dd}%20${hh}:${min}:${ss}`;
     }
     let url = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?results=${RESULTS}&start=${fmt(startDate)}`;
     if (READ_API_KEY && READ_API_KEY.length > 0) url += `&api_key=${READ_API_KEY}`;
@@ -115,10 +117,39 @@
     return (n / 1000).toFixed(2);
   }
 
+  function renderFreqDisplay(freqRaw) {
+    // if no freqRaw, show baseline 625 (100%)
+    if (freqRaw === null || freqRaw === undefined || freqRaw === '') {
+      const text = `${BASE_FREQ} (100%)`;
+      const el = document.getElementById('val_freq');
+      el.className = 'freq-normal';
+      el.innerText = text;
+      return;
+    }
+    const n = Number(freqRaw);
+    if (!isFinite(n)) {
+      const text = `${BASE_FREQ} (100%)`;
+      const el = document.getElementById('val_freq');
+      el.className = 'freq-normal';
+      el.innerText = text;
+      return;
+    }
+    const freqInt = Math.round(n);
+    const pct = Math.round((n / BASE_FREQ) * 100);
+    const text = `${freqInt} (${pct}%)`;
+    const el = document.getElementById('val_freq');
+    if (n > BASE_FREQ) {
+      el.className = 'freq-overload';
+    } else {
+      el.className = 'freq-normal';
+    }
+    el.innerText = text;
+  }
+
   function updateInfoBoxes(lastTemp, lastVr, lastFreq, lastVolt) {
     document.getElementById('val_temp').innerText   = lastTemp ? fmtNumberSafe(lastTemp, 1) : '--';
     document.getElementById('val_vrtemp').innerText = lastVr ? fmtNumberSafe(lastVr, 1) : '--';
-    document.getElementById('val_freq').innerText   = lastFreq ? fmtNumberSafe(lastFreq, 0) : '--';
+    renderFreqDisplay(lastFreq);
     document.getElementById('val_volt').innerText   = lastVolt ? fmtVoltageFromThingSpeak(lastVolt) : '--';
   }
 
@@ -155,7 +186,7 @@
           },
           y: {
             display: true,
-            title: { display: true, text: 'Hashrate' },
+            title: { display: true, text: 'Hashrate  (Mh/s)' },
             beginAtZero: true,
             ticks: {
               callback: function(value) {
@@ -181,7 +212,6 @@
       }
     });
   }
-
 
   function parseAndPlot(data) {
     if (!data || !data.feeds) return;
@@ -210,7 +240,6 @@
   }
 
   async function refreshForHours(hours) {
-
     document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
     const activeBtn = document.querySelector(`.btn[data-hours="${hours}"]`);
     if (activeBtn) activeBtn.classList.add('active');
@@ -229,6 +258,7 @@
       });
     });
 
+    // initial load with default 1 hour
     refreshForHours(currentHours);
 
     setInterval(() => refreshForHours(currentHours), 30000);
