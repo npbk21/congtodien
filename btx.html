@@ -17,8 +17,19 @@
     .info-box h3 {margin:8px 0 4px; font-size:18px;}
     .info-box p {margin:0; font-size:14px; color:#555;}
     #canvasWrap {height:360px;}
-    .freq-normal { color: #1b6f9a; font-weight:600; } /* xanh */
-    .freq-overload { color: #d33; font-weight:700; } /* đỏ */
+    .freq-normal { color: #1b6f9a; font-weight:600; }
+    .freq-overload { color: #d33; font-weight:700; }
+    .minmax-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;   /* ⭐ Căn giữa ngang */
+  text-align: center;         /* ⭐ Căn chữ giữa */
+  margin-top: 12px;
+}
+
+    .minmax-box { background:#fff;padding:10px;border-radius:8px;border:1px solid #eee; min-width:160px; text-align:center; }
+    .warn { font-size:12px;color:#b44; margin-top:8px; }
     @media (max-width:480px) { #canvasWrap {height:260px;} .btn{padding:6px 8px; margin:4px;} }
   </style>
 </head>
@@ -26,16 +37,44 @@
   <h2>Theo Dõi Dữ Liệu BTX</h2>
 
   <div class="controls card">
-    <span>Khoảng thời gian: </span>
-    <button class="btn" data-hours="1" id="btn2">1 giờ</button>
-    <button class="btn" data-hours="2" id="btn4">2 giờ</button>
-    <button class="btn" data-hours="3" id="btn6">3 giờ</button>
-    <button class="btn" data-hours="4" id="btn8">4 giờ</button>
-    <button class="btn" data-hours="5" id="btn10">5 giờ</button>
-    <div style="margin-top:8px;color:#666;font-size:13px;">Dữ liệu được cập nhật mỗi 30s, và ép xung tự động.</div>
+    <span>Xem lại khoảng thời gian: </span>
+    <button class="btn" data-hours="1">1 giờ</button>
+    <button class="btn" data-hours="2">2 giờ</button>
+    <button class="btn" data-hours="3">3 giờ</button>
+    <button class="btn" data-hours="4">4 giờ</button>
+    <button class="btn" data-hours="5">5 giờ</button>    
   </div>
+  
+	<div class="minmax-grid" id="minmaxSummary" style="margin-top:20px;">
+    <h3 style="width:100%; text-align:center; margin-bottom:10px;">Min/Max Hashrate</h3>
 
-  <div class="card" id="chartCard">
+    <div class="minmax-box">
+      <strong>30 phút</strong>
+      <div id="mm_30m">-- / --</div>
+    </div>
+
+    <div class="minmax-box">
+      <strong>1 giờ</strong>
+      <div id="mm_1h">-- / --</div>
+    </div>
+
+    <div class="minmax-box">
+      <strong>6 giờ</strong>
+      <div id="mm_6h">-- / --</div>
+    </div>
+
+    <div class="minmax-box">
+      <strong>24 giờ</strong>
+      <div id="mm_24h">-- / --</div>
+    </div>
+</div>
+
+<div id="minmaxWarn" class="warn" style="display:none;">
+  ⚠️ Số lượng dữ liệu đạt giới hạn 8000 điểm — Min/Max có thể chưa đầy đủ.
+</div>
+
+	
+  <div class="card" id="chartCard" style="margin-top:25px;">
     <div id="canvasWrap">
       <canvas id="hashChart"></canvas>
     </div>
@@ -43,225 +82,175 @@
 
   <div class="card">
     <div class="grid">
-      <div class="info-box">
-        <h3 id="val_temp">--</h3>
-        <p>Nhiệt độ CPU (°C)</p>
-      </div>
-      <div class="info-box">
-        <h3 id="val_vrtemp">--</h3>
-        <p>Nhiệt Độ IC Điện Áp (°C)</p>
-      </div>
-      <div class="info-box">
-        <h3 id="val_freq" class="freq-normal">--</h3>
-        <p>Tần Số CPU (MHz)</p>
-      </div>
-      <div class="info-box">
-        <h3 id="val_volt">--</h3>
-        <p>Điện Áp CPU (V)</p>
-      </div>
+      <div class="info-box"><h3 id="val_temp">--</h3><p>Nhiệt độ CPU (°C)</p></div>
+      <div class="info-box"><h3 id="val_vrtemp">--</h3><p>Nhiệt Độ IC Điện Áp (°C)</p></div>
+      <div class="info-box"><h3 id="val_freq" class="freq-normal">--</h3><p>Tần Số CPU (MHz)</p></div>
+      <div class="info-box"><h3 id="val_volt">--</h3><p>Điện Áp CPU (V)</p></div>
     </div>
   </div>
 
 <script>
   const CHANNEL_ID = '3187244';
   const READ_API_KEY = 'V9AVUWJB5I9K32D4';
-
   const RESULTS = 8000;
-  let currentHours = 1; // mặc định 1 giờ (button 1h)
+  let currentHours = 1;
   let hashChartInstance = null;
+  const BASE_FREQ = 625;
 
-  // baseline
-  const BASE_FREQ = 625; // 625 MHz = 100%
+  function fmt(d) {
+    const yyyy = d.getUTCFullYear();
+    const mm = String(d.getUTCMonth()+1).padStart(2,'0');
+    const dd = String(d.getUTCDate()).padStart(2,'0');
+    const hh = String(d.getUTCHours()).padStart(2,'0');
+    const m = String(d.getUTCMinutes()).padStart(2,'0');
+    const s = String(d.getUTCSeconds()).padStart(2,'0');
+    return `${yyyy}-${mm}-${dd}%20${hh}:${m}:${s}`;
+  }
 
-  function buildApiUrl(hours) {
+  function urlFor(hours) {
     const now = new Date();
-    const startDate = new Date(now.getTime() - hours * 3600 * 1000);
-    function fmt(d) {
-      const yyyy = d.getUTCFullYear();
-      const mm = String(d.getUTCMonth()+1).padStart(2,'0');
-      const dd = String(d.getUTCDate()).padStart(2,'0');
-      const hh = String(d.getUTCHours()).padStart(2,'0');
-      const min = String(d.getUTCMinutes()).padStart(2,'0');
-      const ss = String(d.getUTCSeconds()).padStart(2,'0');
-      return `${yyyy}-${mm}-${dd}%20${hh}:${min}:${ss}`;
-    }
-    let url = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json?results=${RESULTS}&start=${fmt(startDate)}`;
-    if (READ_API_KEY && READ_API_KEY.length > 0) url += `&api_key=${READ_API_KEY}`;
+    const start = new Date(now.getTime() - hours*3600*1000);
+    let url = `https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds.json`
+            + `?results=${RESULTS}&start=${fmt(start)}`;
+    if (READ_API_KEY) url += `&api_key=${READ_API_KEY}`;
     return url;
   }
 
-  async function fetchDataFor(hours) {
-    const url = buildApiUrl(hours);
+  async function fetchJson(url) {
     try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const j = await res.json();
-      return j;
+      const r = await fetch(url);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return await r.json();
     } catch (e) {
-      console.error('Fetch error', e);
+      console.error(e);
       return null;
     }
   }
 
-  function fmtNumberSafe(value, decimals) {
-    if (value === null || value === undefined || value === '' ) return '--';
+  function calcMinMax(feeds) {
+    let min = NaN, max = NaN;
+    for (const f of feeds) {
+      const n = Number(f.field1);
+      if (!isFinite(n)) continue;
+      if (isNaN(min) || n < min) min = n;
+      if (isNaN(max) || n > max) max = n;
+    }
+    return { min, max, len: feeds.length };
+  }
+
+  function showMinMax(id, obj) {
+    const el = document.getElementById(id);
+    if (!obj || isNaN(obj.min)) el.innerText = "-- / --";
+    else el.innerText = `${obj.min.toFixed(1)} / ${obj.max.toFixed(1)}`;
+  }
+
+  async function updateAllMinMax() {
+    const list = [
+      { hours: 0.5, id: 'mm_30m' },
+      { hours: 1,   id: 'mm_1h' },
+      { hours: 6,   id: 'mm_6h' },
+      { hours: 24,  id: 'mm_24h' }
+    ];
+
+    document.getElementById("minmaxWarn").style.display = "none";
+
+    for (const p of list) {
+      const j = await fetchJson(urlFor(p.hours));
+      if (!j || !j.feeds) {
+        showMinMax(p.id, null);
+        continue;
+      }
+      if (j.feeds.length >= RESULTS) {
+        document.getElementById("minmaxWarn").style.display = "block";
+      }
+      const mm = calcMinMax(j.feeds);
+      showMinMax(p.id, mm);
+      await new Promise(r => setTimeout(r, 200));
+    }
+  }
+
+  function fmtNumber(value, dec) {
     const n = Number(value);
-    if (!isFinite(n)) return '--';
-    return n.toFixed(decimals);
+    return isFinite(n) ? n.toFixed(dec) : "--";
+  }
+  function fmtVolt(v) {
+    const n = Number(v);
+    return isFinite(n) ? (n/1000).toFixed(2) : "--";
   }
 
-  function fmtVoltageFromThingSpeak(valString) {
-    if (valString === null || valString === undefined || valString === '') return '--';
-    const n = Number(valString);
-    if (!isFinite(n)) return '--';
-    return (n / 1000).toFixed(2);
+  function setFreqDisplay(raw) {
+    const el = document.getElementById("val_freq");
+    if (!raw) { el.innerText = `${BASE_FREQ} (100%)`; el.className="freq-normal"; return; }
+    const f = Number(raw);
+    if (!isFinite(f)) { el.innerText = `${BASE_FREQ} (100%)`; el.className="freq-normal"; return; }
+    const pct = Math.round(f/BASE_FREQ*100);
+    el.innerText = `${Math.round(f)} (${pct}%)`;
+    el.className = (f > BASE_FREQ ? "freq-overload" : "freq-normal");
   }
 
-  function renderFreqDisplay(freqRaw) {
-    // if no freqRaw, show baseline 625 (100%)
-    if (freqRaw === null || freqRaw === undefined || freqRaw === '') {
-      const text = `${BASE_FREQ} (100%)`;
-      const el = document.getElementById('val_freq');
-      el.className = 'freq-normal';
-      el.innerText = text;
-      return;
-    }
-    const n = Number(freqRaw);
-    if (!isFinite(n)) {
-      const text = `${BASE_FREQ} (100%)`;
-      const el = document.getElementById('val_freq');
-      el.className = 'freq-normal';
-      el.innerText = text;
-      return;
-    }
-    const freqInt = Math.round(n);
-    const pct = Math.round((n / BASE_FREQ) * 100);
-    const text = `${freqInt} (${pct}%)`;
-    const el = document.getElementById('val_freq');
-    if (n > BASE_FREQ) {
-      el.className = 'freq-overload';
-    } else {
-      el.className = 'freq-normal';
-    }
-    el.innerText = text;
-  }
-
-  function updateInfoBoxes(lastTemp, lastVr, lastFreq, lastVolt) {
-    document.getElementById('val_temp').innerText   = lastTemp ? fmtNumberSafe(lastTemp, 1) : '--';
-    document.getElementById('val_vrtemp').innerText = lastVr ? fmtNumberSafe(lastVr, 1) : '--';
-    renderFreqDisplay(lastFreq);
-    document.getElementById('val_volt').innerText   = lastVolt ? fmtVoltageFromThingSpeak(lastVolt) : '--';
-  }
-
-  function renderChart(labels, dataPoints) {
+  function renderChart(labels, data) {
     if (hashChartInstance) {
       hashChartInstance.data.labels = labels;
-      hashChartInstance.data.datasets[0].data = dataPoints;
+      hashChartInstance.data.datasets[0].data = data;
       hashChartInstance.update();
       return;
     }
-
-    const ctx = document.getElementById('hashChart').getContext('2d');
+    const ctx = document.getElementById("hashChart").getContext("2d");
     hashChartInstance = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Hashrate',
-          data: dataPoints,
-          fill: true,
-          tension: 0.2,
-          pointRadius: 2,
-          borderWidth: 1.5
-        }]
-      },
+      type: "line",
+      data: { labels, datasets: [{ data, label:"Hashrate", fill:true, tension:0.2, pointRadius:2, borderWidth:1.5 }] },
       options: {
-        responsive: true,
-        maintainAspectRatio: false,
+        responsive:true, maintainAspectRatio:false,
         scales: {
-          x: {
-            display: true,
-            title: { display: true, text: 'Time' },
-            ticks: { maxRotation: 0, autoSkip: true, maxTicksLimit: 12 }
-          },
-          y: {
-            display: true,
-            title: { display: true, text: 'Hashrate  (Mh/s)' },
-            beginAtZero: true,
-            ticks: {
-              callback: function(value) {
-                const n = Number(value);
-                if (!isFinite(n)) return value;
-                return n.toFixed(1);
-              }
-            }
-          }
+          x:{ ticks:{autoSkip:true,maxTicksLimit:12} },
+          y:{ beginAtZero:true }
         },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: function(context) {
-                const v = context.parsed.y;
-                if (!isFinite(v)) return 'Hashrate: --';
-                return 'Hashrate: ' + Number(v).toFixed(1);
-              }
-            }
-          }
-        }
+        plugins:{ legend:{display:false} }
       }
     });
   }
 
-  function parseAndPlot(data) {
-    if (!data || !data.feeds) return;
-    const feeds = data.feeds;
-
+  function parseAndPlot(j) {
+    if (!j || !j.feeds) return;
+    const feeds = j.feeds;
     const labels = [];
-    const hrData = [];
+    const hr = [];
+    let t=null, vr=null, f=null, v=null;
 
-    let lastTemp = null, lastVr = null, lastFreq = null, lastVolt = null;
-
-    for (let i = 0; i < feeds.length; i++) {
-      const f = feeds[i];
-      let t = f.created_at ? new Date(f.created_at) : new Date();
-      labels.push(t.toLocaleTimeString());
-      const v1 = parseFloat(f.field1);
-      hrData.push(isNaN(v1) ? null : v1);
-
-      if (f.field2 && f.field2 !== '') lastTemp = f.field2;
-      if (f.field3 && f.field3 !== '') lastVr = f.field3;
-      if (f.field4 && f.field4 !== '') lastFreq = f.field4;
-      if (f.field5 && f.field5 !== '') lastVolt = f.field5;
+    for (const x of feeds) {
+      const dt = new Date(x.created_at);
+      labels.push(dt.toLocaleTimeString());
+      hr.push(isFinite(Number(x.field1)) ? Number(x.field1) : null);
+      if (x.field2) t=x.field2;
+      if (x.field3) vr=x.field3;
+      if (x.field4) f=x.field4;
+      if (x.field5) v=x.field5;
     }
 
-    updateInfoBoxes(lastTemp, lastVr, lastFreq, lastVolt);
-    renderChart(labels, hrData);
+    document.getElementById("val_temp").innerText = fmtNumber(t,1);
+    document.getElementById("val_vrtemp").innerText = fmtNumber(vr,1);
+    setFreqDisplay(f);
+    document.getElementById("val_volt").innerText = fmtVolt(v);
+
+    renderChart(labels, hr);
   }
 
-  async function refreshForHours(hours) {
-    document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-    const activeBtn = document.querySelector(`.btn[data-hours="${hours}"]`);
-    if (activeBtn) activeBtn.classList.add('active');
+  async function refresh(hours) {
+    document.querySelectorAll(".btn").forEach(b=>b.classList.remove("active"));
+    const btn = document.querySelector(`.btn[data-hours="${hours}"]`);
+    if (btn) btn.classList.add("active");
 
-    const data = await fetchDataFor(hours);
-    parseAndPlot(data);
+    const j = await fetchJson(urlFor(hours));
+    parseAndPlot(j);
+    updateAllMinMax();
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const btns = document.querySelectorAll('.btn');
-    btns.forEach(b => {
-      b.addEventListener('click', () => {
-        const h = Number(b.getAttribute('data-hours'));
-        currentHours = h;
-        refreshForHours(h);
-      });
+  document.addEventListener("DOMContentLoaded", ()=>{
+    document.querySelectorAll(".btn").forEach(b=>{
+      b.onclick = ()=>{ currentHours = Number(b.dataset.hours); refresh(currentHours); };
     });
-
-    // initial load with default 1 hour
-    refreshForHours(currentHours);
-
-    setInterval(() => refreshForHours(currentHours), 30000);
+    refresh(currentHours);
+    setInterval(()=>refresh(currentHours),30000);
   });
 </script>
 </body>
