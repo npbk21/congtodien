@@ -80,32 +80,24 @@
       <table class="minmax-table">
         <thead>
           <tr>
-            <th>30 phút</th>
             <th>1 giờ</th>
-            <th>6 giờ</th>
             <th>12 giờ</th>
             <th>24 giờ</th>
           </tr>
         </thead>
         <tbody>
           <tr id="mrow_k1">
-            <td id="m_k1_30m">-- / --</td>
             <td id="m_k1_1h">-- / --</td>
-            <td id="m_k1_6h">-- / --</td>
             <td id="m_k1_12h">-- / --</td>
             <td id="m_k1_24h">-- / --</td>
           </tr>
           <tr id="mrow_k2">
-            <td id="m_k2_30m">-- / --</td>
             <td id="m_k2_1h">-- / --</td>
-            <td id="m_k2_6h">-- / --</td>
             <td id="m_k2_12h">-- / --</td>
             <td id="m_k2_24h">-- / --</td>
           </tr>
           <tr id="mrow_k3">
-            <td id="m_k3_30m">-- / --</td>
             <td id="m_k3_1h">-- / --</td>
-            <td id="m_k3_6h">-- / --</td>
             <td id="m_k3_12h">-- / --</td>
             <td id="m_k3_24h">-- / --</td>
           </tr>
@@ -313,12 +305,10 @@ function calcMinMax(feeds){
   return {min, max, len: feeds.length};
 }
 
-/* per-channel minmax for intervals */
+/* per-channel minmax for intervals (removed 30m and 6h) */
 async function updateMinMax(){
   const intervals = [
-    {m:30, idSuffix:'30m'},
     {m:60, idSuffix:'1h'},
-    {m:360, idSuffix:'6h'},
     {m:720, idSuffix:'12h'},
     {m:1440, idSuffix:'24h'}
   ];
