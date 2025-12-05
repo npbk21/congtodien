@@ -74,31 +74,23 @@
       </table>
     </div>
 
-    <!-- Per-channel min/max -->
+    <!-- Per-channel min/max (24h only) -->
     <div class="card">
-      <h3 style="margin:0 0 8px 0">Min / Max theo từng channel</h3>
+      <h3 style="margin:0 0 8px 0">Min / Max trong 24 giờ (theo từng channel)</h3>
       <table class="minmax-table">
         <thead>
           <tr>
-            <th>1 giờ</th>
-            <th>12 giờ</th>
             <th>24 giờ</th>
           </tr>
         </thead>
         <tbody>
           <tr id="mrow_k1">
-            <td id="m_k1_1h">-- / --</td>
-            <td id="m_k1_12h">-- / --</td>
             <td id="m_k1_24h">-- / --</td>
           </tr>
           <tr id="mrow_k2">
-            <td id="m_k2_1h">-- / --</td>
-            <td id="m_k2_12h">-- / --</td>
             <td id="m_k2_24h">-- / --</td>
           </tr>
           <tr id="mrow_k3">
-            <td id="m_k3_1h">-- / --</td>
-            <td id="m_k3_12h">-- / --</td>
             <td id="m_k3_24h">-- / --</td>
           </tr>
         </tbody>
@@ -186,7 +178,6 @@ function globalMaxFromDatasets(datasets) {
 
 /* chart rendering with y.min fixed to 1000 */
 function renderChart(labels, datasets) {
-  // prepare chart datasets for Chart.js
   const cjDatasets = datasets.map(ds => ({
     label: ds.label,
     data: ds.data,
@@ -198,18 +189,15 @@ function renderChart(labels, datasets) {
     spanGaps: true
   }));
 
-  // y-axis logic: lower bound fixed at 1000
   const FIXED_YMIN = 1000;
-  const DEFAULT_SPAN = 200; // show 200 units high if possible
+  const DEFAULT_SPAN = 200;
   const gmax = globalMaxFromDatasets(datasets);
 
   let yMin = FIXED_YMIN;
   let yMax;
 
   if (!isNaN(gmax)) {
-    // candidate max based on data (with small headroom)
     const candidateMax = Math.ceil(gmax * 1.01);
-    // ensure at least show FIXED_YMIN + DEFAULT_SPAN
     yMax = Math.max(FIXED_YMIN + DEFAULT_SPAN, candidateMax);
   } else {
     yMax = FIXED_YMIN + DEFAULT_SPAN;
@@ -265,14 +253,12 @@ function updateLatest(meta, idx){
   }
   document.getElementById(`k${id}_volt`).innerText = volt;
 
-  // color row text and left border to match dataset color
   const row = document.getElementById(`row_k${id}`);
   if (row) {
     row.style.color = COLORS[idx];
     row.style.borderLeft = `6px solid ${COLORS[idx]}`;
   }
 
-  // color minmax row left border too
   const mrow = document.getElementById(`mrow_k${id}`);
   if (mrow) mrow.style.borderLeft = `6px solid ${COLORS[idx]}`;
 }
@@ -305,11 +291,9 @@ function calcMinMax(feeds){
   return {min, max, len: feeds.length};
 }
 
-/* per-channel minmax for intervals (removed 30m and 6h) */
+/* per-channel minmax for 24h only */
 async function updateMinMax(){
   const intervals = [
-    {m:60, idSuffix:'1h'},
-    {m:720, idSuffix:'12h'},
     {m:1440, idSuffix:'24h'}
   ];
   const warnEl = document.getElementById('minmaxWarn');
@@ -329,7 +313,6 @@ async function updateMinMax(){
       }
       await new Promise(r => setTimeout(r, 120));
     }
-    // color minmax row border to match chart
     const mrow = document.getElementById(`mrow_k${ci+1}`);
     if (mrow) {
       mrow.style.borderLeft = `6px solid ${COLORS[ci]}`;
