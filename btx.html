@@ -36,8 +36,8 @@
 </head>
 <body>
   <div class="wrap">
-    <h2 id="pageTitle">Theo Dõi Dữ Liệu BTX — 3 channels</h2>
-    <div class="subtitle" id="totalHashSubtitle">Tổng Hashrate: -- Mh/s</div>
+    <h2 id="pageTitle">Theo Dõi Dữ Liệu BTX</h2>
+    <div class="subtitle" id="totalHashSubtitle">Tổng Hashrate: -- MH/s</div>
 
     <div class="controls card">
       <span>Thời gian hiển thị: </span>
@@ -46,7 +46,6 @@
       <button class="btn" data-mins="60">1 giờ</button>
       <button class="btn" data-mins="180">3 giờ</button>
       <button class="btn" data-mins="360">6 giờ</button>
-      <div style="margin-top:8px;color:#666;font-size:13px;">Tự động làm mới mỗi 30 giây.</div>
     </div>
 
     <div class="card" id="chartCard">
@@ -59,7 +58,7 @@
       <table class="ts-info" id="latestTable">
         <thead>
           <tr>
-            <th>Hashrate</th>
+            <th>Hashrate (MH/s)</th>
             <th>Temp (°C)</th>
             <th>VR Temp (°C)</th>
             <th>Freq (MHz)</th>
@@ -76,7 +75,7 @@
 
     <!-- Per-channel min/max (24h only) -->
     <div class="card">
-      <h3 style="margin:0 0 8px 0">Min / Max trong 24 giờ (theo từng channel)</h3>
+      <h3 style="margin:0 0 8px 0">Min/Max</h3>
       <table class="minmax-table">
         <thead>
           <tr>
@@ -95,7 +94,6 @@
           </tr>
         </tbody>
       </table>
-      <div class="warn" id="minmaxWarn" style="display:none;">⚠️ Giới hạn 8000 điểm — Min/Max có thể thiếu dữ liệu.</div>
     </div>
 
   </div>
