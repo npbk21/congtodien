@@ -72,30 +72,6 @@
         </tbody>
       </table>
     </div>
-
-    <!-- Per-channel min/max (24h only) -->
-    <div class="card">
-      <h3 style="margin:0 0 8px 0">Min/Max</h3>
-      <table class="minmax-table">
-        <thead>
-          <tr>
-            <th>24 giờ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr id="mrow_k1">
-            <td id="m_k1_24h">-- / --</td>
-          </tr>
-          <tr id="mrow_k2">
-            <td id="m_k2_24h">-- / --</td>
-          </tr>
-          <tr id="mrow_k3">
-            <td id="m_k3_24h">-- / --</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
   </div>
 
 <script>
@@ -287,35 +263,6 @@ function calcMinMax(feeds){
     if (isNaN(max) || n > max) max = n;
   });
   return {min, max, len: feeds.length};
-}
-
-/* per-channel minmax for 24h only */
-async function updateMinMax(){
-  const intervals = [
-    {m:1440, idSuffix:'24h'}
-  ];
-  const warnEl = document.getElementById('minmaxWarn');
-  warnEl.style.display = 'none';
-  for (let ci = 0; ci < CHANNELS.length; ++ci) {
-    const ch = CHANNELS[ci];
-    for (const it of intervals) {
-      const j = await fetchJson(urlForChannel(ch, it.m));
-      const elId = `m_k${ci+1}_${it.idSuffix}`;
-      if (!j || !j.feeds) {
-        document.getElementById(elId).innerText = '-- / --';
-      } else {
-        const mm = calcMinMax(j.feeds);
-        if (isNaN(mm.min)) document.getElementById(elId).innerText = '-- / --';
-        else document.getElementById(elId).innerText = `${mm.min.toFixed(1)} / ${mm.max.toFixed(1)}`;
-        if (mm.len >= RESULTS) warnEl.style.display = 'block';
-      }
-      await new Promise(r => setTimeout(r, 120));
-    }
-    const mrow = document.getElementById(`mrow_k${ci+1}`);
-    if (mrow) {
-      mrow.style.borderLeft = `6px solid ${COLORS[ci]}`;
-    }
-  }
 }
 
 /* main refresh */
