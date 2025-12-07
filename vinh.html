@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Theo Dõi BTX — 3 ThingSpeak Channels</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif; margin:16px; background:#f7f7f7;}
+    .wrap{max-width:1100px;margin:12px auto;}
+    h2{ text-align:center; margin:6px 0 10px; font-size:20px; }
+    .subtitle{ text-align:center; color:#666; margin-top:-6px; margin-bottom:8px; font-size:13px }
+    .controls {text-align:center; margin-bottom:12px;}
+    .btn {background:#2d9cdb;color:#fff;border:none;padding:8px 12px;border-radius:6px;margin:0 6px;cursor:pointer;}
+    .btn.active {background:#1b6f9a;}
+    .card {background:white; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:16px; margin-bottom:16px;}
+    #canvasWrap {height:360px;}
+    table.ts-info, table.minmax-table {
+      width:100%; border-collapse:collapse; margin-top:12px;
+    }
+    table.ts-info th, table.ts-info td,
+    table.minmax-table th, table.minmax-table td {
+      border:1px solid #eee; padding:8px; text-align:center; font-size:14px;
+    }
+    table.ts-info th, table.minmax-table th {
+      background:#fafafa; font-weight:600;
+    }
+    .row-colored td { font-weight:600; }
+    .warn { font-size:12px;color:#b44; margin-top:8px; text-align:center; }
+    @media (max-width:640px) {
+      #canvasWrap {height:240px;}
+      .btn{padding:6px 8px; margin:4px;}
+      td{font-size:12px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2 id="pageTitle">Theo Dõi Dữ Liệu BTX</h2>
+    <div class="subtitle" id="totalHashSubtitle">Tổng Hashrate: -- MH/s</div>
+
+    <div class="controls card">
+      <span>Thời gian hiển thị: </span>
+      <button class="btn" data-mins="10">10 phút</button>
+      <button class="btn" data-mins="30">30 phút</button>
+      <button class="btn" data-mins="60">1 giờ</button>
+      <button class="btn" data-mins="180">3 giờ</button>
+      <button class="btn" data-mins="360">6 giờ</button>
+    </div>
+
+    <div class="card" id="chartCard">
+      <div id="canvasWrap"><canvas id="hashChart"></canvas></div>
+    </div>
+
+    <!-- Latest data table -->
+    <div class="card">
+      <h3 style="margin:0 0 8px 0">Dữ liệu mới nhất</h3>
+      <table class="ts-info" id="latestTable">
+        <thead>
+          <tr>
+            <th>Hashrate (MH/s)</th>
+            <th>Temp (°C)</th>
+            <th>VR Temp (°C)</th>
+            <th>Freq (MHz)</th>
+            <th>Volt (V)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="row_k1" class="row-colored"><td id="k1_hr">--</td><td id="k1_temp">--</td><td id="k1_vr">--</td><td id="k1_freq">--</td><td id="k1_volt">--</td></tr>
+          <tr id="row_k2" class="row-colored"><td id="k2_hr">--</td><td id="k2_temp">--</td><td id="k2_vr">--</td><td id="k2_freq">--</td><td id="k2_volt">--</td></tr>
+          <tr id="row_k3" class="row-colored"><td id="k3_hr">--</td><td id="k3_temp">--</td><td id="k3_vr">--</td><td id="k3_freq">--</td><td id="k3_volt">--</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<script>
+/* ==== Channels ==== */
+const CHANNELS = [
+  { id: 3187244, key: 'V9AVUWJB5I9K32D4' },
+  { id: 3192699, key: '3IUSF5ID0VGIULVA' },
+  { id: 3192701, key: 'DSKEV3IZ5UVHVMP5' }
+];
+
+const COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c']; // màu cho 3 channel
+let MINUTES = 10;
+const RESULTS = 8000;
+let chart = null;
+
+/* helpers */
+function tsFmt(d){
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}%20${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')}`;
+}
+function urlForChannel(ch, mins){
+  const start = new Date(Date.now() - mins*60000);
+  return `https://api.thingspeak.com/channels/${ch.id}/feeds.json?api_key=${ch.key}&start=${tsFmt(start)}&results=${RESULTS}`;
+}
+async function fetchJson(url){
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return await r.json();
+  } catch(e) {
+    console.error('Fetch error', e, url);
+    return null;
+  }
+}
+
+/* parse feed */
+function parseFeeds(j){
+  if(!j || !j.feeds) return {pts:[], meta:{}};
+  const pts = [];
+  const meta = {};
+  for(const f of j.feeds){
+    if (f.created_at) pts.push({t:new Date(f.created_at), v: isFinite(Number(f.field1)) ? Number(f.field1) : null});
+    if (f.field1 && f.field1 !== '') meta.hr = f.field1;
+    if (f.field2 && f.field2 !== '') meta.temp = f.field2;
+    if (f.field3 && f.field3 !== '') meta.vr = f.field3;
+    if (f.field4 && f.field4 !== '') meta.freq = f.field4;
+    if (f.field5 && f.field5 !== '') meta.volt = f.field5;
+  }
+  pts.sort((a,b)=>a.t-b.t);
+  return {pts, meta};
+}
+
+/* align series */
+function alignSeries(allPoints){
+  const timeSet = new Set();
+  allPoints.forEach(arr=>arr.forEach(p=>timeSet.add(p.t.getTime())));
+  const times = Array.from(timeSet).sort((a,b)=>a-b);
+  const labels = times.map(ms=>new Date(ms).toLocaleTimeString());
+  const datasets = allPoints.map((arr, idx)=>{
+    const map = new Map(arr.map(p=>[p.t.getTime(), p.v]));
+    return { label: `Ch ${idx+1}`, data: times.map(ms => map.has(ms) ? map.get(ms) : null), color: COLORS[idx] };
+  });
+  return {labels, datasets};
+}
+
+/* compute global numeric max across datasets */
+function globalMaxFromDatasets(datasets) {
+  let gmax = NaN;
+  datasets.forEach(ds => {
+    ds.data.forEach(v => {
+      if (v === null || v === undefined) return;
+      const n = Number(v);
+      if (!isFinite(n)) return;
+      if (isNaN(gmax) || n > gmax) gmax = n;
+    });
+  });
+  return gmax;
+}
+
+/* chart rendering with y.min fixed to 1000 */
+function renderChart(labels, datasets) {
+  const cjDatasets = datasets.map(ds => ({
+    label: ds.label,
+    data: ds.data,
+    borderColor: ds.color,
+    backgroundColor: ds.color,
+    tension: 0.2,
+    pointRadius: 2,
+    fill: false,
+    spanGaps: true
+  }));
+
+  const FIXED_YMIN = 1000;
+  const DEFAULT_SPAN = 200;
+  const gmax = globalMaxFromDatasets(datasets);
+
+  let yMin = FIXED_YMIN;
+  let yMax;
+
+  if (!isNaN(gmax)) {
+    const candidateMax = Math.ceil(gmax * 1.01);
+    yMax = Math.max(FIXED_YMIN + DEFAULT_SPAN, candidateMax);
+  } else {
+    yMax = FIXED_YMIN + DEFAULT_SPAN;
+  }
+
+  if (!chart) {
+    const ctx = document.getElementById('hashChart').getContext('2d');
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: cjDatasets
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'nearest', intersect: false },
+        scales: {
+          x: { display: true, title: { display: true, text: 'Time' } },
+          y: {
+            display: true,
+            title: { display: true, text: 'Hashrate' },
+            min: yMin,
+            max: yMax
+          }
+        },
+        plugins: { legend: { position: 'top' } }
+      }
+    });
+  } else {
+    chart.data.labels = labels;
+    chart.data.datasets = cjDatasets;
+    if (chart.options && chart.options.scales && chart.options.scales.y) {
+      chart.options.scales.y.min = yMin;
+      chart.options.scales.y.max = yMax;
+    }
+    chart.update();
+  }
+}
+
+/* update latest table row styling and values */
+function updateLatest(meta, idx){
+  const id = idx + 1;
+  const m = meta || {};
+  document.getElementById(`k${id}_hr`).innerText   = m.hr   ? Number(m.hr).toFixed(1)   : "--";
+  document.getElementById(`k${id}_temp`).innerText = m.temp ? Number(m.temp).toFixed(1) : "--";
+  document.getElementById(`k${id}_vr`).innerText   = m.vr   ? Number(m.vr).toFixed(1)   : "--";
+  document.getElementById(`k${id}_freq`).innerText = m.freq ? Math.round(Number(m.freq)) : "--";
+  let volt = "--";
+  if (m.volt) {
+    const nv = Number(m.volt);
+    if (isFinite(nv)) volt = Math.abs(nv) > 50 ? (nv/1000).toFixed(2) : nv.toFixed(3);
+  }
+  document.getElementById(`k${id}_volt`).innerText = volt;
+
+  const row = document.getElementById(`row_k${id}`);
+  if (row) {
+    row.style.color = COLORS[idx];
+    row.style.borderLeft = `6px solid ${COLORS[idx]}`;
+  }
+
+  const mrow = document.getElementById(`mrow_k${id}`);
+  if (mrow) mrow.style.borderLeft = `6px solid ${COLORS[idx]}`;
+}
+
+/* update total hashrate in title */
+function updateTotalHashSubtitle(metas) {
+  let sum = 0;
+  let any = false;
+  metas.forEach(m => {
+    if (m && m.hr) {
+      const v = Number(m.hr);
+      if (isFinite(v)) { sum += v; any = true; }
+    }
+  });
+  const el = document.getElementById('totalHashSubtitle');
+  if (!any) el.innerText = 'Tổng Hashrate: -- Mh/s';
+  else el.innerText = 'Tổng Hashrate: ' + (sum.toFixed(1)) + ' Mh/s';
+}
+
+/* minmax calculation */
+function calcMinMax(feeds){
+  let min=NaN, max=NaN;
+  if (!feeds) return {min:NaN,max:NaN,len:0};
+  feeds.forEach(f => {
+    const n = Number(f.field1);
+    if (!isFinite(n)) return;
+    if (isNaN(min) || n < min) min = n;
+    if (isNaN(max) || n > max) max = n;
+  });
+  return {min, max, len: feeds.length};
+}
+
+/* main refresh */
+async function refreshAll(){
+  const reqs = CHANNELS.map(ch => fetchJson(urlForChannel(ch, MINUTES)));
+  const results = await Promise.all(reqs);
+
+  const parsed = results.map(r => parseFeeds(r));
+  const allPoints = parsed.map(p => p.pts);
+  const metas = parsed.map(p => p.meta);
+
+  const aligned = alignSeries(allPoints);
+  renderChart(aligned.labels, aligned.datasets);
+
+  metas.forEach((m, i) => updateLatest(m, i));
+  updateTotalHashSubtitle(metas);
+
+  updateMinMax();
+}
+
+/* init UI */
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.btn').forEach(b => {
+    b.addEventListener('click', () => {
+      const m = Number(b.getAttribute('data-mins'));
+      if (isFinite(m) && m > 0) {
+        MINUTES = m;
+        document.querySelectorAll('.btn').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        refreshAll();
+      }
+    });
+    if (Number(b.getAttribute('data-mins')) === MINUTES) b.classList.add('active');
+  });
+
+  // set initial colored row borders even before data
+  for (let i=0;i<3;i++){
+    const r = document.getElementById(`row_k${i+1}`);
+    const mr = document.getElementById(`mrow_k${i+1}`);
+    if (r) r.style.borderLeft = `6px solid ${COLORS[i]}`;
+    if (mr) mr.style.borderLeft = `6px solid ${COLORS[i]}`;
+  }
+
+  refreshAll();
+  setInterval(refreshAll, 30000);
+});
+</script>
+</body>
+</html>
