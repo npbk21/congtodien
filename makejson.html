@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Wallet2 JSON Generator</title>
+  <title>JSON Generator</title>
   <style>
     body{font-family:Inter,system-ui,Arial,Helvetica,sans-serif;background:#f6f8fb;color:#0b1220;padding:18px}
     .container{max-width:980px;margin:18px auto;background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(11,18,32,0.06)}
@@ -23,8 +23,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Wallet#2 JSON Generator</h1>
-    <p class="muted">Nhập thông tin Stratum và chọn máy Bitaxe muốn áp dụng. Bấm <strong>Tạo JSON</strong> để sinh nội dung có thể copy vào file <code>config.json</code>.</p>
+    <h1>JSON Generator</h1>
 
     <label>Stratum URL</label>
     <input id="url" type="text" placeholder="ví dụ: solo.ckpool.org" value="solo.ckpool.org">
@@ -61,13 +60,13 @@
         </div>
       </div>
       <div style="width:220px">
-        <label>Số lượng Bitaxe (max)</label>
+        <label>Số lượng B(max)</label>
         <input id="bitaxeCount" type="number" min="1" max="12" value="5">
         <div class="muted">Chỉnh số lượng để hiện đúng số checkbox cho thiết bị.</div>
       </div>
     </div>
 
-    <label style="margin-top:12px">Chọn máy Bitaxe áp dụng Wallet #2</label>
+    <label style="margin-top:12px">Chọn máy B áp dụng W#2</label>
     <div id="bitaxeArea" class="bitaxe-list"></div>
 
     <div class="actions">
