@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wallet2 JSON Generator</title>
+  <style>
+    body{font-family:Inter,system-ui,Arial,Helvetica,sans-serif;background:#f6f8fb;color:#0b1220;padding:18px}
+    .container{max-width:980px;margin:18px auto;background:#fff;border-radius:10px;padding:18px;box-shadow:0 6px 18px rgba(11,18,32,0.06)}
+    h1{font-size:20px;margin:0 0 12px}
+    label{display:block;margin-top:10px;font-size:13px;color:#334155}
+    input[type=text], input[type=number], input[type=time], textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #e6eef6;margin-top:6px}
+    .row{display:flex;gap:10px}
+    .row>div{flex:1}
+    .bitaxe-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+    .bitaxe-item{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;border:1px solid #eef2ff;background:#fbfcff}
+    button{background:#2563eb;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
+    button.secondary{background:#0ea5a4}
+    pre{background:#0f1724;color:#e6eef6;padding:12px;border-radius:8px;overflow:auto}
+    .actions{display:flex;gap:8px;margin-top:12px}
+    .muted{color:#64748b;font-size:13px;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Wallet#2 JSON Generator</h1>
+    <p class="muted">Nhập thông tin Stratum và chọn máy Bitaxe muốn áp dụng. Bấm <strong>Tạo JSON</strong> để sinh nội dung có thể copy vào file <code>config.json</code>.</p>
+
+    <label>Stratum URL</label>
+    <input id="url" type="text" placeholder="ví dụ: solo.ckpool.org" value="solo.ckpool.org">
+
+    <div class="row">
+      <div>
+        <label>Stratum Port</label>
+        <input id="port" type="number" placeholder="3333" value="3333">
+      </div>
+      <div>
+        <label>Stratum User</label>
+        <input id="user" type="text" placeholder="ví dụ: bc1q..." value="bc1qefa94j4zv0r7y60vcad4lkh6ycyc4c08xhaqq0">
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:10px;align-items:end">
+      <div style="flex:1">
+        <label>Giờ bắt đầu (W2) — Nhập tối đa 4 khung giờ</label>
+        <div class="row">
+          <input id="w2s0" type="time">
+          <input id="w2e0" type="time">
+        </div>
+        <div class="row" style="margin-top:6px">
+          <input id="w2s1" type="time">
+          <input id="w2e1" type="time">
+        </div>
+        <div class="row" style="margin-top:6px">
+          <input id="w2s2" type="time">
+          <input id="w2e2" type="time">
+        </div>
+        <div class="row" style="margin-top:6px">
+          <input id="w2s3" type="time">
+          <input id="w2e3" type="time">
+        </div>
+      </div>
+      <div style="width:220px">
+        <label>Số lượng Bitaxe (max)</label>
+        <input id="bitaxeCount" type="number" min="1" max="12" value="5">
+        <div class="muted">Chỉnh số lượng để hiện đúng số checkbox cho thiết bị.</div>
+      </div>
+    </div>
+
+    <label style="margin-top:12px">Chọn máy Bitaxe áp dụng Wallet #2</label>
+    <div id="bitaxeArea" class="bitaxe-list"></div>
+
+    <div class="actions">
+      <button id="generate">Tạo JSON</button>
+      <button id="copy" class="secondary">Copy JSON</button>
+      <button id="reset" style="background:#ef4444">Reset</button>
+    </div>
+
+    <h3 style="margin-top:12px">Kết quả (copy & dán vào config.json trên server)</h3>
+    <pre id="out">{
+  "wallet2_url": "",
+  "wallet2_port": 0,
+  "wallet2_user": "",
+  "w2_start": [],
+  "w2_end": [],
+  "apply_wallet2_mask": []
+}</pre>
+  </div>
+
+  <script>
+    const bitaxeArea = document.getElementById('bitaxeArea');
+    const bitaxeCountInput = document.getElementById('bitaxeCount');
+    function renderBitaxes(n){
+      bitaxeArea.innerHTML = '';
+      for(let i=0;i<n;i++){
+        const div = document.createElement('div'); div.className='bitaxe-item';
+        const cb = document.createElement('input'); cb.type='checkbox'; cb.id='bx_'+i; cb.checked = (i<2); // mặc định bật 2 cái đầu
+        const lbl = document.createElement('label'); lbl.htmlFor='bx_'+i; lbl.style.margin='0'; lbl.innerText='Bitaxe '+i;
+        div.appendChild(cb); div.appendChild(lbl);
+        bitaxeArea.appendChild(div);
+      }
+    }
+    renderBitaxes(parseInt(bitaxeCountInput.value,10));
+    bitaxeCountInput.addEventListener('change',()=>{
+      const v = parseInt(bitaxeCountInput.value,10) || 5; let n = Math.max(1,Math.min(12,v)); bitaxeCountInput.value=n; renderBitaxes(n);
+    });
+
+    function collectTimes(){
+      const starts=[]; const ends=[];
+      for(let i=0;i<4;i++){
+        const s=document.getElementById('w2s'+i).value;
+        const e=document.getElementById('w2e'+i).value;
+        if(s && e){ starts.push(s); ends.push(e); }
+      }
+      return {starts,ends};
+    }
+
+    function generateJSON(){
+      const url = document.getElementById('url').value.trim();
+      const port = parseInt(document.getElementById('port').value,10) || 0;
+      const user = document.getElementById('user').value.trim();
+      const count = parseInt(bitaxeCountInput.value,10) || 5;
+      const mask = [];
+      for(let i=0;i<count;i++){
+        const cb = document.getElementById('bx_'+i);
+        mask.push(cb && cb.checked ? 1 : 0);
+      }
+      const t = collectTimes();
+      const obj = {
+        wallet2_url: url,
+        wallet2_port: port,
+        wallet2_user: user,
+        w2_start: t.starts,
+        w2_end: t.ends,
+        apply_wallet2_mask: mask
+      };
+      const txt = JSON.stringify(obj, null, 2);
+      document.getElementById('out').innerText = txt;
+      return txt;
+    }
+
+    document.getElementById('generate').addEventListener('click',()=>{ generateJSON(); });
+    document.getElementById('copy').addEventListener('click',()=>{
+      const txt = generateJSON();
+      navigator.clipboard.writeText(txt).then(()=>{ alert('Đã copy JSON vào clipboard'); }).catch(()=>{ alert('Copy thất bại — bạn có thể bôi đen và copy thủ công.'); });
+    });
+    document.getElementById('reset').addEventListener('click',()=>{
+      if(!confirm('Reset mẫu về mặc định?')) return;
+      document.getElementById('url').value='solo.ckpool.org';
+      document.getElementById('port').value='3333';
+      document.getElementById('user').value='';
+      for(let i=0;i<4;i++){ document.getElementById('w2s'+i).value=''; document.getElementById('w2e'+i).value=''; }
+      bitaxeCountInput.value=5; renderBitaxes(5);
+      document.getElementById('out').innerText='{}';
+    });
+
+    // generate initially
+    generateJSON();
+  </script>
+</body>
+</html>
