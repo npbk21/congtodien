@@ -2,8 +2,9 @@
   "wallet2_url": "solo.ckpool.org",
   "wallet2_port": 3333,
   "wallet2_user": "bc1qefa94j4zv0r7y60vcad4lkh6ycyc4c08xhaqq0",
-  "w2_start": ["00:30"],
-  "w2_end":   ["05:30"],
+  "w2_start": [],
+  "w2_end":   [],
   "apply_wallet2_mask": [1,0,1,0]
 }
+
 
