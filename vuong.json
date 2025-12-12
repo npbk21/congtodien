@@ -1,9 +1,9 @@
 {
-  "wallet2_url": "eu1.pool.org",
+  "wallet2_url": "eu1.solopool.org",
   "wallet2_port": 8004,
   "wallet2_user": "dgb1qq3mcl0vheme0e8whyehnj8jy70unj7808x86eq",
   "w2_start": [
-    "19:15"
+    "19:27"
   ],
   "w2_end": [
     "07:15"
@@ -14,3 +14,4 @@
     1
   ]
 }
+
