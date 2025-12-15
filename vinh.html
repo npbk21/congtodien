@@ -29,7 +29,6 @@
     .channel-name {
       display:flex; align-items:center; gap:8px; justify-content:flex-start;
     }
-    .color-dot { width:12px; height:12px; border-radius:50%; display:inline-block; margin-right:6px; box-shadow:0 0 0 2px rgba(0,0,0,0.03) inset; }
     .warn { font-size:12px;color:#b44; margin-top:8px; text-align:center; }
     @media (max-width:640px) {
       #canvasWrap {height:240px;}
@@ -72,15 +71,15 @@
         </thead>
         <tbody>
           <tr id="row_k1" class="row-colored">
-            <td id="k1_name" class="channel-name"><span class="color-dot" id="k1_dot"></span><span id="k1_name_text">CH 1</span></td>
+            <td id="k1_name" class="channel-name"><span id="k1_name_text">CH 1</span></td>
             <td id="k1_hr">--</td><td id="k1_temp">--</td><td id="k1_vr">--</td><td id="k1_freq">--</td><td id="k1_volt">--</td>
           </tr>
           <tr id="row_k2" class="row-colored">
-            <td id="k2_name" class="channel-name"><span class="color-dot" id="k2_dot"></span><span id="k2_name_text">CH 2</span></td>
+            <td id="k2_name" class="channel-name"><span id="k2_name_text">CH 2</span></td>
             <td id="k2_hr">--</td><td id="k2_temp">--</td><td id="k2_vr">--</td><td id="k2_freq">--</td><td id="k2_volt">--</td>
           </tr>
           <tr id="row_k3" class="row-colored">
-            <td id="k3_name" class="channel-name"><span class="color-dot" id="k3_dot"></span><span id="k3_name_text">CH 3</span></td>
+            <td id="k3_name" class="channel-name"><span id="k3_name_text">CH 3</span></td>
             <td id="k3_hr">--</td><td id="k3_temp">--</td><td id="k3_vr">--</td><td id="k3_freq">--</td><td id="k3_volt">--</td>
           </tr>
         </tbody>
@@ -273,9 +272,7 @@ function updateLatest(meta, idx){
     row.style.borderLeft = `6px solid ${CHANNEL_COLORS[idx]}`;
   }
 
-  const dot = document.getElementById(`k${id}_dot`);
   const nameText = document.getElementById(`k${id}_name_text`);
-  if (dot) dot.style.background = CHANNEL_COLORS[idx];
   if (nameText) nameText.innerText = CHANNEL_NAMES[idx] || `CH ${id}`;
 }
 
@@ -335,13 +332,10 @@ async function refreshAll(){
     }
   });
 
-  // cập nhật UI của tên + dot color ngay sau khi có tên
   for (let i=0;i<CHANNELS.length;i++){
-    const dot = document.getElementById(`k${i+1}_dot`);
     const nameText = document.getElementById(`k${i+1}_name_text`);
     const row = document.getElementById(`row_k${i+1}`);
     const col = CHANNEL_COLORS[i];
-    if (dot) dot.style.background = col;
     if (nameText) nameText.innerText = CHANNEL_NAMES[i];
     if (row) { row.style.borderLeft = `6px solid ${col}`; row.style.color = col; }
   }
@@ -400,14 +394,11 @@ document.addEventListener('DOMContentLoaded', async function(){
     if (Number(b.getAttribute('data-mins')) === MINUTES) b.classList.add('active');
   });
 
-  // set initial colored dots/borders before data
   for (let i=0;i<CHANNELS.length;i++){
     const r = document.getElementById(`row_k${i+1}`);
-    const dot = document.getElementById(`k${i+1}_dot`);
     const nameText = document.getElementById(`k${i+1}_name_text`);
     const col = CHANNEL_COLORS[i] || colorForIndexOrName(i, CHANNEL_NAMES[i]);
     if (r) r.style.borderLeft = `6px solid ${col}`;
-    if (dot) dot.style.background = col;
     if (nameText) nameText.innerText = CHANNEL_NAMES[i];
   }
 
@@ -418,11 +409,9 @@ document.addEventListener('DOMContentLoaded', async function(){
 
   // apply tên + màu vào UI
   for (let i=0;i<CHANNELS.length;i++){
-    const dot = document.getElementById(`k${i+1}_dot`);
     const nameText = document.getElementById(`k${i+1}_name_text`);
     const row = document.getElementById(`row_k${i+1}`);
     const col = CHANNEL_COLORS[i];
-    if (dot) dot.style.background = col;
     if (nameText) nameText.innerText = CHANNEL_NAMES[i];
     if (row) { row.style.borderLeft = `6px solid ${col}`; row.style.color = col; }
   }
@@ -431,7 +420,7 @@ document.addEventListener('DOMContentLoaded', async function(){
 
   // refresh data lần đầu và set interval
   refreshAll();
-  setInterval(refreshAll, 30000);
+  setInterval(refreshAll, 10000);
 });
 </script>
 </body>
