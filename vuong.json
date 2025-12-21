@@ -2,18 +2,15 @@
   "W2_url": "eu1.solopool.org",
   "W2_port": 8004,
   "W2_user": "dgb1qq3mcl0vheme0e8whyehnj8jy70unj7808x86eq",
-  "w2_start": [
-    "13:06"
-  ],
-  "w2_end": [
-    "23:00"
-  ],
+  "w2_start": [],
+  "w2_end": [],
   "apply_W2_mask": [
     1,
     1,
     1
   ]
 }
+
 
 
 
