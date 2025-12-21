@@ -77,13 +77,14 @@
 
     <h3 style="margin-top:12px">Kết quả (copy & dán vào config.json trên server)</h3>
     <pre id="out">{
-  "wallet2_url": "",
-  "wallet2_port": 0,
-  "wallet2_user": "",
+  "W2_url": "",
+  "W2_port": 0,
+  "W2_user": "",
   "w2_start": [],
   "w2_end": [],
-  "apply_wallet2_mask": []
+  "apply_W2_mask": []
 }</pre>
+
   </div>
 
   <script>
@@ -126,13 +127,14 @@
       }
       const t = collectTimes();
       const obj = {
-        wallet2_url: url,
-        wallet2_port: port,
-        wallet2_user: user,
-        w2_start: t.starts,
-        w2_end: t.ends,
-        apply_wallet2_mask: mask
-      };
+  W2_url: url,
+  W2_port: port,
+  W2_user: user,
+  w2_start: t.starts,
+  w2_end: t.ends,
+  apply_W2_mask: mask
+};
+
       const txt = JSON.stringify(obj, null, 2);
       document.getElementById('out').innerText = txt;
       return txt;
