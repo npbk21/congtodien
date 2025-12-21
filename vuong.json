@@ -1,10 +1,10 @@
 {
-  "wallet2_url": "eu1.solopool.org",
-  "wallet2_port": 8004,
-  "wallet2_user": "dgb1qq3mcl0vheme0e8whyehnj8jy70unj7808x86eq",
+  "W2_url": "eu1.solopool.org",
+  "W2_port": 0,
+  "W2_user": "dgb1qq3mcl0vheme0e8whyehnj8jy70unj7808x86eq",
   "w2_start": [],
   "w2_end": [],
-  "apply_wallet2_mask": [
+  "apply_W2_mask": [
     1,
     1,
     1
