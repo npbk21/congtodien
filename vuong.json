@@ -2,7 +2,7 @@
   "W2_url": "eu1.solopool.org",
   "W2_port": 8004,
   "W2_user": "dgb1qq3mcl0vheme0e8whyehnj8jy70unj7808x86eq",
-  "w2_start": [14:18],
+  "w2_start": ["14:20"],
   "w2_end": ["14:55"],
   "apply_W2_mask": [
     1,
@@ -10,6 +10,7 @@
     1
   ]
 }
+
 
 
 
