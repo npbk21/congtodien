@@ -1,4 +1,5 @@
-<!doctype html>
+
+    <!doctype html>
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
@@ -62,7 +63,6 @@
       <table class="ts-info" id="latestTable">
         <thead>
           <tr>
-            <th>Kênh</th>
             <th>Hash</th>
             <th>ASIC</th>
             <th>VR</th>
@@ -73,15 +73,12 @@
         </thead>
         <tbody>
           <tr id="row_k1" class="row-colored">
-            <td id="k1_name" class="channel-name"></span><span id="k1_name_text">CH 1</span></td>
             <td id="k1_hr">--</td><td id="k1_temp">--</td><td id="k1_vr">--</td><td id="k1_freq">--</td><td id="k1_power">--</td><td id="k1_volt">--</td>
           </tr>
           <tr id="row_k2" class="row-colored">
-            <td id="k2_name" class="channel-name"><span id="k2_name_text">CH 2</span></td>
             <td id="k2_hr">--</td><td id="k2_temp">--</td><td id="k2_vr">--</td><td id="k2_freq">--</td><td id="k2_power">--</td><td id="k2_volt">--</td>
           </tr>
           <tr id="row_k3" class="row-colored">
-            <td id="k3_name" class="channel-name"></span><span id="k3_name_text">CH 3</span></td>
             <td id="k3_hr">--</td><td id="k3_temp">--</td><td id="k3_vr">--</td><td id="k3_freq">--</td><td id="k3_power">--</td><td id="k3_volt">--</td>
           </tr>
         </tbody>
@@ -278,15 +275,6 @@ function updateLatest(meta, idx){
     if (isFinite(nv)) volt = Math.abs(nv) > 50 ? (nv/1000).toFixed(2) : nv.toFixed(3);
   }
   document.getElementById(`k${id}_volt`).innerText = volt;
-
-  const row = document.getElementById(`row_k${id}`);
-  if (row) {
-    row.style.color = CHANNEL_COLORS[idx];
-    row.style.borderLeft = `6px solid ${CHANNEL_COLORS[idx]}`;
-  }
-
-  const nameText = document.getElementById(`k${id}_name_text`);
-  if (nameText) nameText.innerText = CHANNEL_NAMES[idx] || `CH ${id}`;
 }
 
 function updateTotalPowerSubtitle(metas) {
@@ -367,10 +355,8 @@ async function refreshAll(){
   });
 
   for (let i=0;i<CHANNELS.length;i++){
-    const nameText = document.getElementById(`k${i+1}_name_text`);
     const row = document.getElementById(`row_k${i+1}`);
     const col = CHANNEL_COLORS[i];
-    if (nameText) nameText.innerText = CHANNEL_NAMES[i];
     if (row) { row.style.borderLeft = `6px solid ${col}`; row.style.color = col; }
   }
   updatePageTitle();
@@ -432,10 +418,8 @@ document.addEventListener('DOMContentLoaded', async function(){
 
   for (let i=0;i<CHANNELS.length;i++){
     const r = document.getElementById(`row_k${i+1}`);
-    const nameText = document.getElementById(`k${i+1}_name_text`);
     const col = CHANNEL_COLORS[i] || colorForIndexOrName(i, CHANNEL_NAMES[i]);
     if (r) r.style.borderLeft = `6px solid ${col}`;
-    if (nameText) nameText.innerText = CHANNEL_NAMES[i];
   }
 
   // LẤY TÊN TỪ THINGSPEAK TRƯỚC khi bắt đầu refresh
@@ -444,10 +428,8 @@ document.addEventListener('DOMContentLoaded', async function(){
   CHANNEL_COLORS = CHANNEL_NAMES.map((n,i)=>colorForIndexOrName(i,n));
 
   for (let i=0;i<CHANNELS.length;i++){
-    const nameText = document.getElementById(`k${i+1}_name_text`);
     const row = document.getElementById(`row_k${i+1}`);
     const col = CHANNEL_COLORS[i];
-    if (nameText) nameText.innerText = CHANNEL_NAMES[i];
     if (row) { row.style.borderLeft = `6px solid ${col}`; row.style.color = col; }
   }
 
