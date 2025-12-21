@@ -1,4 +1,4 @@
-<!doctype html>
+  <!doctype html>
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
@@ -29,7 +29,6 @@
     .channel-name {
       display:flex; align-items:center; gap:8px; justify-content:flex-start;
     }
-    .color-dot { width:12px; height:12px; border-radius:50%; display:inline-block; margin-right:6px; box-shadow:0 0 0 2px rgba(0,0,0,0.03) inset; }
     .warn { font-size:12px;color:#b44; margin-top:8px; text-align:center; }
     @media (max-width:640px) {
       #canvasWrap {height:240px;}
@@ -42,6 +41,7 @@
   <div class="wrap">
     <h2 id="pageTitle">Theo Dõi Dữ Liệu BTX</h2>
     <div class="subtitle" id="totalHashSubtitle">Tổng Hashrate: -- MH/s</div>
+<div class="subtitle" id="totalPowerSubtitle">Tổng Công Suất: -- W</div>
 
     <div class="controls card">
       <span>Thời gian hiển thị: </span>
@@ -58,30 +58,26 @@
 
     <!-- Latest data table -->
     <div class="card">
-      <h3 style="margin:0 0 8px 0">Dữ liệu mới nhất</h3>
       <table class="ts-info" id="latestTable">
         <thead>
           <tr>
-            <th>Kênh</th>
-            <th>Hashrate (MH/s)</th>
-            <th>Temp (°C)</th>
-            <th>VR Temp (°C)</th>
-            <th>Freq (MHz)</th>
-            <th>Volt (V)</th>
+            <th>Hash</th>
+            <th>ASIC</th>
+            <th>VR</th>
+            <th>Freq</th>
+			<th>Power</th>
+            <th>Volt</th>
           </tr>
         </thead>
         <tbody>
           <tr id="row_k1" class="row-colored">
-            <td id="k1_name" class="channel-name"><span class="color-dot" id="k1_dot"></span><span id="k1_name_text">CH 1</span></td>
-            <td id="k1_hr">--</td><td id="k1_temp">--</td><td id="k1_vr">--</td><td id="k1_freq">--</td><td id="k1_volt">--</td>
+            <td id="k1_hr">--</td><td id="k1_temp">--</td><td id="k1_vr">--</td><td id="k1_freq">--</td><td id="k1_power">--</td><td id="k1_volt">--</td>
           </tr>
           <tr id="row_k2" class="row-colored">
-            <td id="k2_name" class="channel-name"><span class="color-dot" id="k2_dot"></span><span id="k2_name_text">CH 2</span></td>
-            <td id="k2_hr">--</td><td id="k2_temp">--</td><td id="k2_vr">--</td><td id="k2_freq">--</td><td id="k2_volt">--</td>
+            <td id="k2_hr">--</td><td id="k2_temp">--</td><td id="k2_vr">--</td><td id="k2_freq">--</td><td id="k2_power">--</td><td id="k2_volt">--</td>
           </tr>
           <tr id="row_k3" class="row-colored">
-            <td id="k3_name" class="channel-name"><span class="color-dot" id="k3_dot"></span><span id="k3_name_text">CH 3</span></td>
-            <td id="k3_hr">--</td><td id="k3_temp">--</td><td id="k3_vr">--</td><td id="k3_freq">--</td><td id="k3_volt">--</td>
+            <td id="k3_hr">--</td><td id="k3_temp">--</td><td id="k3_vr">--</td><td id="k3_freq">--</td><td id="k3_power">--</td><td id="k3_volt">--</td>
           </tr>
         </tbody>
       </table>
@@ -146,22 +142,31 @@ async function fetchChannelName(ch, index) {
   }
 }
 
-/* parse feed */
 function parseFeeds(j){
   if(!j || !j.feeds) return {pts:[], meta:{}};
+
   const pts = [];
   const meta = {};
+
   for(const f of j.feeds){
-    if (f.created_at) pts.push({t:new Date(f.created_at), v: isFinite(Number(f.field1)) ? Number(f.field1) : null});
+    if (f.created_at)
+      pts.push({
+        t:new Date(f.created_at),
+        v: isFinite(Number(f.field1)) ? Number(f.field1) : null
+      });
+
     if (f.field1 && f.field1 !== '') meta.hr = f.field1;
     if (f.field2 && f.field2 !== '') meta.temp = f.field2;
     if (f.field3 && f.field3 !== '') meta.vr = f.field3;
     if (f.field4 && f.field4 !== '') meta.freq = f.field4;
     if (f.field5 && f.field5 !== '') meta.volt = f.field5;
+    if (f.field6 && f.field6 !== '') meta.power = f.field6; // 🔴 POWER
   }
+
   pts.sort((a,b)=>a.t-b.t);
   return {pts, meta};
 }
+
 
 /* align series */
 function alignSeries(allPoints){
@@ -260,23 +265,35 @@ function updateLatest(meta, idx){
   document.getElementById(`k${id}_temp`).innerText = m.temp ? Number(m.temp).toFixed(1) : "--";
   document.getElementById(`k${id}_vr`).innerText   = m.vr   ? Number(m.vr).toFixed(1)   : "--";
   document.getElementById(`k${id}_freq`).innerText = m.freq ? Math.round(Number(m.freq)) : "--";
+  document.getElementById(`k${id}_power`).innerText = m.power ? Number(m.power).toFixed(1) : "--";
+
   let volt = "--";
   if (m.volt) {
     const nv = Number(m.volt);
     if (isFinite(nv)) volt = Math.abs(nv) > 50 ? (nv/1000).toFixed(2) : nv.toFixed(3);
   }
   document.getElementById(`k${id}_volt`).innerText = volt;
+}
 
-  const row = document.getElementById(`row_k${id}`);
-  if (row) {
-    row.style.color = CHANNEL_COLORS[idx];
-    row.style.borderLeft = `6px solid ${CHANNEL_COLORS[idx]}`;
-  }
+function updateTotalPowerSubtitle(metas) {
+  let sum = 0;
+  let any = false;
 
-  const dot = document.getElementById(`k${id}_dot`);
-  const nameText = document.getElementById(`k${id}_name_text`);
-  if (dot) dot.style.background = CHANNEL_COLORS[idx];
-  if (nameText) nameText.innerText = CHANNEL_NAMES[idx] || `CH ${id}`;
+  metas.forEach(m => {
+    if (m && m.power) {
+      const v = Number(m.power);
+      if (isFinite(v)) {
+        sum += v;
+        any = true;
+      }
+    }
+  });
+
+  const el = document.getElementById('totalPowerSubtitle');
+  if (!any)
+    el.innerText = 'Tổng Công Suất: -- W';
+  else
+    el.innerText = 'Tổng Công Suất: ' + sum.toFixed(1) + ' W';
 }
 
 /* update total hashrate in title */
@@ -335,14 +352,9 @@ async function refreshAll(){
     }
   });
 
-  // cập nhật UI của tên + dot color ngay sau khi có tên
   for (let i=0;i<CHANNELS.length;i++){
-    const dot = document.getElementById(`k${i+1}_dot`);
-    const nameText = document.getElementById(`k${i+1}_name_text`);
     const row = document.getElementById(`row_k${i+1}`);
     const col = CHANNEL_COLORS[i];
-    if (dot) dot.style.background = col;
-    if (nameText) nameText.innerText = CHANNEL_NAMES[i];
     if (row) { row.style.borderLeft = `6px solid ${col}`; row.style.color = col; }
   }
   updatePageTitle();
@@ -355,7 +367,9 @@ async function refreshAll(){
   renderChart(aligned.labels, aligned.datasets);
 
   metas.forEach((m, i) => updateLatest(m, i));
-  updateTotalHashSubtitle(metas);
+updateTotalHashSubtitle(metas);
+updateTotalPowerSubtitle(metas);
+
 }
 
 
@@ -400,15 +414,10 @@ document.addEventListener('DOMContentLoaded', async function(){
     if (Number(b.getAttribute('data-mins')) === MINUTES) b.classList.add('active');
   });
 
-  // set initial colored dots/borders before data
   for (let i=0;i<CHANNELS.length;i++){
     const r = document.getElementById(`row_k${i+1}`);
-    const dot = document.getElementById(`k${i+1}_dot`);
-    const nameText = document.getElementById(`k${i+1}_name_text`);
     const col = CHANNEL_COLORS[i] || colorForIndexOrName(i, CHANNEL_NAMES[i]);
     if (r) r.style.borderLeft = `6px solid ${col}`;
-    if (dot) dot.style.background = col;
-    if (nameText) nameText.innerText = CHANNEL_NAMES[i];
   }
 
   // LẤY TÊN TỪ THINGSPEAK TRƯỚC khi bắt đầu refresh
@@ -416,14 +425,9 @@ document.addEventListener('DOMContentLoaded', async function(){
   // cập nhật màu sau khi biết tên
   CHANNEL_COLORS = CHANNEL_NAMES.map((n,i)=>colorForIndexOrName(i,n));
 
-  // apply tên + màu vào UI
   for (let i=0;i<CHANNELS.length;i++){
-    const dot = document.getElementById(`k${i+1}_dot`);
-    const nameText = document.getElementById(`k${i+1}_name_text`);
     const row = document.getElementById(`row_k${i+1}`);
     const col = CHANNEL_COLORS[i];
-    if (dot) dot.style.background = col;
-    if (nameText) nameText.innerText = CHANNEL_NAMES[i];
     if (row) { row.style.borderLeft = `6px solid ${col}`; row.style.color = col; }
   }
 
@@ -431,9 +435,10 @@ document.addEventListener('DOMContentLoaded', async function(){
 
   // refresh data lần đầu và set interval
   refreshAll();
-  setInterval(refreshAll, 20000);
+  setInterval(refreshAll, 10000);
 });
 </script>
 </body>
 </html>
+
 
