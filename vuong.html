@@ -144,10 +144,11 @@ async function fetchChannelName(ch, index) {
 }
 
 function parseFeeds(j){
-  if(!j || !j.feeds) return {pts:[], meta:{}};
+  if(!j || !j.feeds) return {pts:[], meta:{}, blocks:0};
 
   const pts = [];
   const meta = {};
+  let blocks = 0;
 
   for(const f of j.feeds){
     if (f.created_at)
@@ -161,12 +162,18 @@ function parseFeeds(j){
     if (f.field3 && f.field3 !== '') meta.vr = f.field3;
     if (f.field4 && f.field4 !== '') meta.freq = f.field4;
     if (f.field5 && f.field5 !== '') meta.volt = f.field5;
-    if (f.field6 && f.field6 !== '') meta.power = f.field6; // 🔴 POWER
+    if (f.field6 && f.field6 !== '') meta.power = f.field6;
+
+    // 🔴 ĐẾM BLOCK
+    if (f.field7 !== undefined && Number(f.field7) === 1) {
+      blocks++;
+    }
   }
 
   pts.sort((a,b)=>a.t-b.t);
-  return {pts, meta};
+  return {pts, meta, blocks};
 }
+
 
 
 /* align series */
@@ -313,13 +320,18 @@ function updateTotalHashSubtitle(metas) {
 }
 
 /* cập nhật tiêu đề trang theo tên kênh */
-function updatePageTitle() {
+function updatePageTitle(totalBlocks = 0) {
   const titleEl = document.getElementById('pageTitle');
   const names = CHANNEL_NAMES.map(n => n || '').filter(n => n !== '');
-  if (names.length) {
-    titleEl.innerText = `Theo Dõi Dữ Liệu BTX — ${names.join(' · ')}`;
-  }
+
+  let suffix = names.length ? names.join(' · ') : '';
+  let blockText = totalBlocks > 0
+    ? ` | ${totalBlocks}`
+    : ` | 0`;
+
+  titleEl.innerText = `Theo Dõi Dữ Liệu BTX — ${suffix}${blockText}`;
 }
+
 
 /* minmax calculation (không đổi) */
 function calcMinMax(feeds){
@@ -358,15 +370,14 @@ async function refreshAll(){
     const col = CHANNEL_COLORS[i];
     if (row) { row.style.borderLeft = `6px solid ${col}`; row.style.color = col; }
   }
-  updatePageTitle();
 
   const parsed = results.map(r => parseFeeds(r));
   const allPoints = parsed.map(p => p.pts);
   const metas = parsed.map(p => p.meta);
-
+  const totalBlocks = parsed.reduce((sum, p) => sum + (p.blocks || 0), 0);
   const aligned = alignSeries(allPoints);
   renderChart(aligned.labels, aligned.datasets);
-
+updatePageTitle(totalBlocks);
   metas.forEach((m, i) => updateLatest(m, i));
 updateTotalHashSubtitle(metas);
 updateTotalPowerSubtitle(metas);
@@ -432,7 +443,7 @@ document.addEventListener('DOMContentLoaded', async function(){
     if (row) { row.style.borderLeft = `6px solid ${col}`; row.style.color = col; }
   }
 
-  updatePageTitle();
+  updatePageTitle(0);
 
   // refresh data lần đầu và set interval
   refreshAll();
