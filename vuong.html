@@ -36,6 +36,26 @@
       .btn{padding:6px 8px; margin:4px;}
       td{font-size:12px;}
     }
+	/* bảng gọn cho mobile */
+table.compact th,
+table.compact td {
+  padding: 6px;
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  table.compact th,
+  table.compact td {
+    padding: 4px;
+    font-size: 11px;
+  }
+
+  /* Ẩn chữ, chỉ giữ số */
+  table.compact th {
+    font-size: 10px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -59,29 +79,49 @@
 
     <!-- Latest data table -->
     <div class="card">
-      <table class="ts-info" id="latestTable">
-        <thead>
-          <tr>
-            <th>Hash</th>
-            <th>ASIC</th>
-            <th>VR</th>
-            <th>Freq</th>
-			<th>Power</th>
-            <th>Volt</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr id="row_k1" class="row-colored">
-            <td id="k1_hr">--</td><td id="k1_temp">--</td><td id="k1_vr">--</td><td id="k1_freq">--</td><td id="k1_power">--</td><td id="k1_volt">--</td>
-          </tr>
-          <tr id="row_k2" class="row-colored">
-            <td id="k2_hr">--</td><td id="k2_temp">--</td><td id="k2_vr">--</td><td id="k2_freq">--</td><td id="k2_power">--</td><td id="k2_volt">--</td>
-          </tr>
-          <tr id="row_k3" class="row-colored">
-            <td id="k3_hr">--</td><td id="k3_temp">--</td><td id="k3_vr">--</td><td id="k3_freq">--</td><td id="k3_power">--</td><td id="k3_volt">--</td>
-          </tr>
-        </tbody>
-      </table>
+<table class="ts-info compact" id="latestTable">
+  <thead>
+    <tr>
+      <th>Hash</th>
+      <th>ASIC</th>
+      <th>VR</th>
+      <th>Freq</th>
+      <th>Pwr</th>
+      <th>Core</th>
+      <th>input</th> <!-- 🔴 NEW -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="row_k1" class="row-colored">
+      <td id="k1_hr">--</td>
+      <td id="k1_temp">--</td>
+      <td id="k1_vr">--</td>
+      <td id="k1_freq">--</td>
+      <td id="k1_power">--</td>
+      <td id="k1_coreVoltage">--</td>
+      <td id="k1_voltage">--</td> <!-- 🔴 NEW -->
+    </tr>
+    <tr id="row_k2" class="row-colored">
+      <td id="k2_hr">--</td>
+      <td id="k2_temp">--</td>
+      <td id="k2_vr">--</td>
+      <td id="k2_freq">--</td>
+      <td id="k2_power">--</td>
+      <td id="k2_coreVoltage">--</td>
+      <td id="k2_voltage">--</td>
+    </tr>
+    <tr id="row_k3" class="row-colored">
+      <td id="k3_hr">--</td>
+      <td id="k3_temp">--</td>
+      <td id="k3_vr">--</td>
+      <td id="k3_freq">--</td>
+      <td id="k3_power">--</td>
+      <td id="k3_coreVoltage">--</td>
+      <td id="k3_voltage">--</td>
+    </tr>
+  </tbody>
+</table>
+
     </div>
   </div>
 
@@ -161,8 +201,9 @@ function parseFeeds(j){
     if (f.field2 && f.field2 !== '') meta.temp = f.field2;
     if (f.field3 && f.field3 !== '') meta.vr = f.field3;
     if (f.field4 && f.field4 !== '') meta.freq = f.field4;
-    if (f.field5 && f.field5 !== '') meta.volt = f.field5;
+    if (f.field5 && f.field5 !== '') meta.coreVoltage = f.field5;
     if (f.field6 && f.field6 !== '') meta.power = f.field6;
+	if (f.field8 && f.field8 !== '') meta.voltage = f.field8;
 
     // 🔴 ĐẾM BLOCK
     if (f.field7 !== undefined && Number(f.field7) === 1) {
@@ -265,23 +306,33 @@ function renderChart(labels, datasets) {
   }
 }
 
-/* update latest table row styling and values */
 function updateLatest(meta, idx){
   const id = idx + 1;
   const m = meta || {};
-  document.getElementById(`k${id}_hr`).innerText   = m.hr   ? Number(m.hr).toFixed(1)   : "--";
+
+  document.getElementById(`k${id}_hr`).innerText   = m.hr   ? Number(m.hr).toFixed(1) : "--";
   document.getElementById(`k${id}_temp`).innerText = m.temp ? Number(m.temp).toFixed(1) : "--";
-  document.getElementById(`k${id}_vr`).innerText   = m.vr   ? Number(m.vr).toFixed(1)   : "--";
+  document.getElementById(`k${id}_vr`).innerText   = m.vr   ? Number(m.vr).toFixed(1) : "--";
   document.getElementById(`k${id}_freq`).innerText = m.freq ? Math.round(Number(m.freq)) : "--";
   document.getElementById(`k${id}_power`).innerText = m.power ? Number(m.power).toFixed(1) : "--";
 
-  let volt = "--";
-  if (m.volt) {
-    const nv = Number(m.volt);
-    if (isFinite(nv)) volt = Math.abs(nv) > 50 ? (nv/1000).toFixed(2) : nv.toFixed(3);
+  // Core voltage
+  let core = "--";
+  if (m.coreVoltage) {
+    const v = Number(m.coreVoltage);
+    if (isFinite(v)) core = (Math.abs(v) > 50 ? v / 1000 : v).toFixed(3);
   }
-  document.getElementById(`k${id}_volt`).innerText = volt;
+  document.getElementById(`k${id}_coreVoltage`).innerText = core;
+
+  // 🔴 INPUT VOLTAGE (voltage)
+  let voltage = "--";
+  if (m.voltage) {
+    const v = Number(m.voltage);
+    if (isFinite(v)) voltage = v.toFixed(2);
+  }
+  document.getElementById(`k${id}_voltage`).innerText = voltage;
 }
+
 
 function updateTotalPowerSubtitle(metas) {
   let sum = 0;
