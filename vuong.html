@@ -77,7 +77,6 @@ table.compact td {
       <div id="canvasWrap"><canvas id="hashChart"></canvas></div>
     </div>
 
-    <!-- Latest data table -->
     <div class="card">
 <table class="ts-info compact" id="latestTable">
   <thead>
@@ -88,7 +87,7 @@ table.compact td {
       <th>Freq</th>
       <th>Pwr</th>
       <th>Core</th>
-      <th>input</th> <!-- 🔴 NEW -->
+      <th>input</th>
     </tr>
   </thead>
   <tbody>
@@ -99,7 +98,7 @@ table.compact td {
       <td id="k1_freq">--</td>
       <td id="k1_power">--</td>
       <td id="k1_coreVoltage">--</td>
-      <td id="k1_voltage">--</td> <!-- 🔴 NEW -->
+      <td id="k1_voltage">--</td>
     </tr>
     <tr id="row_k2" class="row-colored">
       <td id="k2_hr">--</td>
@@ -126,15 +125,13 @@ table.compact td {
   </div>
 
 <script>
-/* ==== Channels ==== */
-/* Giữ nguyên id + read key của bạn ở đây */
+
 const CHANNELS = [
   { id: 3187244, key: 'V9AVUWJB5I9K32D4' },
   { id: 3192699, key: '3IUSF5ID0VGIULVA' },
   { id: 3192701, key: 'DSKEV3IZ5UVHVMP5' }
 ];
 
-/* Màu mặc định (nếu muốn override, sửa ở đây) */
 const COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c'];
 
 let CHANNEL_NAMES = Array.from({length: CHANNELS.length}, (_,i)=>`CH ${i+1}`);
@@ -144,7 +141,6 @@ let MINUTES = 10;
 const RESULTS = 8000;
 let chart = null;
 
-/* helpers */
 function tsFmt(d){
   return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}%20${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')}`;
 }
@@ -163,7 +159,6 @@ async function fetchJson(url){
   }
 }
 
-/* Lấy tên channel (và có thể lấy thêm meta nếu cần) */
 async function fetchChannelName(ch, index) {
   try {
     const url = `https://api.thingspeak.com/channels/${ch.id}.json?api_key=${ch.key}`;
@@ -216,8 +211,6 @@ function parseFeeds(j){
 }
 
 
-
-/* align series */
 function alignSeries(allPoints){
   const timeSet = new Set();
   allPoints.forEach(arr=>arr.forEach(p=>timeSet.add(p.t.getTime())));
@@ -230,7 +223,6 @@ function alignSeries(allPoints){
   return {labels, datasets};
 }
 
-/* compute global numeric max across datasets */
 function globalMaxFromDatasets(datasets) {
   let gmax = NaN;
   datasets.forEach(ds => {
@@ -244,7 +236,6 @@ function globalMaxFromDatasets(datasets) {
   return gmax;
 }
 
-/* chart rendering with y.min fixed to 1000 */
 function renderChart(labels, datasets) {
   const cjDatasets = datasets.map(ds => ({
     label: ds.label,
@@ -324,13 +315,14 @@ function updateLatest(meta, idx){
   }
   document.getElementById(`k${id}_coreVoltage`).innerText = core;
 
-  // 🔴 INPUT VOLTAGE (voltage)
-  let voltage = "--";
-  if (m.voltage) {
-    const v = Number(m.voltage);
-    if (isFinite(v)) voltage = v.toFixed(2);
-  }
-  document.getElementById(`k${id}_voltage`).innerText = voltage;
+// 🔴 INPUT VOLTAGE (voltage) — CHỈ HIỂN THỊ SỐ NGUYÊN
+let voltage = "--";
+if (m.voltage) {
+  const v = Number(m.voltage);
+  if (isFinite(v)) voltage = Math.round(v).toString();
+}
+document.getElementById(`k${id}_voltage`).innerText = voltage;
+
 }
 
 
@@ -355,7 +347,6 @@ function updateTotalPowerSubtitle(metas) {
     el.innerText = 'Tổng Công Suất: ' + sum.toFixed(1) + ' W';
 }
 
-/* update total hashrate in title */
 function updateTotalHashSubtitle(metas) {
   let sum = 0;
   let any = false;
@@ -370,7 +361,6 @@ function updateTotalHashSubtitle(metas) {
   else el.innerText = 'Tổng Hashrate: ' + (sum.toFixed(1)) + ' Mh/s';
 }
 
-/* cập nhật tiêu đề trang theo tên kênh */
 function updatePageTitle(totalBlocks = 0) {
   const titleEl = document.getElementById('pageTitle');
   const names = CHANNEL_NAMES.map(n => n || '').filter(n => n !== '');
@@ -383,8 +373,6 @@ function updatePageTitle(totalBlocks = 0) {
   titleEl.innerText = `Theo Dõi Dữ Liệu BTX — ${suffix}${blockText}`;
 }
 
-
-/* minmax calculation (không đổi) */
 function calcMinMax(feeds){
   let min=NaN, max=NaN;
   if (!feeds) return {min:NaN,max:NaN,len:0};
@@ -397,8 +385,6 @@ function calcMinMax(feeds){
   return {min, max, len: feeds.length};
 }
 
-/* main refresh */
-/* main refresh (đã chỉnh: lấy tên kênh từ response.feeds.channel nếu có) */
 async function refreshAll(){
   const reqs = CHANNELS.map(ch => fetchJson(urlForChannel(ch, MINUTES)));
   const results = await Promise.all(reqs);
@@ -435,8 +421,6 @@ updateTotalPowerSubtitle(metas);
 
 }
 
-
-/* Utility: tạo màu từ tên (deterministic) */
 function hashStringToInt(str) {
   let h = 2166136261 >>> 0;
   for (let i = 0; i < str.length; i++) {
@@ -456,14 +440,12 @@ function colorForIndexOrName(idx, name) {
     const h = hashStringToInt(name);
     return hslFromHash(h);
   }
-  // fallback
+
   const h = hashStringToInt(String(idx));
   return hslFromHash(h);
 }
 
-/* init UI */
 document.addEventListener('DOMContentLoaded', async function(){
-  // nút thời gian
   document.querySelectorAll('.btn').forEach(b => {
     b.addEventListener('click', () => {
       const m = Number(b.getAttribute('data-mins'));
