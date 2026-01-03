@@ -308,11 +308,12 @@ function updateLatest(meta, idx){
   document.getElementById(`k${id}_power`).innerText = m.power ? Number(m.power).toFixed(1) : "--";
 
   // Core voltage
-  let core = "--";
-  if (m.coreVoltage) {
-    const v = Number(m.coreVoltage);
-    if (isFinite(v)) core = (Math.abs(v) > 50 ? v / 1000 : v).toFixed(3);
-  }
+let core = "--";
+if (m.coreVoltage) {
+  const v = Number(m.coreVoltage);
+  if (isFinite(v))
+    core = Math.round(Math.abs(v) > 50 ? v : v * 1000).toString();
+}
   document.getElementById(`k${id}_coreVoltage`).innerText = core;
 
 // 🔴 INPUT VOLTAGE (voltage) — CHỈ HIỂN THỊ SỐ NGUYÊN

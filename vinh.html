@@ -35,6 +35,26 @@
       .btn{padding:6px 8px; margin:4px;}
       td{font-size:12px;}
     }
+	/* bảng gọn cho mobile */
+table.compact th,
+table.compact td {
+  padding: 6px;
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  table.compact th,
+  table.compact td {
+    padding: 4px;
+    font-size: 11px;
+  }
+
+  /* Ẩn chữ, chỉ giữ số */
+  table.compact th {
+    font-size: 10px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -56,44 +76,61 @@
       <div id="canvasWrap"><canvas id="hashChart"></canvas></div>
     </div>
 
-    <!-- Latest data table -->
     <div class="card">
-      <table class="ts-info" id="latestTable">
-        <thead>
-          <tr>
-            <th>Hash</th>
-            <th>ASIC</th>
-            <th>VR</th>
-            <th>Freq</th>
-			<th>Power</th>
-            <th>Volt</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr id="row_k1" class="row-colored">
-            <td id="k1_hr">--</td><td id="k1_temp">--</td><td id="k1_vr">--</td><td id="k1_freq">--</td><td id="k1_power">--</td><td id="k1_volt">--</td>
-          </tr>
-          <tr id="row_k2" class="row-colored">
-            <td id="k2_hr">--</td><td id="k2_temp">--</td><td id="k2_vr">--</td><td id="k2_freq">--</td><td id="k2_power">--</td><td id="k2_volt">--</td>
-          </tr>
-          <tr id="row_k3" class="row-colored">
-            <td id="k3_hr">--</td><td id="k3_temp">--</td><td id="k3_vr">--</td><td id="k3_freq">--</td><td id="k3_power">--</td><td id="k3_volt">--</td>
-          </tr>
-        </tbody>
-      </table>
+<table class="ts-info compact" id="latestTable">
+  <thead>
+    <tr>
+      <th>Hash</th>
+      <th>ASIC</th>
+      <th>VR</th>
+      <th>Freq</th>
+      <th>Pwr</th>
+      <th>Core</th>
+      <th>input</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="row_k1" class="row-colored">
+      <td id="k1_hr">--</td>
+      <td id="k1_temp">--</td>
+      <td id="k1_vr">--</td>
+      <td id="k1_freq">--</td>
+      <td id="k1_power">--</td>
+      <td id="k1_coreVoltage">--</td>
+      <td id="k1_voltage">--</td>
+    </tr>
+    <tr id="row_k2" class="row-colored">
+      <td id="k2_hr">--</td>
+      <td id="k2_temp">--</td>
+      <td id="k2_vr">--</td>
+      <td id="k2_freq">--</td>
+      <td id="k2_power">--</td>
+      <td id="k2_coreVoltage">--</td>
+      <td id="k2_voltage">--</td>
+    </tr>
+    <tr id="row_k3" class="row-colored">
+      <td id="k3_hr">--</td>
+      <td id="k3_temp">--</td>
+      <td id="k3_vr">--</td>
+      <td id="k3_freq">--</td>
+      <td id="k3_power">--</td>
+      <td id="k3_coreVoltage">--</td>
+      <td id="k3_voltage">--</td>
+    </tr>
+  </tbody>
+</table>
+
     </div>
   </div>
 
 <script>
-/* ==== Channels ==== */
-/* Giữ nguyên id + read key của bạn ở đây */
+
 const CHANNELS = [
   { id: 3195071, key: 'D34PDCUTENHRF48D' }, 
   { id: 3195070, key: '22P0L4COOGOR0K23' },
-  { id: 3195075, key: 'QQWDJ030R4RFER0J' } 
+  { id: 3195075, key: 'QQWDJ030R4RFER0J' }
 ];
 
-/* Màu mặc định (nếu muốn override, sửa ở đây) */
 const COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c'];
 
 let CHANNEL_NAMES = Array.from({length: CHANNELS.length}, (_,i)=>`CH ${i+1}`);
@@ -103,7 +140,6 @@ let MINUTES = 10;
 const RESULTS = 8000;
 let chart = null;
 
-/* helpers */
 function tsFmt(d){
   return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}%20${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')}`;
 }
@@ -122,7 +158,6 @@ async function fetchJson(url){
   }
 }
 
-/* Lấy tên channel (và có thể lấy thêm meta nếu cần) */
 async function fetchChannelName(ch, index) {
   try {
     const url = `https://api.thingspeak.com/channels/${ch.id}.json?api_key=${ch.key}`;
@@ -160,8 +195,9 @@ function parseFeeds(j){
     if (f.field2 && f.field2 !== '') meta.temp = f.field2;
     if (f.field3 && f.field3 !== '') meta.vr = f.field3;
     if (f.field4 && f.field4 !== '') meta.freq = f.field4;
-    if (f.field5 && f.field5 !== '') meta.volt = f.field5;
+    if (f.field5 && f.field5 !== '') meta.coreVoltage = f.field5;
     if (f.field6 && f.field6 !== '') meta.power = f.field6;
+	if (f.field8 && f.field8 !== '') meta.voltage = f.field8;
 
     // 🔴 ĐẾM BLOCK
     if (f.field7 !== undefined && Number(f.field7) === 1) {
@@ -174,8 +210,6 @@ function parseFeeds(j){
 }
 
 
-
-/* align series */
 function alignSeries(allPoints){
   const timeSet = new Set();
   allPoints.forEach(arr=>arr.forEach(p=>timeSet.add(p.t.getTime())));
@@ -188,7 +222,6 @@ function alignSeries(allPoints){
   return {labels, datasets};
 }
 
-/* compute global numeric max across datasets */
 function globalMaxFromDatasets(datasets) {
   let gmax = NaN;
   datasets.forEach(ds => {
@@ -202,7 +235,6 @@ function globalMaxFromDatasets(datasets) {
   return gmax;
 }
 
-/* chart rendering with y.min fixed to 1000 */
 function renderChart(labels, datasets) {
   const cjDatasets = datasets.map(ds => ({
     label: ds.label,
@@ -264,23 +296,35 @@ function renderChart(labels, datasets) {
   }
 }
 
-/* update latest table row styling and values */
 function updateLatest(meta, idx){
   const id = idx + 1;
   const m = meta || {};
-  document.getElementById(`k${id}_hr`).innerText   = m.hr   ? Number(m.hr).toFixed(1)   : "--";
+
+  document.getElementById(`k${id}_hr`).innerText   = m.hr   ? Number(m.hr).toFixed(1) : "--";
   document.getElementById(`k${id}_temp`).innerText = m.temp ? Number(m.temp).toFixed(1) : "--";
-  document.getElementById(`k${id}_vr`).innerText   = m.vr   ? Number(m.vr).toFixed(1)   : "--";
+  document.getElementById(`k${id}_vr`).innerText   = m.vr   ? Number(m.vr).toFixed(1) : "--";
   document.getElementById(`k${id}_freq`).innerText = m.freq ? Math.round(Number(m.freq)) : "--";
   document.getElementById(`k${id}_power`).innerText = m.power ? Number(m.power).toFixed(1) : "--";
 
-  let volt = "--";
-  if (m.volt) {
-    const nv = Number(m.volt);
-    if (isFinite(nv)) volt = Math.abs(nv) > 50 ? (nv/1000).toFixed(2) : nv.toFixed(3);
-  }
-  document.getElementById(`k${id}_volt`).innerText = volt;
+  // Core voltage
+let core = "--";
+if (m.coreVoltage) {
+  const v = Number(m.coreVoltage);
+  if (isFinite(v))
+    core = Math.round(Math.abs(v) > 50 ? v : v * 1000).toString();
 }
+  document.getElementById(`k${id}_coreVoltage`).innerText = core;
+
+// 🔴 INPUT VOLTAGE (voltage) — CHỈ HIỂN THỊ SỐ NGUYÊN
+let voltage = "--";
+if (m.voltage) {
+  const v = Number(m.voltage);
+  if (isFinite(v)) voltage = Math.round(v).toString();
+}
+document.getElementById(`k${id}_voltage`).innerText = voltage;
+
+}
+
 
 function updateTotalPowerSubtitle(metas) {
   let sum = 0;
@@ -303,7 +347,6 @@ function updateTotalPowerSubtitle(metas) {
     el.innerText = 'Tổng Công Suất: ' + sum.toFixed(1) + ' W';
 }
 
-/* update total hashrate in title */
 function updateTotalHashSubtitle(metas) {
   let sum = 0;
   let any = false;
@@ -318,7 +361,6 @@ function updateTotalHashSubtitle(metas) {
   else el.innerText = 'Tổng Hashrate: ' + (sum.toFixed(1)) + ' Mh/s';
 }
 
-/* cập nhật tiêu đề trang theo tên kênh */
 function updatePageTitle(totalBlocks = 0) {
   const titleEl = document.getElementById('pageTitle');
   const names = CHANNEL_NAMES.map(n => n || '').filter(n => n !== '');
@@ -331,8 +373,6 @@ function updatePageTitle(totalBlocks = 0) {
   titleEl.innerText = `Theo Dõi Dữ Liệu BTX — ${suffix}${blockText}`;
 }
 
-
-/* minmax calculation (không đổi) */
 function calcMinMax(feeds){
   let min=NaN, max=NaN;
   if (!feeds) return {min:NaN,max:NaN,len:0};
@@ -345,8 +385,6 @@ function calcMinMax(feeds){
   return {min, max, len: feeds.length};
 }
 
-/* main refresh */
-/* main refresh (đã chỉnh: lấy tên kênh từ response.feeds.channel nếu có) */
 async function refreshAll(){
   const reqs = CHANNELS.map(ch => fetchJson(urlForChannel(ch, MINUTES)));
   const results = await Promise.all(reqs);
@@ -383,8 +421,6 @@ updateTotalPowerSubtitle(metas);
 
 }
 
-
-/* Utility: tạo màu từ tên (deterministic) */
 function hashStringToInt(str) {
   let h = 2166136261 >>> 0;
   for (let i = 0; i < str.length; i++) {
@@ -404,14 +440,12 @@ function colorForIndexOrName(idx, name) {
     const h = hashStringToInt(name);
     return hslFromHash(h);
   }
-  // fallback
+
   const h = hashStringToInt(String(idx));
   return hslFromHash(h);
 }
 
-/* init UI */
 document.addEventListener('DOMContentLoaded', async function(){
-  // nút thời gian
   document.querySelectorAll('.btn').forEach(b => {
     b.addEventListener('click', () => {
       const m = Number(b.getAttribute('data-mins'));
