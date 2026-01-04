@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin Nội Dung Tự Động</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 18px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 16px;
+        }
+        .status {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Spin Nội Dung</h1>
+
+<div>
+    <button onclick="spinFromRemote()">Spin</button>
+    <button onclick="copyToClipboard()">Sao chép kết quả</button>
+</div>
+
+<div class="status" id="status"></div>
+
+<h3>Kết quả:</h3>
+<div class="result" id="outputText"></div>
+
+<script>
+const REMOTE_URL =
+  "https://raw.githubusercontent.com/npbk21/congtodien/refs/heads/main/noidung.txt";
+
+/* ---- Hàm spin {a|b|c} ---- */
+function spinText(text) {
+    const regex = /\{([^{}]*)\}/;
+    while (regex.test(text)) {
+        text = text.replace(regex, (match, options) => {
+            const choices = options.split("|");
+            return choices[Math.floor(Math.random() * choices.length)];
+        });
+    }
+    return text;
+}
+
+/* ---- Tải nội dung & spin ---- */
+async function spinFromRemote() {
+    const status = document.getElementById("status");
+    const output = document.getElementById("outputText");
+
+    status.textContent = "Đang tải nội dung...";
+    output.textContent = "";
+
+    try {
+        const res = await fetch(REMOTE_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error("Không tải được nội dung");
+
+        const text = await res.text();
+        const spun = spinText(text.trim());
+
+        output.textContent = spun;
+        status.textContent = "Spin thành công";
+    } catch (err) {
+        status.textContent = "Lỗi: không thể tải nội dung spin";
+        console.error(err);
+    }
+}
+
+/* ---- Sao chép ---- */
+function copyToClipboard() {
+    const text = document.getElementById("outputText").textContent;
+    if (!text) {
+        alert("Chưa có nội dung để sao chép");
+        return;
+    }
+    navigator.clipboard.writeText(text)
+        .then(() => alert("Đã sao chép vào bộ nhớ tạm"))
+        .catch(() => alert("Không thể sao chép"));
+}
+</script>
+
+</body>
+</html>
