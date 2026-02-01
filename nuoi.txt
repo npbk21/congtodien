@@ -129,4 +129,4 @@ Cái món {nlmt|điện mặt trời} này chỉ dành cho người {có tiền|
 Sao bác lại chọn {hãng này|con này} nhỉ? {Em|E|Mình} nghe nhiều người {chê|phàn nàn} nó {hay lỗi|chạy nóng|áp thấp} lắm mà.|
 Tầm tiền con {Deye|Luxpower} này {thà|sao không} mua con {Growatt|Goodwe} dùng có khi còn {ngon hơn|ổn định hơn} ấy chứ.|
 {Tấm pin|PV} hãng này nhìn {hoàn thiện|đường hàn} {hơi dại|không khôn} lắm, liệu có đúng {công suất thực|chuẩn hãng} không bác?|
-{Nói thật là|Nói thật lòng|} {em|e|mình} {đang tính|định} lắp mà {nhìn|ngó} cái {giá|chi phí} thấy {chùn tay|oải|hết muốn chơi} quá. {Tiền này|Đống tiền này} {để|đem} đóng {tiền điện|cho EVN} chắc cũng {phải|được} {7 8 năm|cả chục năm}, chưa kể {hỏng hóc|bảo trì} thì {quá tội|lỗ vốn} bác ah.}}
+{Nói thật là|Nói thật lòng|} {em|e|mình} {đang tính|định} lắp mà {nhìn|ngó} cái {giá|chi phí} thấy {chùn tay|oải|hết muốn chơi} quá. {Tiền này|Đống tiền này} {để|đem} đóng {tiền điện|cho EVN} chắc cũng {phải|được} {7 8 năm|cả chục năm}, chưa kể {hỏng hóc|bảo trì} thì {quá tội|lỗ vốn} bác ah.}
