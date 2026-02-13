@@ -15,15 +15,15 @@ Longi, Astro, Jinko, Trina, TCL nên mua của hãng nào vậy {các|} {anh|b|b
 {Em|E|Mình} mới tìm hiểu về {nlmt|điện mặt trời|năng lượng mặt trời} chưa hiểu mấy thuật ngữ ongrid/offgrid và hybrid.|
 Có nên { |thêm tiền} mua mạch giao tiếp cho {pin|lưu trữ} không vậy {anh|bác|b|a}?|
 Nhà {Em|E|Mình} dùng tầm {550-600|500 600|500 700} {kw 1 tháng|kw/tháng}, tải có lúc 6-7kw, có lúc chỉ {1 200w|2 300w} thì nên dùng hệ nào ah?|
-{Dùng|Sử dụng} BMS {hãng|loại} nào tốt vậy các {bác|anh|b}?|
+{Dùng|Sử dụng} BMS {hãng|loại} nào tốt vậy các {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
 {Pin|lưu trữ} mua của {shop|cửa hàng|ở đâu} uy tín vậy các {bác|anh|bạn}?|
-{Lắp|Sử dụng} đồng hồ đo {công suất|lượng điện|tải} tiêu thụ nào tốt vậy {bác|anh|b}?|
-{Em|E|Mình} mới {tìm hiểu|tập chơi|nghiện} thì nên chọn {biến tần|inverter} hãng nào vậy các {bác|anh|b}?|
-{Em|E|Mình} mới {tìm hiểu|tập chơi|nghiện} thì nên chọn hệ {12v|24v|48v} không các {bác|anh|b}?|
-{Mình|Em|E} mới {tìm hiểu|bén duyên|bắt đầu quan tâm} tới {nlmt|điện mặt trời|năng lượng mặt trời} mà {chưa rõ|chưa nắm|không hiểu} lắm, các {bác|anh|b} cho xin ít kinh nghiệm với ah.|
+{Lắp|Sử dụng} đồng hồ đo {công suất|lượng điện|tải} tiêu thụ nào tốt vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{Em|E|Mình} mới {tìm hiểu|tập chơi|nghiện} thì nên chọn {biến tần|inverter} hãng nào vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{Em|E|Mình} mới {tìm hiểu|tập chơi|nghiện} thì nên chọn hệ {12v|24v|48v} {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{Mình|Em|E} mới {tìm hiểu|bén duyên|bắt đầu quan tâm} tới {nlmt|điện mặt trời|năng lượng mặt trời} mà {chưa rõ|chưa nắm|không hiểu} lắm, {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} cho xin ít kinh nghiệm với ah.|
 {Mình|Em|E} đang {xem qua|ngó thử|tìm hiểu} mấy hệ {độc lập|hòa lưới|bám tải} mà thấy {loạn quá|nhiều loại quá|khó chọn quá}.|
-Người mới thì nên {tự làm|mua sẵn|chơi dần từng món} hay {đầu tư luôn|mua trọn bộ} cho đỡ {rối|tốn công|mất thời gian} vậy {bác|anh|b}?|
-{Mình|Em|E} mới tìm hiểu nên còn {gà mờ|chưa rành|hỏi ngu tí}, mong các {bác|anh|b} thông cảm ah.|
+Người mới thì nên {tự làm|mua sẵn|chơi dần từng món} hay {đầu tư luôn|mua trọn bộ} cho đỡ {rối|tốn công|mất thời gian} vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{Mình|Em|E} mới tìm hiểu nên còn {gà mờ|chưa rành|hỏi ngu tí}, mong {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} thông cảm ah.|
 {Tiền điện|Hóa đơn điện} nhà {em|e|mình} tầm {400 600k|500 700k|600 900k|800 1tr} mỗi tháng thì {lắp|chơi} hệ {nào|gì} là {hợp lý|ổn áp} vậy {bác|anh}?|
 Lắp {năng lượng mặt trời|điện mặt trời|nlmt} tầm này thì {bao lâu|mấy năm} mới {hoàn vốn|thu hồi vốn|thu hồi chi phí} vậy {anh|bác|b}?|
 {Mình|Em|E} nghe nói {hòa lưới|bám tải} tiết kiệm hơn mà không biết thực tế có {đúng|hiệu quả|bền} không.|
@@ -31,7 +31,7 @@ Chi phí ban đầu cho hệ {12v|24v|48v} chênh nhau {bao nhiêu|nhiều khôn
 {Pin|pin lưu trữ} giờ nên chơi {LFP|lifepo4|cell rời} hay {ắc quy|pin cũ} cho {bền|ổn định} vậy {bác|anh|a|b}?|
 {Biến tần|inverter} cho người mới thì nên chọn loại {dễ xài|ổn định|ít lỗi} của hãng nào ah {bác|anh|a|b}?|
 BMS {JK|DALY|JBD} khác nhau {nhiều không ah|ở điểm nào}, người mới có cần mua loại {xịn|đắt tiền|có giao tiếp} không vậy {bác|anh|a|b}?|
-{Pin|Cell|Ắc quy} mua ở {shop nào|đâu|cửa hàng nào} thì {uy tín|yên tâm|đảm bảo} vậy các {bác|anh|b}?|
+{Pin|Cell|Ắc quy} mua ở {shop nào|đâu|cửa hàng nào} thì {uy tín|yên tâm|đảm bảo} vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
 {Mình|Em|E} thấy nhiều {bác|anh|a|b} bảo {chơi nlmt|điện mặt trời} rồi là {nghiện|khó bỏ|khó cai}, không biết có {đúng|chuẩn} không ah.|
 Hệ {bám tải|hòa lưới} dùng thực tế có {ổn định|bền|hiệu quả} không, hay bị {lỗi vặt|sự cố} không vậy {bác|anh|a|b}?|
 {Mình|Em|E} dùng tải {bơm nước|máy lạnh|máy hàn} thì {chọn hệ|chọn inverter} sao cho {đỡ sụt áp|không quá tải} vậy {bác|anh|b|a}?|
@@ -42,46 +42,46 @@ Hệ {bám tải|hòa lưới} dùng thực tế có {ổn định|bền|hiệu 
 {Mình|Em|E} mới nên {sợ mua nhầm|sợ lắp sai|ko biết cách vận hành|sợ không dùng được}, các {bác|anh|bạn} cho xin lời khuyên với ah.|
 Người mới hay {mắc lỗi|bị sai|nhầm lẫn} chỗ nào nhất khi {chơi|lắp|sử dụng} {nlmt|điện mặt trời|năng lượng mặt trời} vậy {bác|anh|a|b}?|
 {Mình|Em|E} sợ nhất là {pin nhanh hỏng|inverter không bền|hệ không ổn định}, có cách nào {tránh|hạn chế} không ah?|
-{Cho mình|Em|E} hỏi {dây cáp DC|dây pin} nên đi loại {4mm|6mm} cho hệ {3kw|5kw} thì {ổn|an toàn} hơn vậy {bác|anh|b}?|
+{Cho mình|Em|E} hỏi {dây cáp DC|dây pin} nên đi loại {4mm|6mm} cho hệ {3kw|5kw} thì {ổn|an toàn} hơn vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
 {Hệ bám tải|Biến tần bám tải} có cần {lắp thêm|phải có} chống sét lan truyền không {bác|anh|a|b} hay {chỉ cần|cứ thế} dùng thôi?|
 {Mình|Em|E} đang {tính|định} tự {đóng|ráp} khối pin {100Ah|200Ah|280Ah}, có {khó|phức tạp} quá cho người mới không ah?|
 Cùng công suất thì {pin Mono|tấm Mono} với {pin Poly|tấm Poly} loại nào {hiệu quả|ngon|bền} hơn khi {trời âm u|ít nắng} vậy {bác|anh}?|
 {Biến tần|Inverter} {chạy|vận hành} có {ồn|tiếng kêu to} không {anh|bác|b}, em định lắp {trong nhà|gần phòng ngủ}.|
 {Cho em hỏi|E thắc mắc} là {lắp hệ hòa lưới|chơi bám tải} thì {bao lâu|sau mấy năm} là {gỡ vốn|hòa vốn} được vậy {các bác|mọi người}?|
 {Tiền điện|Hóa đơn} nhà em {trung bình|tháng nào cũng} tầm {1tr|1tr5|2tr}, lắp hệ {5kw|3kw} có {giảm được 50%|tiết kiệm nhiều|bớt được đồng nào} không ah?|
-{Mùa mưa|Trời mưa} thì {tấm pin|hệ nlmt} có {sinh điện|ra được tí điện nào} không hay là {nghỉ|đắp chiếu} luôn vậy {bác|anh|b}?|
-{Pin lưu trữ|Lithium} giờ giá {ổn|rẻ} chưa {các bác|anh em}, có nên {chờ thêm|đợi nữa} hay {múc luôn|triển luôn} bây giờ ah?|
+{Mùa mưa|Trời mưa} thì {tấm pin|hệ nlmt} có {sinh điện|ra được tí điện nào} không hay là {nghỉ|đắp chiếu} luôn vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{Pin lưu trữ|Lithium} giờ giá {ổn|rẻ} chưa {Các bác|Anh em|Mọi người|Các anh}, có nên {chờ thêm|đợi nữa} hay {múc luôn|triển luôn} bây giờ ah?|
 {Giữa|So sánh} {Luxpower|Deye|Growatt} thì dòng {hybrid|bám tải} nào {lành|ít lỗi vặt|chạy êm} nhất cho người mới vậy ah?|
 {Tấm pin|PV} {công suất lớn|540w|550w} với {tấm nhỏ|450w} thì lắp loại nào {dễ vận chuyển|ít nứt vỡ} hơn {các bác|anh}?|
-Có {bác|anh|b} nào dùng {pin lưu trữ|Lithium} của {Giga|Sve|Narada} chưa, cho {em|e|mình} xin {review|đánh giá} thực tế với.|
+Có {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} nào dùng {pin lưu trữ|Lithium} của {Giga|Sve|Narada} chưa, cho {em|e|mình} xin {review|đánh giá} thực tế với.|
 {Inverter|Biến tần} {áp cao|áp thấp} cái nào {an toàn|dễ chơi|phổ biến} hơn cho hệ {gia đình|nhỏ} vậy ah?|
 {Nhìn|Thấy} các {bác|anh} khoe {hệ|giàn} pin mà {thèm|mê|phát cuồng} quá, không biết {vợ|nhà} có cho {cấp kinh phí|duyệt chi} không đây.|
 {Có bác nào|Ai} ở khu vực {Miền Bắc|Miền Trung|Miền Nam} {nhận lắp|hỗ trợ kỹ thuật} không, em muốn {tìm hiểu|lắp một hệ} nhỏ.|
-{Các bác|Anh em} cho em xin ít {ảnh|hình} cách {lắp khung giá đỡ|bắt chân chữ L} trên {mái tôn|mái ngói} với ah.|
+{Các bác|Anh em|Mọi người|Các anh} cho em xin ít {ảnh|hình} cách {lắp khung giá đỡ|bắt chân chữ L} trên {mái tôn|mái ngói} với ah.|
 Vệ sinh {tấm pin|mặt pin} thì {bao lâu|mấy tháng} làm 1 lần là {hợp lý|chuẩn} vậy {anh|bác|b}?|
 {{Mình|Em|E} mới {tìm hiểu|tập chơi|nghiện} | {Mới|Vừa} {bén duyên|va} vào} {môn|mảng} {nlmt|điện mặt trời} này mà {thấy|nghe} nhiều {thuật ngữ|loại} {loạn quá|hại não quá}, {mong|hi vọng} các {bác|anh|b|tiền bối} {chỉ giáo|giúp đỡ|tư vấn} {tí|chút|with} ah.|
-{Pin|Cell} {Lithium|LFP} giờ {giá|chi phí} có {giảm|xuống} nhiều không {bác|anh|b}, em định {lên|nâng cấp} hệ {lưu trữ|back-up} mà chưa biết chọn {hãng nào|loại nào}.|
-{Nên|Có nên} mua {cell rời|cell 280Ah} về tự {ráp|đóng} hay mua nguyên {quả|bình|module} {áp thấp|48v} cho {an toàn|nhanh} vậy các {bác|anh|b}?|
+{Pin|Cell} {Lithium|LFP} giờ {giá|chi phí} có {giảm|xuống} nhiều không {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}, em định {lên|nâng cấp} hệ {lưu trữ|back-up} mà chưa biết chọn {hãng nào|loại nào}.|
+{Nên|Có nên} mua {cell rời|cell 280Ah} về tự {ráp|đóng} hay mua nguyên {quả|bình|module} {áp thấp|48v} cho {an toàn|nhanh} vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
 {Tầm này|Giờ} dùng {ắc quy viễn thông|bình chì} có còn {hiệu quả|ổn|kinh tế} không hay {phải|nên} lên thẳng {pin sắt|lithium} luôn ah?|
 Cho {em|e|mình} hỏi cái {BMS|mạch quản lý} nào {giao tiếp|kết nối} tốt với {Inverter|biến tần} {Luxpower|Deye|Growatt} nhất vậy ah?|
-{Diện tích|Mái nhà} tầm {15m2|20m2|30m2} thì {lắp|rải} được tối đa bao nhiêu {tấm pin|kw} vậy {bác|anh|b}?|
+{Diện tích|Mái nhà} tầm {15m2|20m2|30m2} thì {lắp|rải} được tối đa bao nhiêu {tấm pin|kw} vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
 {Dàn pin|Tấm pin} lắp trên {mái tôn|mái ngói} có cần {chống sét|tiếp địa} kỹ không {các|} {anh|b|bác|a|ah}, em sợ {mùa mưa bão|sét đánh} quá.|
-{Em|E|Mild} định tự {lắp|thi công} cho {tiết kiệm|vui}, không biết có {lưu ý|chú ý} đặc biệt gì về {hướng nắng|độ nghiêng} không ah?|
-{Tấm pin|PV} bị {đổ bóng|che bóng} một chút có làm {sụt áp|giảm hiệu suất} {nhiều|ghê} không các {bác|anh|b}?|
+{Em|E|Mình} định tự {lắp|thi công} cho {tiết kiệm|vui}, không biết có {lưu ý|chú ý} đặc biệt gì về {hướng nắng|độ nghiêng} không ah?|
+{Tấm pin|PV} bị {đổ bóng|che bóng} một chút có làm {sụt áp|giảm hiệu suất} {nhiều|ghê} không các {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
 {Giữa|So sánh} {hệ bám tải|hòa lưới không lưu trữ} với {hệ hybrid|có lưu trữ} thì cái nào {nhanh thu hồi vốn|hiệu quả kinh tế} hơn vậy ah?|
 {Có nên|Nên} dùng {biến tần|inverter} {phổ thông|giá rẻ} như {Suoer|EPEver} hay {cố|đầu tư} lên hàng {thương hiệu|xịn} luôn cho {chắc|bền} ah?|
 {Nên|Có nên} lắp {nhiều pin|thừa pin} một chút để {bù nắng yếu|dùng mùa đông} không {anh|bác|b}?|
 {Biến tần|Inverter} {áp cao|High Voltage} với {áp thấp|Low Voltage} thì người mới nên {chọn|theo} hệ nào cho {dễ nâng cấp|an toàn} ah?|
-{Các bác|Anh em} cho em hỏi {dung dịch|nước} gì {vệ sinh|rửa} tấm pin {sạch|bóng} mà không làm {hỏng|ố} lớp kính mặt trên ah?|
-{Dùng|Xài} {nlmt|điện mặt trời} này có {ảnh hưởng|hại} gì đến {thiết bị điện|tủ lạnh|tivi} trong nhà không {bác|anh|b}, em cứ {lo lo|lăn tăn}.|
+{Các bác|Anh em|Mọi người|Các anh} cho em hỏi {dung dịch|nước} gì {vệ sinh|rửa} tấm pin {sạch|bóng} mà không làm {hỏng|ố} lớp kính mặt trên ah?|
+{Dùng|Xài} {nlmt|điện mặt trời} này có {ảnh hưởng|hại} gì đến {thiết bị điện|tủ lạnh|tivi} trong nhà không {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}, em cứ {lo lo|lăn tăn}.|
 {Vợ|Nhà} em cứ bảo {phí tiền|vẽ chuyện}, có {bác|anh} nào lắp xong mà {hiệu quả|tiết kiệm điện} thấy rõ để em có {động lực|cớ} thuyết phục không ah?|
-Có cách nào {giám sát|theo dõi} {sản lượng điện|công suất} qua {điện thoại|app} mà không cần {wifi|internet} không các {bác|anh|b}?|
-{{Cho mình|Em|E} hỏi {chút|tí|với}|{Bác|Anh|B} cho xin {ý kiến|kinh nghiệm} về} hệ {3kw|5kw} {bám tải|hybrid} tầm này {giá|chi phí} trọn gói {khoảng|tầm} bao nhiêu là {hợp lý|vừa miếng} vậy ah? {Em|E|Mình} ở {khu vực|tỉnh} {miền Bắc|miền Trung|miền Nam} thì {mua thiết bị|tìm thợ} ở đâu {uy tín|chuẩn|ngon} nhất ah?|
+Có cách nào {giám sát|theo dõi} {sản lượng điện|công suất} qua {điện thoại|app} mà không cần {wifi|internet} không {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{{Cho mình|Em|E} hỏi {chút|tí|với}|{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} cho xin {ý kiến|kinh nghiệm} về} hệ {3kw|5kw} {bám tải|hybrid} tầm này {giá|chi phí} trọn gói {khoảng|tầm} bao nhiêu là {hợp lý|vừa miếng} vậy ah? {Em|E|Mình} ở {khu vực|tỉnh} {miền Bắc|miền Trung|miền Nam} thì {mua thiết bị|tìm thợ} ở đâu {uy tín|chuẩn|ngon} nhất ah?|
 {Vừa|Mới} {lắp|hoàn thiện} xong hệ {3kw|5kw|6kw}, nắng {đẹp|to} thế này nhìn {đồng hồ|app} nhảy {số|công suất} mà {sướng|phê|ấm lòng} quá các bác.|
 {Nay|Hôm nay} nắng {gắt|tốt}, hệ nhà {em|e|mình} {thu|được} tận {15kw|20kw|25kw|30kw} điện. Như vậy là {ổn|đạt hiệu suất|ngon} chưa {anh em|các bác}?|
 {Cuối cùng|Sau bao ngày chờ} cũng {vận hành|chạy} trơn tru. {Cảm ơn|Thanks} các bác trong nhóm đã {tư vấn|nhiệt tình chỉ bảo} thời gian qua.|
 Nhìn {số điện|tiền điện} tháng này {giảm|tụt} hẳn mà thấy {đầu tư|xuống tiền} cho {nlmt|hybrid} là {sáng suốt|đúng đắn} quá.|
-{Các bác|Anh em} cho hỏi {biến tần|inverter} nhà em {báo lỗi|hiện mã lỗi} {F01|F02|F52} là bị sao vậy ah? Có {nguy hiểm|nghiêm trọng} không?|
+{Các bác|Anh em|Mọi người|Các anh} cho hỏi {biến tần|inverter} nhà em {báo lỗi|hiện mã lỗi} {F01|F02|F52} là bị sao vậy ah? Có {nguy hiểm|nghiêm trọng} không?|
 Sao {dàn pin|hệ} nhà {em|e|mình} {dạo này|mấy hôm nay} {áp|voltage} lên cao mà {dòng|ampe} lại {thấp|lèo tèo} vậy nhỉ? Có cần {kiểm tra|đo lại} dây nối không ah?|
 {Pin lưu trữ|Lithium} sạc đầy {100%|đầy bình} mà {vừa dùng|mới chạy} tí đã {tụt|sụt} xuống {90%|85%}, như vậy có {bình thường|ổn} không các bác?|
 Cái {quạt tản nhiệt|quạt gió} của {biến tần|inverter} nhà em kêu {hơi to|ồn quá}, có cách nào {thay quạt|xử lý} cho {êm|đỡ ồn} không ah?|
@@ -93,21 +93,21 @@ Theo {kinh nghiệm|ý em} thì {bác|anh} nên {lên thẳng|chơi luôn} hệ 
 Bác {kiểm tra|xem lại} lại {điểm tiếp xúc|đầu nối MC4} xem, có khi bị {lỏng|move} nên {hiệu suất|sản lượng} mới thấp thế đấy.|
 Cứ {thương hiệu|hãng lớn} mà {vả|múc} bác ạ, đắt sắt ra miếng, {nlmt|điện mặt trời} là dùng {lâu dài|chục năm} chứ có phải {ngày một ngày hai|đồ chơi} đâu.|
 Bác {ngâm cứu|tham khảo} mấy dòng {biến tần|inverter} có {giao tiếp|app theo dõi} ấy, dùng {nhàn|sướng} hơn hẳn.|
-{Các bác|Anh em} hay mua {MC4|CB DC|Chống sét} ở shop nào {giá tốt|chuẩn|uy tín} chỉ cho {em|e|mình} với ah.|
+{Các bác|Anh em|Mọi người|Các anh} hay mua {MC4|CB DC|Chống sét} ở shop nào {giá tốt|chuẩn|uy tín} chỉ cho {em|e|mình} với ah.|
 {Nên dùng|Dùng} {thanh ray nhôm|kẹp pin} loại nào để {chắc chắn|không bị rỉ sét} khi lắp {gần biển|ngoài trời} vậy các bác?|
 {Có cần|Nên} lắp thêm {đồng hồ 6 thông số|thiết bị đo} để theo dõi {tải|công suất} riêng không hay cứ nhìn trên {app|inverter} là đủ rồi ah?|
-{Hệ|Dàn} này {bác|anh|b} tự {lắp|thi công} hay {thuê thợ|bên nào làm} mà nhìn {gọn|đẹp|pro} thế ah?|
-{Tổng thiệt hại|Tổng chi phí} cho hệ {như hình|này} là bao nhiêu {củ|tr} vậy {bác|anh|b}, cho em {tham khảo|xin giá} với.|
+{Hệ|Dàn} này {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} tự {lắp|thi công} hay {thuê thợ|bên nào làm} mà nhìn {gọn|đẹp|pro} thế ah?|
+{Tổng thiệt hại|Tổng chi phí} cho hệ {như hình|này} là bao nhiêu {củ|tr} vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}, cho em {tham khảo|xin giá} với.|
 Nhìn {dàn pin|đống thiết bị} mà {mê|phát thèm} quá, không biết {hiệu quả|sản lượng} thực tế {thế nào|có ổn không} {bác|anh}?|
-{Bác|Anh|B} cho hỏi con {biến tần|inverter} đó chạy có {nóng|ồn} không, em cũng đang {định|tính} múc một con.|
+{Bác|Anh|B|Các b|Các anh|Các a|Mọi người|Anh em} cho hỏi con {biến tần|inverter} đó chạy có {nóng|ồn} không, em cũng đang {định|tính} múc một con.|
 {Nhà em|Nhà mình} cũng đang dùng {hệ tương tự|bộ y hệt}, mà sao {sản lượng|áp} không được {cao|tốt} như nhà {bác|anh} nhỉ?|
-Con {BMS|Inverter} này {cài đặt|setup} có {khó|phức tạp} không {bác|anh|b}, em đang dùng mà {mò|chỉnh} mãi chưa {ưng ý|xong}.|
+Con {BMS|Inverter} này {cài đặt|setup} có {khó|phức tạp} không {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}, em đang dùng mà {mò|chỉnh} mãi chưa {ưng ý|xong}.|
 {Hệ|Dàn} nhà em cũng {tầm này|công suất này} mà tháng vừa rồi {tiết kiệm|đỡ} được tận {500k|700k|1tr} tiền điện, {phê|sướng} thật.|
 {Bác|Anh} dùng {dây|cáp} mấy chấm mà nhìn {chắc chắn|xịn} vậy, em đi {dây cũ|dây 4mm} thấy hơi {nóng|lo}.|
-Có {bác|anh|b} nào ở {khu vực|tỉnh} {Hà Nội|Sài Gòn|miền Tây|miền Trung} chuyên {lắp|cung cấp} món này {uy tín|giá mềm} không, {ib|tư vấn} em với.|
+Có {bác|anh|b|a} nào ở {khu vực|tỉnh} {Hà Nội|Sài Gòn|miền Tây|miền Trung} chuyên {lắp|cung cấp} món này {uy tín|giá mềm} không, {ib|tư vấn} em với.|
 {Em|E|Mình} mới {lấy|mua} bộ này về mà {chưa biết|lúng túng} chỗ {đấu nối|cài đặt}, có {bác|anh} nào {rành|pro} chỉ giáo {em|e} với ah.|
-{Pin|Cell} này mua ở đâu thì {chuẩn|yên tâm|không sợ hàng nhái} vậy {bác|anh|b}, trên mạng {nhiều giá|loạn} quá em không biết {đâu mà lần|chọn ai}|
-{Bác|Anh|B} cho hỏi {áp|voltage} của {string|dàn pin} này lúc {nắng gắt|đỉnh điểm} lên được bao nhiêu {V|vôn} vậy ah?|
+{Pin|Cell} này mua ở đâu thì {chuẩn|yên tâm|không sợ hàng nhái} vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}, trên mạng {nhiều giá|loạn} quá em không biết {đâu mà lần|chọn ai}|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} cho hỏi {áp|voltage} của {string|dàn pin} này lúc {nắng gắt|đỉnh điểm} lên được bao nhiêu {V|vôn} vậy ah?|
 {Hệ|Dàn} này có {chống sét|tiếp địa} riêng cho {khung giá|thiết bị} chưa {bác|anh}, nhìn có vẻ {thiếu thiếu|chưa thấy} thì phải.|
 Cái {mạch cân bằng|active balance} kia {bác|anh} mua bao nhiêu thế, dùng cho {khối pin|LFP} thấy có {khác biệt|hiệu quả} nhiều không?|
 Sao {bác|anh} không dùng {át DC|CB DC} loại {chống giật|xịn hơn} tí cho {an toàn|yên tâm}, hệ này {áp cao|dòng lớn} phết đấy.|
@@ -115,7 +115,7 @@ Sao {bác|anh} không dùng {át DC|CB DC} loại {chống giật|xịn hơn} t�
 Nhìn {gọn|sạch|đẹp} thế này là biết {chủ xe|bác|anh} {chăm chút|kỹ tính} cỡ nào rồi.|
 Ước gì {nhà|vợ} em cũng {cho phép|ủng hộ} để làm một hệ {như thế này|hoành tráng} về dùng cho sướng.|
 {Mình|Em|E} thấy {lắp|đầu tư} hệ này {chi phí|tiền máy} cao quá, tính ra phải {7-10 năm|chục năm} mới {hòa vốn|gỡ vốn}, liệu có {đáng không|phí không} các bác?|
-Tiền {đầu tư|bỏ ra} cục tiền lớn thế này đem {gửi tiết kiệm|mua vàng} lấy lãi đóng tiền điện có khi {lời hơn|ngon hơn} ấy chứ, {các bác|anh em} thấy sao?|
+Tiền {đầu tư|bỏ ra} cục tiền lớn thế này đem {gửi tiết kiệm|mua vàng} lấy lãi đóng tiền điện có khi {lời hơn|ngon hơn} ấy chứ, {Các bác|Anh em|Mọi người|Các anh} thấy sao?|
 Nghe bảo {tấm pin|pin} dùng vài năm là {sụt hiệu suất|chai đi}, lúc đó {tiền thu lại|tiền điện tiết kiệm} chắc gì đã đủ bù {tiền máy|vốn} nhỉ?|
 Sao {bác|anh} không chơi {hòa lưới bám tải|hệ không lưu trữ} cho {rẻ|nhanh thu hồi vốn}? Chứ mua thêm {pin lưu trữ|Lithium} đội giá lên {gấp đôi|quá cao} mà chả biết khi nào mới {hỏng|hết bảo hành}.|
 {Em|E|Mình} thấy bảo {pin lưu trữ|lithium} chỉ được {vài năm|3-4 năm} là hỏng, đầu tư {mấy chục triệu|đống tiền} vào đó có {phiêu|mạo hiểm} quá không?|
@@ -130,7 +130,7 @@ Sao bác lại chọn {hãng này|con này} nhỉ? {Em|E|Mình} nghe nhiều ng�
 Tầm tiền con {Deye|Luxpower} này {thà|sao không} mua con {Growatt|Goodwe} dùng có khi còn {ngon hơn|ổn định hơn} ấy chứ.|
 {Tấm pin|PV} hãng này nhìn {hoàn thiện|đường hàn} {hơi dại|không khôn} lắm, liệu có đúng {công suất thực|chuẩn hãng} không bác?|
 {Nói thật là|Nói thật lòng} {em|e|mình} {đang tính|định} lắp mà {nhìn|ngó} cái {giá|chi phí} thấy {chùn tay|oải|hết muốn chơi} quá. {Tiền này|Đống tiền này} {để|đem} đóng {tiền điện|cho EVN} chắc cũng {phải|được} {7 8 năm|cả chục năm}, chưa kể {hỏng hóc|bảo trì} thì {quá tội|lỗ vốn} bác ah.|
-{Các bác|Anh em} lưu ý khi {lắp|đi dây} dàn PV nên {bấm đầu MC4|siết ốc} cho thật {chặt|kỹ}, không là dễ bị {move|cháy đầu nối} giữa trưa nắng lắm đó.|
+{Các bác|Anh em|Mọi người|Các anh} lưu ý khi {lắp|đi dây} dàn PV nên {bấm đầu MC4|siết ốc} cho thật {chặt|kỹ}, không là dễ bị {move|cháy đầu nối} giữa trưa nắng lắm đó.|
 {Kinh nghiệm của em là|Theo em thấy} cứ phải {tiếp địa|đóng cọc tiếp địa} riêng cho khung giá và Inverter, chứ {mùa sét|trời dông} ở mình {ghê lắm|đáng sợ lắm}.|
 {Bác|Anh} nên {nâng|kê} tấm pin cách mái tôn tầm {10cm|15cm} cho {thoáng gió|giải nhiệt}, pin mát thì {hiệu suất|áp} mới {cao|ổn định} được.|
 {Dây DC|Cáp mặt trời} cứ phải dùng loại {chuyên dụng|6mm2} chứ đừng {tiết kiệm|dùng dây điện thường}, nắng mưa vài năm là {giòn|mục|chạm chập} hết.|
