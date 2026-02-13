@@ -182,7 +182,7 @@ Có {bác|anh} nào biết chỗ nào còn bán {dây DC|đầu MC4|busbar} {t�
 Em định {set|cài đặt} cho pin lưu trữ nghỉ ở {50%|70%} để {về quê|nghỉ Tết} cho {bền pin|an tâm}, làm vậy có {chuẩn|đúng} không các bác?|
 {Năm hết Tết đến|Cuối năm rồi} chúc {anh em|các bác} hội {mê điện mặt trời|solar} luôn {đầy nắng|đầy pin}, {hệ thống|dàn đồ} chạy {êm ru|không lỗi lầm} nhé!|
 {Tổng kết|Nhìn lại} một năm {nghịch|vọc} {nlmt|năng lượng mặt trời}, {tiền điện|tiền túi} sụt đi mà {đam mê|kiến thức} tăng lên, chúc các bác ăn Tết vui vẻ!|
-{Tầm này|Sát Tết} mà vẫn còn {ngồi|lo} {hàn cell|đóng pin|siết ốc} là biết {nghiện|đam mê} cỡ nào rồi, chúc các bác có cái Tết {ấm áp|rực rỡ} nhé!}|
+{Tầm này|Sát Tết} mà vẫn còn {ngồi|lo} {hàn cell|đóng pin|siết ốc} là biết {nghiện|đam mê} cỡ nào rồi, chúc các bác có cái Tết {ấm áp|rực rỡ} nhé!|
 {Chúc|Mừng} năm mới {anh em|các bác|gia đình} hội {Solar|NLMT}, năm mới {nắng cực gắt|nắng đầy mái|nắng rực rỡ}, {pin|lưu trữ} lúc nào cũng {đầy bình|100%|no điện} nhé!|
 {Đầu xuân|Năm mới} chúc {anh em|các bác} {sức khỏe|vạn sự như ý}, dàn {PV|pin mặt trời} {hiệu suất cao|không bóng che}, {Inverter|Biến tần} chạy {êm ru|mượt mà|không lỗi F} cả năm!|
 {Chúc các bác|Chúc anh em} năm mới {áp luôn cao|dòng luôn đỉnh}, {tiền điện|hóa đơn EVN} {về 0 đồng|giảm kịch sàn}, {vợ|nhà} không cằn nhằn chuyện {mua đồ|độ chế} nữa nhé!|
