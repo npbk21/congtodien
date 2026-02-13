@@ -168,4 +168,18 @@ Tầm tiền con {Deye|Luxpower} này {thà|sao không} mua con {Growatt|Goodwe}
 {Dùng|Xài} {pin hãng|pin module} như {Pylontech|Sve|EVE|Giga} thì {giao tiếp|kết nối} với {Inverter|biến tần} {đồng bộ|mượt} hơn hẳn, nhưng {giá|chi phí} lại {chát|cao} quá.|
 {Pin đóng|Pin tự ráp} thì {rẻ|tiết kiệm} nhưng {ngại nhất|lo nhất} là khoản {giao tiếp|nhận diện} với Inverter qua cổng {CAN|BUS|RS485}, nhiều khi phải {chỉnh tay|set áp} mệt phết.|
 {Cho em hỏi|Bác nào rành} về {giao tiếp|protocol} giữa {BMS JK|Daly} với {Luxpower|Deye|Lumentree|Senergy} không, sao em {cắm dây|kết nối} mãi mà nó không {nhận|hiện SOC} nhỉ?|
-{Pin|Lưu trữ} {loại A|loại B} khác nhau {nhiều|ghê} không {bác|anh}, thấy nhiều shop {quảng cáo|bán} pin {thanh lý|tháo máy} mà giá {rẻ giật mình}.}
+{Pin|Lưu trữ} {loại A|loại B} khác nhau {nhiều|ghê} không {bác|anh}, thấy nhiều shop {quảng cáo|bán} pin {thanh lý|tháo máy} mà giá {rẻ giật mình}.|
+{Tầm này|Sát Tết rồi} phải {tranh thủ|gấp rút} {lên hệ|đóng khối pin|nâng cấp lưu trữ} để {phòng hờ|ngừa} {mất điện|cúp điện} mấy ngày Tết {anh em|các bác} nhỉ.|
+{Mới|Vừa} {tậu|sắm} được {khối pin|con biến tần|bộ lưu trữ} {xịn|mới} để {đón Tết|vui Xuân}, hy vọng {BMS|giao tiếp} ngon lành không {lỗi vặt|dở quẻ} lúc đang đón khách.|
+{Đang tính|Định} {vệ sinh|lau rửa} dàn {PV|pin mặt trời} sạch sẽ cho {đẹp|sáng sủa} mái nhà đón Tết mà {ngại|lười} leo trèo quá {bác|anh|b} ơi.|
+Tết này {vợ|nhà} cho {phép|duyệt chi} nên {quyết|mạnh dạn} {lên hệ|vả} luôn khối {LFP|Lithium} {280Ah|100Ah} cho {sướng|yên tâm|phê}.|
+{Mấy ngày|Đợt} Tết {thợ nghỉ|cửa hàng đóng cửa}, em sợ nhất là {hệ thống|biến tần} báo {lỗi F|sự cố} thì {xong đời|ăn Tết không ngon|mệt lắm}.|
+{Bác|Anh} cho hỏi {BMS|mạch quản lý} đang bị {lệch cell|lệch áp} nhẹ thì có nên {xả|dùng} cố qua Tết không hay phải {cân bằng|xử lý} luôn giờ ah?|
+{Sợ|Lo} nhất là trưa mùng 1 {nắng gắt|nắng to} mà {áp cao|điện áp} lên quá mức {Inverter|biến tần} nó {ngắt|cắt} thì {mất vui|mất điện} cả nhà.|
+Có {bác|anh} nào biết chỗ nào còn bán {dây DC|đầu MC4|busbar} {tầm này|sát Tết} không, em đang {thi công|lắp dở} mà bị thiếu {tí|chút} đồ.|
+{Tết này|Sắp tới} em {về quê|đi du lịch} cả tuần, có nên {ngắt|tắt} hệ {nlmt|điện mặt trời} hay cứ để {bám tải|chạy hybrid} bình thường vậy {các bác|anh em}?|
+{Đi vắng|Vắng nhà} mấy ngày Tết có cần {hạ CB|ngắt pin} để phòng {chập cháy|sét đánh} không ah, hay cứ để {BMS|thiết bị bảo vệ} nó tự lo?|
+Em định {set|cài đặt} cho pin lưu trữ nghỉ ở {50%|70%} để {về quê|nghỉ Tết} cho {bền pin|an tâm}, làm vậy có {chuẩn|đúng} không các bác?|
+{Năm hết Tết đến|Cuối năm rồi} chúc {anh em|các bác} hội {mê điện mặt trời|solar} luôn {đầy nắng|đầy pin}, {hệ thống|dàn đồ} chạy {êm ru|không lỗi lầm} nhé!|
+{Tổng kết|Nhìn lại} một năm {nghịch|vọc} {nlmt|năng lượng mặt trời}, {tiền điện|tiền túi} sụt đi mà {đam mê|kiến thức} tăng lên, chúc các bác ăn Tết vui vẻ!|
+{Tầm này|Sát Tết} mà vẫn còn {ngồi|lo} {hàn cell|đóng pin|siết ốc} là biết {nghiện|đam mê} cỡ nào rồi, chúc các bác có cái Tết {ấm áp|rực rỡ} nhé!}}
