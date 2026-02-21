@@ -49,17 +49,85 @@
 <script>
 const BASE_URL = "https://raw.githubusercontent.com/npbk21/congtodien/refs/heads/main/";
 
+// === THAY THẾ HÀM countVariations CŨ BẰNG HÀM MỚI NÀY ===
+
 function countVariations(text) {
-    if (!text) return 0;
-    let total = 1;
-    const regex = /\{([^{}]*)\}/g;
-    const matches = text.matchAll(regex);
-    for (const match of matches) {
-        const options = match[1].split("|");
-        total *= options.length;
+    if (!text || typeof text !== 'string') return 0;
+
+    // Hàm đệ quy để xử lý các nhóm lồng nhau
+    function parseSegment(segment) {
+        let total = 1; // Tích số cho đoạn văn bản hiện tại
+        let i = 0;
+        const len = segment.length;
+
+        while (i < len) {
+            const char = segment[i];
+            if (char === '{') {
+                // Tìm dấu '}' đóng cho nhóm này, chú ý đến độ lồng nhau
+                let depth = 1;
+                let j = i + 1;
+                while (j < len && depth > 0) {
+                    if (segment[j] === '{') depth++;
+                    if (segment[j] === '}') depth--;
+                    j++;
+                }
+                // j bây giờ là vị trí sau dấu '}' đóng
+
+                // Lấy nội dung bên trong dấu ngoặc nhọn (bao gồm cả các nhóm con)
+                const innerContent = segment.substring(i + 1, j - 1);
+
+                // Tách các lựa chọn con bên trong, nhưng phải cẩn thận với các nhóm lồng nhau
+                const options = [];
+                let optionStart = 0;
+                let optionDepth = 0;
+                for (let k = 0; k < innerContent.length; k++) {
+                    const ch = innerContent[k];
+                    if (ch === '{') optionDepth++;
+                    if (ch === '}') optionDepth--;
+                    if (ch === '|' && optionDepth === 0) {
+                        options.push(innerContent.substring(optionStart, k));
+                        optionStart = k + 1;
+                    }
+                }
+                options.push(innerContent.substring(optionStart)); // Thêm lựa chọn cuối cùng
+
+                // Tính tổng số biến thể cho nhóm này bằng cách nhân tổng số biến thể của từng lựa chọn con
+                let optionTotal = 0;
+                for (const opt of options) {
+                    // Đệ quy: mỗi lựa chọn con lại có thể chứa nhóm xoay con của nó
+                    optionTotal += parseSegment(opt);
+                }
+
+                // Nhân vào tổng số của đoạn hiện tại
+                total *= optionTotal;
+
+                // Di chuyển chỉ số i lên sau dấu '}' vừa xử lý
+                i = j;
+            } else {
+                // Nếu là ký tự bình thường (không phải '{'), chỉ cần tăng i lên 1
+                i++;
+            }
+        }
+        // Trường hợp cơ bản: Nếu đoạn văn bản không chứa '{' nào, parseSegment trả về 1
+        // vì nó chỉ là một lựa chọn văn bản thuần túy.
+        // Tuy nhiên, nếu toàn bộ segment là rỗng? Trong ngữ cảnh này, một lựa chọn rỗng vẫn được tính là 1 cách.
+        // Ví dụ: {|A} có nghĩa là "không có gì" hoặc "A". Đoạn rỗng này vẫn là 1 cách.
+        if (total === 1 && segment.includes('{') === false) {
+             return 1; // Văn bản thuần túy, không có spin, chỉ là 1 lựa chọn duy nhất.
+        }
+        return total;
     }
-    return total;
+
+    // Bắt đầu phân tích toàn bộ văn bản
+    // Chú ý: Nếu toàn bộ văn bản được bao bởi '{}' thì chúng ta cần xử lý nó như một nhóm.
+    // Nhưng trong trường hợp file của bạn, mỗi khối là một câu hỏi hoàn chỉnh và thường không được bao bọc.
+    // Hàm parseSegment ở trên đã xử lý bằng cách duyệt qua từng ký tự, nên nó sẽ hoạt động chính xác cho cả hai trường hợp.
+    const finalTotal = parseSegment(text);
+    return finalTotal;
 }
+
+// === GIỮ NGUYÊN PHẦN CÒN LẠI CỦA MÃ NGUỒN ===
+// (Các hàm getLargeBlocks, XoayFinal, processXoay, copyToClipboard giữ nguyên)
 
 // Hàm tách các khối lớn cấp 1
 function getLargeBlocks(content) {
