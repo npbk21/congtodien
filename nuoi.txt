@@ -131,7 +131,7 @@ Cái món {nlmt|điện mặt trời} này chỉ dành cho người {có tiền|
 Sao bác lại chọn {hãng này|con này} nhỉ? {Em|E|Mình} nghe nhiều người {chê|phàn nàn} nó {hay lỗi|chạy nóng|áp thấp} lắm mà.|
 Tầm tiền con {Deye|Luxpower} này {thà|sao không} mua con {Growatt|Goodwe} dùng có khi còn {ngon hơn|ổn định hơn} ấy chứ.|
 {Tấm pin|PV} hãng này nhìn {hoàn thiện|đường hàn} {hơi dại|không khôn} lắm, liệu có đúng {công suất thực|chuẩn hãng} không bác?|
-{Nói thật là|Nói thật lòng} {em|e|mình} {đang tính|định} lắp mà {nhìn|ngó} cái {giá|chi phí} thấy {chùn tay|oải|hết muốn chơi} quá. {Tiền này|Đống tiền này} {để|đem} đóng {tiền điện|cho EVN} chắc cũng {phải|được} {7 8 năm|cả chục năm}, chưa kể {hỏng hóc|bảo trì} thì {quá tội|lỗ vốn} bác ah.|
+{Nói thật là|Nói thật lòng} {em|e|mình} {đang tính|định|muốn} lắp mà {nhìn|ngó} cái {giá|chi phí} thấy {chùn tay|oải|hết muốn chơi} quá. {Tiền này|Đống tiền này} {để|đem} đóng {tiền điện|cho EVN} chắc cũng {phải|được} {7 8 năm|cả chục năm}, chưa kể {hỏng hóc|bảo trì} thì {quá tội|lỗ vốn} bác ah.|
 {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} lưu ý khi {lắp|đi dây} dàn PV nên {bấm đầu MC4|siết ốc} cho thật {chặt|kỹ}, không là dễ bị {move|cháy đầu nối} giữa trưa nắng lắm đó.|
 {Kinh nghiệm của em là|Theo em thấy} cứ phải {tiếp địa|đóng cọc tiếp địa} riêng cho khung giá và Inverter, chứ {mùa sét|trời dông} ở mình {ghê lắm|đáng sợ lắm}.|
 {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} nên {nâng|kê} tấm pin cách mái tôn tầm {10cm|15cm} cho {thoáng gió|giải nhiệt}, pin mát thì {hiệu suất|áp} mới {cao|ổn định} được.|
@@ -140,7 +140,7 @@ Tầm tiền con {Deye|Luxpower} này {thà|sao không} mua con {Growatt|Goodwe}
 {Em|Mình} {mới phát hiện ra là|Chia sẻ với các bác|chia sẻ với mọi người} {vệ sinh|rửa} pin vào {sáng sớm|chiều mát} giúp {sản lượng|điện ra} tăng rõ rệt mà lại an toàn, nhất là {vùng nhiều bụi|mùa hanh khô|nhà gần đường|nhà gần công trường|nhà gần xí nghiệp}.|
 {Con|Cái} Inverter nhà em {để trong kho|treo tường} bí quá, em mới {độ thêm|lắp thêm} 2 cái quạt 12v {hút nhiệt|tản nhiệt} là máy {mát rượi|chạy êm} {luôn|ngay}.|
 {Sau một thời gian dùng|Thực tế em thấy} thì {mạch giao tiếp|kết nối BMS với Inverter} rất quan trọng, nó {quản lý sạc xả|bảo vệ pin} chuẩn hơn hẳn {chạy manual|set áp thủ công}.|
-{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} định đóng pin {LFP|Lithium} thì nhớ {cân bằng cell|balance} thật chuẩn trước khi {ráp|đóng thùng} nhé, không là dùng một thời gian {lệch áp|tèo} ngay đó.|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} {tính|muốn|định} đóng pin {LFP|Lithium} thì nhớ {cân bằng cell|balance} thật chuẩn trước khi {ráp|đóng thùng} nhé, không là dùng một thời gian {lệch áp|tèo} ngay đó.|
 {Tầm này|Giờ} {theo em|Cá nhân em thấy} biến tần {Luxpower|Deye|Lumentree|Senergy|Mạnh Quân|Gia Bảo} vẫn là {lựa chọn|phân khúc} {quốc dân|an toàn} nhất vì {cộng đồng hỗ trợ đông|dễ cài đặt|hậu mãi tốt}.|
 {So với|Giữa} {pin lưu trữ|Lithium} hãng và {pin tự đóng|cell rời} thì {hàng hãng|module} vẫn {yên tâm|đẳng cấp} hơn về độ {an toàn|chống cháy nổ} dù giá có {cao hơn|chát hơn}.|
 {Tấm pin|PV} {hiệu suất cao|N-Type} mới giờ giá cũng {mềm|tốt} rồi, {không nên|đừng} mua mấy loại {cũ|P-type đời thấp} làm gì cho {tốn diện tích mái|phí công lắp}.|
@@ -171,8 +171,8 @@ Tầm tiền con {Deye|Luxpower} này {thà|sao không} mua con {Growatt|Goodwe}
 {Pin|Lưu trữ} {loại A|loại B} khác nhau {nhiều|ghê} không {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}, thấy nhiều shop {quảng cáo|bán} pin {thanh lý|tháo máy} mà giá {rẻ giật mình}.|
 {Tầm này|Sát Tết rồi} phải {tranh thủ|gấp rút} {lên hệ|đóng khối pin|nâng cấp lưu trữ} để {phòng hờ|ngừa} {mất điện|cúp điện} mấy ngày Tết {anh em|các bác} nhỉ.|
 {Mới|Vừa} {tậu|sắm} được {khối pin|con biến tần|bộ lưu trữ} {xịn|mới} để {đón Tết|vui Xuân}, hy vọng {BMS|giao tiếp} ngon lành không {lỗi vặt|dở quẻ} lúc đang đón khách.|
-{Đang tính|Định} {vệ sinh|lau rửa} dàn {PV|pin mặt trời} sạch sẽ cho {đẹp|sáng sủa} mái nhà đón Tết mà {ngại|lười} leo trèo quá {bác|anh|b} ơi.|
-Tết này {vợ|nhà} cho {phép|duyệt chi} nên {quyết|mạnh dạn} {lên hệ|vả} luôn khối {LFP|Lithium} {280Ah|100Ah} cho {sướng|yên tâm|phê}.|
+{Đang tính|Định|Muốn} {vệ sinh|lau rửa} dàn {PV|pin mặt trời} sạch sẽ cho {đẹp|sáng sủa|hiệu quả|nâng hiệu suất} mà {ngại|lười} leo trèo quá {bác|anh|b} ơi.|
+{Hôm trước|Hôm qua|Hôm nay|Vùa rồi} {vợ|bà xã|nhà em} cho {phép|duyệt chi} nên {quyết|mạnh dạn|muốn|định} {lên hệ|vả|chơi|múc|chiến} luôn khối {LFP|Lithium} {280Ah|100Ah} cho {sướng|yên tâm|phê}.|
 {Mấy ngày|Đợt} Tết {thợ nghỉ|cửa hàng đóng cửa}, em sợ nhất là {hệ thống|biến tần} báo {lỗi F|sự cố} thì {xong đời|ăn Tết không ngon|mệt lắm}.|
 {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} cho hỏi {BMS|mạch quản lý} đang bị {lệch cell|lệch áp} nhẹ thì có nên {xả|dùng} cố qua Tết không hay phải {cân bằng|xử lý} luôn giờ ah?|
 {Sợ|Lo} nhất là trưa mùng 1 {nắng gắt|nắng to} mà {áp cao|điện áp} lên quá mức {Inverter|biến tần} nó {ngắt|cắt} thì {mất vui|mất điện} cả nhà.|
@@ -188,95 +188,95 @@ Em định {set|cài đặt} cho pin lưu trữ nghỉ ở {50%|70%} để {về
 {Chúc các bác|Chúc anh em} năm mới {áp luôn cao|dòng luôn đỉnh}, {tiền điện|hóa đơn EVN} {về 0 đồng|giảm kịch sàn}, {vợ|nhà} không cằn nhằn chuyện {mua đồ|độ chế} nữa nhé!|
 {Tết đến xuân về|Mừng xuân 2026}, chúc toàn thể {anh em|bác} {đam mê|nghiện} điện mặt trời {chốt} được nhiều {kèo ngon|đồ xịn}, khối pin {không lệch cell|nội trợ thấp}, {BMS|giao tiếp} luôn xanh đèn!
 {Mình|Em|E} muốn biết {chi phí|giá trọn gói} lắp {hệ 1kw|hệ 2kw|hệ 3kw} cho nhà trọ tầm bao nhiêu vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
-{Ai|Có bác nào} biết {thời gian|mấy năm} hoàn vốn cho hệ {3kw|5kw} ở khu vực nắng nhiều không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} biết {thời gian|mấy năm} hoàn vốn cho hệ {3kw|5kw} ở khu vực nắng nhiều không?|
 {Có nên|Nên} đầu tư {pin lưu trữ|Lithium} ngay hay chỉ lắp {hòa lưới|bám tải} trước?|
 {Mình|Em|E} muốn {dùng|sạc} xe điện bằng nlmt, {cần|phải} thêm gì cho hệ không?|
 {Tấm pin|PV} loại {mono N-type|mono} có {đắt|khác} nhiều so với {poly|polycrystalline} không?|
-{Ai|Có bác nào} dùng {microinverter|micro inverter} cho mái nhỏ, review thực tế thế nào?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {microinverter|micro inverter} cho mái nhỏ, review thực tế thế nào?|
 {Mình|Em|E} muốn biết {độ bền|tuổi thọ} trung bình của tấm pin hãng phổ biến là bao lâu?|
 {Có nên|Nên} mua {inverter|biến tần} có {bảo hành|hậu mãi} dài hay chỉ cần rẻ?|
 {Mình|Em|E} muốn hỏi {độ an toàn|rủi ro} khi dùng pin {cell rời|tự ráp} so với module hãng?|
-{Ai|Có bác nào} từng {thay|thay thế} cell bị phồng, chi phí và cách xử lý thế nào?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} từng {thay|thay thế} cell bị phồng, chi phí và cách xử lý thế nào?|
 {Mình|Em|E} muốn hỏi {độ sụt|degradation} tấm pin sau 5 năm thường là bao nhiêu %?|
 {Có nên|Nên} dùng {optimizers|micro} khi {ghép|mix} tấm khác công suất không?|
 {Mình|Em|E} muốn biết {cách test|kiểm tra} tấm pin mới trước khi lắp, ai có checklist?|
-{Ai|Có bác nào} dùng {tracker|điều khiển theo nắng} cho mái nhà, có đáng đầu tư không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {tracker|điều khiển theo nắng} cho mái nhà, có đáng đầu tư không?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa các tấm để tránh {đổ bóng|nóng} là bao nhiêu?|
 {Có nên|Nên} lắp {bộ chống sét|SPD} ở đầu nguồn hay ở inverter là đủ?|
 {Mình|Em|E} muốn hỏi {độ an toàn|rủi ro} khi lắp hệ áp cao trên mái ngói, có lưu ý gì?|
-{Ai|Có bác nào} dùng {pin second‑hand|pin tháo máy}, có rủi ro gì cần lưu ý không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {pin second‑hand|pin tháo máy}, có rủi ro gì cần lưu ý không?|
 {Mình|Em|E} muốn hỏi {chi phí bảo trì|bảo dưỡng} hàng năm cho hệ 5kw tầm bao nhiêu?|
 {Có nên|Nên} mua {inverter hybrid|inverter có lưu trữ} để dễ nâng cấp sau này không?|
 {Mình|Em|E} muốn hỏi {độ ồn|tiếng quạt} inverter khi chạy, có ảnh hưởng giấc ngủ không?|
-{Ai|Có bác nào} dùng {BMS JBD|BMS DALY|BMS JK} cho khối 48v, có vấn đề gì khi giao tiếp với inverter?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {BMS JBD|BMS DALY|BMS JK} cho khối 48v, có vấn đề gì khi giao tiếp với inverter?|
 {Mình|Em|E} muốn hỏi {độ an toàn|phòng cháy} khi đóng khối pin lớn trong nhà, cần lưu ý gì?|
 {Có nên|Nên} dùng {cầu chì DC|CB DC} loại nào cho hệ 5kw để an toàn?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa dây DC và ống nước trên mái, có quy chuẩn không?|
-{Ai|Có bác nào} từng {bảo hành|claim} tấm pin bị suy giảm, thủ tục và thời gian thế nào?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} từng {bảo hành|claim} tấm pin bị suy giảm, thủ tục và thời gian thế nào?|
 {Mình|Em|E} muốn hỏi {độ dày|trọng lượng} khung nhôm khi lắp trên mái tôn, có cần gia cố không?|
 {Có nên|Nên} dùng {ống ruột gà|ống conduit} cho dây DC hay để dây nổi cho tiện?|
 {Mình|Em|E} muốn hỏi {cách vệ sinh|vệ sinh pin} an toàn, dùng nước thường hay dung dịch chuyên dụng?|
-{Ai|Có bác nào} dùng {app|phần mềm} giám sát không cần internet, có giải pháp nào không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {app|phần mềm} giám sát không cần internet, có giải pháp nào không?|
 {Mình|Em|E} muốn hỏi {độ an toàn|rủi ro} khi đấu song song tấm khác hướng vào 1 MPPT?|
 {Có nên|Nên} lắp {bộ cân bằng chủ động|active balance} cho khối LFP 16s không?|
 {Mình|Em|E} muốn hỏi {độ sụt áp|voltage drop} khi dùng dây 6mm cho 10m, có ổn không?|
-{Ai|Có bác nào} dùng {pin Giga|pin Sve} cho review, dung lượng thực tế và SOH thế nào?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {pin Giga|pin Sve} cho review, dung lượng thực tế và SOH thế nào?|
 {Mình|Em|E} muốn hỏi {cách chọn|tính toán} dung lượng pin để dùng ban đêm 4kWh, ai giúp?|
 {Có nên|Nên} lắp {đồng hồ 3 pha|đồng hồ 1 pha} cho hệ gia đình có EV không?|
 {Mình|Em|E} muốn hỏi {khoản vay|trả góp} lắp nlmt có phổ biến, lãi suất thường ra sao?|
-{Ai|Có bác nào} dùng {inverter Luxpower|Deye|Growatt} lâu năm, chia sẻ ưu nhược điểm thực tế?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {inverter Luxpower|Deye|Growatt} lâu năm, chia sẻ ưu nhược điểm thực tế?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa tấm pin và mái để thoáng gió, nên để bao nhiêu cm?|
 {Có nên|Nên} dùng {pin module hãng|module nguyên quả} hay {cell rời|tự ráp} cho an toàn lâu dài?|
 {Mình|Em|E} muốn hỏi {cách xử lý|xử lý} khi inverter báo lỗi F02, ai biết nguyên nhân phổ biến?|
-{Ai|Có bác nào} từng {mua|đặt} tấm pin từ nước ngoài, thủ tục hải quan và chi phí ra sao?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} từng {mua|đặt} tấm pin từ nước ngoài, thủ tục hải quan và chi phí ra sao?|
 {Mình|Em|E} muốn hỏi {cách tính|tính toán} số tấm cần cho mái 20m2, ai giúp em tính sơ?|
 {Có nên|Nên} lắp {bộ lưu trữ|pin} để chạy máy lạnh khi mất điện không, có kinh tế không?|
 {Mình|Em|E} muốn hỏi {độ an toàn|rủi ro} khi dùng inverter giá rẻ cho tải cảm ứng như máy hàn?|
-{Ai|Có bác nào} dùng {tấm pin 540w|550w} trên mái tôn, có vấn đề về nứt vỡ khi vận chuyển không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {tấm pin 540w|550w} trên mái tôn, có vấn đề về nứt vỡ khi vận chuyển không?|
 {Mình|Em|E} muốn hỏi {cách test|kiểm tra} BMS trước khi đưa vào vận hành, checklist ai có chia sẻ?|
 {Có nên|Nên} dùng {dây mềm nhiều lõi|dây cứng} cho nối pin trong khối để giảm rung lắc không?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa 2 hàng tấm pin để dễ vệ sinh, nên để bao nhiêu?|
-{Ai|Có bác nào} từng dùng {máy rửa áp lực|pressure washer} để rửa pin, có an toàn không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} từng dùng {máy rửa áp lực|pressure washer} để rửa pin, có an toàn không?|
 {Mình|Em|E} muốn hỏi {độ bền|tuổi thọ} inverter khi để ngoài trời có mái che, có khác nhiều không?|
 {Có nên|Nên} lắp {bộ chống sét lan truyền|SPD} ở cả phía DC và AC không?|
 {Mình|Em|E} muốn hỏi {cách chọn|lựa chọn} MPPT cho dàn pin 3kw, ai có kinh nghiệm chia sẻ?|
-{Ai|Có bác nào} dùng {string inverter|micro inverter} cho mái ngói, lắp loại nào dễ hơn?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {string inverter|micro inverter} cho mái ngói, lắp loại nào dễ hơn?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa ống conduit và tấm pin, có quy chuẩn không?|
 {Có nên|Nên} lắp {bộ chống sét|SPD} cho tủ pin trong nhà không, hay chỉ cần cho khung ngoài?|
 {Mình|Em|E} muốn hỏi {cách bảo quản|bảo quản cell} trước khi ráp, nhiệt độ và độ ẩm tối ưu là bao nhiêu?|
-{Ai|Có bác nào} từng {mua|sắm} inverter cũ, có nên mua để tiết kiệm không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} từng {mua|sắm} inverter cũ, có nên mua để tiết kiệm không?|
 {Mình|Em|E} muốn hỏi {cách đấu|đấu nối} MC4 đúng chuẩn, ai có sơ đồ đơn giản chia sẻ?|
 {Có nên|Nên} dùng {busbar đồng|cầu nối đồng} hay dùng ốc nối trực tiếp cho khối pin?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa tấm pin và ống thoát nước, có lưu ý gì khi mưa?|
-{Ai|Có bác nào} dùng {inverter hybrid|bám tải} để ưu tiên dùng nlmt trước lưới, set như nào?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {inverter hybrid|bám tải} để ưu tiên dùng nlmt trước lưới, set như nào?|
 {Mình|Em|E} muốn hỏi {cách tính|tính toán} công suất đỉnh cần cho nhà có máy lạnh 2hp và bơm nước?|
 {Có nên|Nên} lắp {thiết bị giám sát|monitoring} cho từng string hay chỉ giám sát tổng hệ?|
 {Mình|Em|E} muốn hỏi {khoản bảo hiểm|bảo hiểm} cho hệ nlmt có phổ biến không, chi phí thế nào?|
-{Ai|Có bác nào} từng {thay|thay thế} inverter sau 3 năm, nguyên nhân và chi phí ra sao?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} từng {thay|thay thế} inverter sau 3 năm, nguyên nhân và chi phí ra sao?|
 {Mình|Em|E} muốn hỏi {cách chọn|lựa chọn} cầu chì AC cho inverter 5kw, ai biết thông số chuẩn?|
 {Có nên|Nên} dùng {ống nhôm|thanh ray} hay {kẹp pin} cho mái ngói để tránh rỉ sét?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa tấm pin và ống thông gió trên mái, có ảnh hưởng gì không?|
-{Ai|Có bác nào} dùng {inverter có app|inverter có monitoring} mà app hay lỗi, có cách khắc phục không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {inverter có app|inverter có monitoring} mà app hay lỗi, có cách khắc phục không?|
 {Mình|Em|E} muốn hỏi {cách xử lý|xử lý} khi pin lưu trữ bị lệch cell, có thể cân bằng lại thủ công không?|
 {Có nên|Nên} lắp {bộ chống sét|SPD} cho mái nhà ở vùng hay sấm sét không?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa 2 hàng tấm pin khi lắp theo hướng Đông Tây, nên để bao nhiêu?|
-{Ai|Có bác nào} dùng {inverter High Voltage|áp cao} cho hệ 48v, có lưu ý an toàn gì khác không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {inverter High Voltage|áp cao} cho hệ 48v, có lưu ý an toàn gì khác không?|
 {Mình|Em|E} muốn hỏi {cách kiểm tra|test} sau khi lắp xong để đảm bảo hệ hoạt động ổn định, checklist ai có?|
 {Có nên|Nên} lắp {bộ chống sét|SPD} cho cả inverter và tủ pin riêng biệt không?|
 {Mình|Em|E} muốn hỏi {khoản chi phí|chi phí vận chuyển} tấm pin lớn về tỉnh, có cách tiết kiệm không?|
-{Ai|Có bác nào} từng dùng {pin LFP|Lithium} cho hệ backup 5kWh, thực tế dùng được bao lâu?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} từng dùng {pin LFP|Lithium} cho hệ backup 5kWh, thực tế dùng được bao lâu?|
 {Mình|Em|E} muốn hỏi {cách chọn|lựa chọn} dây nối giữa khối pin và inverter để giảm mất mát điện năng?|
 {Có nên|Nên} dùng {bộ cân bằng|active balance} cho khối pin 48v khi dùng cell rời không?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa tấm pin và ống khói hay ống thông gió, có ảnh hưởng không?|
-{Ai|Có bác nào} từng nâng cấp firmware inverter, có rủi ro gì khi cập nhật không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} từng nâng cấp firmware inverter, có rủi ro gì khi cập nhật không?|
 {Mình|Em|E} muốn hỏi {cách bảo trì|bảo dưỡng} khung giá đỡ để tránh rỉ sét khi gần biển?|
 {Có nên|Nên} lắp {bộ đo 6 thông số|đồng hồ 6 thông số} để theo dõi hiệu suất từng ngày không?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa tấm pin và mái tôn để tránh nóng, nên để bao nhiêu cm?|
-{Ai|Có bác nào} dùng {inverter hybrid|bám tải} mà thấy hao điện nội tại, có cách tối ưu không?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} dùng {inverter hybrid|bám tải} mà thấy hao điện nội tại, có cách tối ưu không?|
 {Mình|Em|E} muốn hỏi {cách xử lý|xử lý} khi tấm pin có hot‑spot, có thể sửa được không?|
 {Có nên|Nên} lắp {bộ chống sét|SPD} cho hệ áp cao nếu khu vực ít sấm sét không?|
 {Mình|Em|E} muốn hỏi {khoảng cách|khoảng hở} giữa tấm pin và máng xối, có lưu ý gì khi mưa to?|
-{Ai|Có bác nào} từng dùng {pin module hãng|module nguyên quả} bị lỗi cell, quy trình bảo hành thế nào?|
-{Mình|Em|E} muốn hỏi {cách chọn|lựa chọn} inverter cho tải có máy hàn, có cần công suất dư lớn không?|
-{Có nên|Nên} lắp {bộ giám sát|monitoring} độc lập cho pin lưu trữ hay dùng monitoring của inverter là đủ?|
+{Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} từng dùng {pin module hãng|module nguyên quả} bị lỗi cell, quy trình bảo hành thế nào?|
+{Mình|Em|E} muốn hỏi {cách chọn|lựa chọn} inverter cho {máy cắt|máy tiện|máy hàn|máy cnc}, có cần công suất dư lớn không?|
+{Có nên|Nên} lắp {bộ giám sát|quản lý|theo dõi|monitoring|giám sát} độc lập cho pin lưu trữ hay dùng tính năng {có sẵn|sẵn có} của inverter là đủ?|
 }
