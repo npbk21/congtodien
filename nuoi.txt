@@ -1,19 +1,19 @@
-{{Mình|Em|E} cũng đang {tìm hiểu|học hỏi} mà {chưa biết|không biết} bắt dầu từ đâu.|
+{{Mình|Em|E} cũng đang {tìm hiểu|học hỏi} mà {chưa biết|không rõ|không biết} bắt dầu từ đâu.|
 {Đầu tư|Để sở hữu} hệ thống {đó|này} có {nhiều tiền|tốn kém lắm} không {bác|anh|bạn}?|
-{Mình|Em|E} không có {tiền|điều kiện} nên toàn {chắp vá|đồ thanh lý} thôi.|
-{Mình|Em|E} {mới|giờ mới} {tìm hiểu|nghiên cứu} thì nên bắt đầu với từ đâu ah?|
+{Mình|Em|E} không có {kinh tế|lúa|tiền|điều kiện} nên toàn {chắp vá|đồ thanh lý} thôi.|
+{Mình|Em|E} {mới|giờ mới|muốn} {tìm hiểu|nghiên cứu} thì nên bắt đầu với từ đâu ah?|
 {Tiền điện|Sử dụng} {500 700k|500 800k|600 1000k|700 1000k} thì nên dùng {hệ độc lập|độc lập} hay {bám tải|hòa lưới bám tải|hòa lưới ngày và đêm} ah?|
 {Mình|Em|E} cũng thích chế cháo, rồi thấy {tốn tiền|phí tiền}, mua luôn {thành phẩm|thiết bị hoàn chỉnh} về dùng luôn là {ngon|tốt|ổn định} nhất.|
-{Mua|Đặt} ở đâu vậy {các|} {anh|b|bác|a|ah}?|
+{Mua|Đặt} ở đâu vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
 {Dây DC|Cáp pin} cứ làm cuộn {loại 8mm|loại 6mm|10mm} {chuyên dụng|Solar} đi cho {bền|đúng chuẩn}, đừng dùng dây điện nhà.|
 {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em} mua ít {cầu nối đồng|busbar} với {ốc|long đền} loại {xịn|chống rỉ} này về mà lắp cho {an tâm|chắc chắn}|
-Dùng có {tốt|ổn|ngon} không {các|} {anh|b|bác|a|ah}?|
-{Tấm pin|PV} hãng nào vậy {các|} {anh|b|bác|a|ah}?|
-{Pin|pin lưu trữ} hãng nào vậy {các|} {anh|b|bác|a|ah}?|
-{Pin|pin lưu trữ} mua ở đâu vậy {các|} {anh|b|bác|a|ah}?|
-{Biến tần|inverter} mua ở đâu vậy {các|} {anh|b|bác|a|ah}?|
-Longi, Astro, Jinko, Trina, TCL nên mua của hãng nào vậy {các|} {anh|b|bác|a|ah}?|
-{3.2kw|3.5kw|3.6kw|3.8kw} pv mà 1 ngày được {20kw|18kw|19kw|17kw} có ổn không {các|} {anh|b|bác|a|ah}?|
+Dùng có {tốt|ổn|ngon} không {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{Tấm pin|PV} hãng nào vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{Pin|pin lưu trữ} hãng nào vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{Pin|pin lưu trữ} mua ở đâu vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{Biến tần|inverter} mua ở đâu vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+Longi, Astro, Jinko, Trina, TCL nên mua của hãng nào vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
+{3.2kw|3.5kw|3.6kw|3.8kw} pv mà 1 ngày được {20kw|18kw|19kw|17kw} có ổn không {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
 {Em|E|Mình} mới tìm hiểu về {nlmt|điện mặt trời|năng lượng mặt trời} chưa hiểu mấy thuật ngữ ongrid/offgrid và hybrid.|
 Có nên { |thêm tiền} mua mạch giao tiếp cho {pin|lưu trữ} không vậy {anh|bác|b|a}?|
 Nhà {Em|E|Mình} dùng tầm {550-600|500 600|500 700} {kw 1 tháng|kw/tháng}, tải có lúc 6-7kw, có lúc chỉ {1 200w|2 300w} thì nên dùng hệ nào ah?|
@@ -67,7 +67,7 @@ Vệ sinh {tấm pin|mặt pin} thì {bao lâu|mấy tháng} làm 1 lần là {h
 {Tầm này|Giờ} dùng {ắc quy viễn thông|bình chì} có còn {hiệu quả|ổn|kinh tế} không hay {phải|nên} lên thẳng {pin sắt|lithium} luôn ah?|
 Cho {em|e|mình} hỏi cái {BMS|mạch quản lý} nào {giao tiếp|kết nối} tốt với {Inverter|biến tần} {Luxpower|Deye|Growatt} nhất vậy ah?|
 {Diện tích|Mái nhà} tầm {15m2|20m2|30m2} thì {lắp|rải} được tối đa bao nhiêu {tấm pin|kw} vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
-{Dàn pin|Tấm pin} lắp trên {mái tôn|mái ngói} có cần {chống sét|tiếp địa} kỹ không {các|} {anh|b|bác|a|ah}, em sợ {mùa mưa bão|sét đánh} quá.|
+{Dàn pin|Tấm pin} lắp trên {mái tôn|mái ngói} có cần {chống sét|tiếp địa} kỹ không {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}, em sợ {mùa mưa bão|sét đánh} quá.|
 {Em|E|Mình} định tự {lắp|thi công} cho {tiết kiệm|vui}, không biết có {lưu ý|chú ý} đặc biệt gì về {hướng nắng|độ nghiêng} không ah?|
 {Tấm pin|PV} bị {đổ bóng|che bóng} một chút có làm {sụt áp|giảm hiệu suất} {nhiều|ghê} không các {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
 {Giữa|So sánh} {hệ bám tải|hòa lưới không lưu trữ} với {hệ hybrid|có lưu trữ} thì cái nào {nhanh thu hồi vốn|hiệu quả kinh tế} hơn vậy ah?|
@@ -166,7 +166,7 @@ Tầm tiền con {Deye|Luxpower} này {thà|sao không} mua con {Growatt|Goodwe}
 {Nên|Có nên} chạy hệ {áp cao|HV} hay {áp thấp|LV 48v} cho {gia đình|nhà} nhỉ? Em thấy hệ {áp cao|nối tiếp nhiều cell} hiệu suất {chuyển đổi|inverter} tốt hơn mà hơi {ghê|lo về an toàn}.|
 {Chu kỳ sạc xả|DOD} nên cài đặt khoảng {80%|90%} để {tăng tuổi thọ|bảo vệ} pin hay cứ {xả cạn|dùng hết} rồi lại nạp đầy vậy {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}?|
 {Dùng|Xài} {pin hãng|pin module} như {Pylontech|Sve|EVE|Giga} thì {giao tiếp|kết nối} với {Inverter|biến tần} {đồng bộ|mượt} hơn hẳn, nhưng {giá|chi phí} lại {chát|cao} quá.|
-{Pin đóng|Pin tự ráp} thì {rẻ|tiết kiệm} nhưng {ngại nhất|lo nhất} là khoản {giao tiếp|nhận diện} với Inverter qua cổng {CAN|BUS|RS485}, nhiều khi phải {chỉnh tay|set áp} mệt phết.|
+{Pin đóng|Pin tự ráp} thì {rẻ|tiết kiệm} nhưng {ngại nhất|lo nhất} là khoản {giao tiếp|nhận diện} với Inverter qua cổng {CAN|BUS|RS485}, nhiều khi phải {chỉnh tay|set áp|cài đặt} mệt phết.|
 {Cho em hỏi|Bác nào rành} về {giao tiếp|protocol} giữa {BMS JK|Daly} với {Luxpower|Deye|Lumentree|Senergy} không, sao em {cắm dây|kết nối} mãi mà nó không {nhận|hiện SOC} nhỉ?|
 {Pin|Lưu trữ} {loại A|loại B} khác nhau {nhiều|ghê} không {Bác|Anh|A|B|Các b|Các anh|Các a|Mọi người|Anh em}, thấy nhiều shop {quảng cáo|bán} pin {thanh lý|tháo máy} mà giá {rẻ giật mình}.|
 {Tầm này|Sát Tết rồi} phải {tranh thủ|gấp rút} {lên hệ|đóng khối pin|nâng cấp lưu trữ} để {phòng hờ|ngừa} {mất điện|cúp điện} mấy ngày Tết {anh em|các bác} nhỉ.|
