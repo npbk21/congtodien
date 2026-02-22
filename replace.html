@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>🔁 CÔNG CỤ THAY LINK - PC & MOBILE</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 24px 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: clamp(22px, 5vw, 28px);
+            font-weight: 700;
+        }
+        .save-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding: 12px 18px;
+            background: #e8f4fd;
+            border-radius: 50px;
+            font-size: 14px;
+            color: #0369a1;
+            border: 1px solid #b8dff0;
+            flex-wrap: wrap;
+        }
+        .save-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 18px;
+            font-size: 16px;
+            transition: all 0.2s;
+            background: #f8f9fa;
+            -webkit-appearance: none;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        textarea {
+            min-height: 250px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin: 25px 0 20px;
+            flex-wrap: wrap;
+        }
+        button {
+            flex: 1;
+            min-width: 150px;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            -webkit-appearance: none;
+        }
+        .btn-replace {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-replace:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+        }
+        .btn-replace:active {
+            transform: scale(0.97);
+        }
+        .btn-clear {
+            background: #f8f9fa;
+            color: #666;
+            border: 2px solid #e0e0e0;
+        }
+        .btn-clear:hover {
+            background: #e0e0e0;
+        }
+        .btn-clear:active {
+            transform: scale(0.97);
+        }
+        .stats {
+            background: #f0f4f8;
+            border-radius: 20px;
+            padding: 16px;
+            margin: 20px 0 15px;
+            font-size: 15px;
+            color: #666;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        .badge {
+            background: #667eea;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .footer-note {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #999;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 20px;
+        }
+        .shortcut-hint {
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 13px;
+            color: #666;
+            display: inline-block;
+        }
+        /* Toast message */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: #22c55e;
+            color: white;
+            padding: 16px;
+            border-radius: 40px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+            z-index: 9999;
+            animation: slideUp 0.3s;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 THAY LINK HÀNG LOẠT</h1>
+        
+        <div class="save-badge">
+            <span class="save-dot"></span>
+            <span><strong>💾 TỰ ĐỘNG LƯU:</strong> Hoạt động trên PC và điện thoại</span>
+        </div>
+
+        <div class="input-group">
+            <label>🔍 LINK CŨ (cần tìm)</label>
+            <input type="text" id="oldLink" placeholder="https://s.shopee.vn/VuongKOL91">
+        </div>
+
+        <div class="input-group">
+            <label>✨ LINK MỚI (sẽ thay)</label>
+            <input type="text" id="newLink" placeholder="https://s.shopee.vn/link-moi">
+        </div>
+
+        <div class="input-group">
+            <label>📄 NỘI DUNG (dán vào đây)</label>
+            <textarea id="content" placeholder="Dán nội dung file TXT của bạn vào đây..."></textarea>
+        </div>
+
+        <div class="button-group">
+            <button class="btn-replace" onclick="replaceAll()">🔄 THAY THẾ</button>
+            <button class="btn-clear" onclick="clearAll()">🗑️ XÓA HẾT</button>
+        </div>
+
+        <div class="stats" id="stats">
+            <span>📊 Nhập nội dung để bắt đầu</span>
+            <span class="badge">Auto-save</span>
+        </div>
+        
+        <div class="footer-note">
+            <span class="shortcut-hint">💻 PC: Ctrl + Enter để thay thế</span>
+            <span style="margin: 0 10px">•</span>
+            <span class="shortcut-hint">📱 Mobile: Tự động lưu khi gõ</span>
+        </div>
+    </div>
+
+    <script>
+        // ===== CẤU HÌNH =====
+        const STORAGE_KEYS = {
+            oldLink: 'universal_oldLink',
+            newLink: 'universal_newLink',
+            content: 'universal_content'
+        };
+
+        // ===== HIỂN THỊ THÔNG BÁO =====
+        function showToast(message, isSuccess = true) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.style.backgroundColor = isSuccess ? '#22c55e' : '#dc3545';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideUp 0.3s reverse';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 2000);
+        }
+
+        // ===== LƯU DỮ LIỆU =====
+        function saveData() {
+            try {
+                const oldLink = document.getElementById('oldLink').value;
+                const newLink = document.getElementById('newLink').value;
+                const content = document.getElementById('content').value;
+
+                if (oldLink) localStorage.setItem(STORAGE_KEYS.oldLink, oldLink);
+                else localStorage.removeItem(STORAGE_KEYS.oldLink);
+                
+                if (newLink) localStorage.setItem(STORAGE_KEYS.newLink, newLink);
+                else localStorage.removeItem(STORAGE_KEYS.newLink);
+                
+                if (content) localStorage.setItem(STORAGE_KEYS.content, content);
+                else localStorage.removeItem(STORAGE_KEYS.content);
+
+                // Highlight nhẹ khi lưu
+                const badge = document.querySelector('.save-badge');
+                badge.style.backgroundColor = '#dcfce7';
+                setTimeout(() => {
+                    badge.style.backgroundColor = '#e8f4fd';
+                }, 200);
+
+            } catch (e) {
+                console.log('Lưu thất bại:', e);
+            }
+        }
+
+        // ===== TẢI DỮ LIỆU =====
+        function loadSavedData() {
+            try {
+                const savedOldLink = localStorage.getItem(STORAGE_KEYS.oldLink);
+                const savedNewLink = localStorage.getItem(STORAGE_KEYS.newLink);
+                const savedContent = localStorage.getItem(STORAGE_KEYS.content);
+
+                if (savedOldLink) document.getElementById('oldLink').value = savedOldLink;
+                if (savedNewLink) document.getElementById('newLink').value = savedNewLink;
+                
+                if (savedContent) {
+                    document.getElementById('content').value = savedContent;
+                    
+                    // Đếm số dòng và số link
+                    const lines = savedContent.split('\n').length;
+                    const linkCount = (savedContent.match(/https?:\/\//gi) || []).length;
+                    
+                    document.getElementById('stats').innerHTML = `
+                        <span>📄 ${lines} dòng • ${linkCount} link</span>
+                        <span class="badge" style="background: #22c55e;">Đã khôi phục</span>
+                    `;
+                }
+            } catch (e) {
+                console.log('Tải thất bại:', e);
+            }
+        }
+
+        // ===== DEBOUNCE CHO VIỆC LƯU =====
+        let saveTimeout;
+        function debounceSave() {
+            clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(saveData, 600); // 600ms cho cả PC và mobile
+        }
+
+        // ===== KHỞI TẠO =====
+        window.addEventListener('load', loadSavedData);
+
+        // Gắn sự kiện lưu
+        const inputs = ['oldLink', 'newLink', 'content'];
+        inputs.forEach(id => {
+            const element = document.getElementById(id);
+            element.addEventListener('input', debounceSave);
+            element.addEventListener('blur', saveData); // Lưu khi rời khỏi ô
+        });
+
+        // Lưu khi chuyển tab/đóng trình duyệt
+        window.addEventListener('pagehide', saveData);
+        window.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') saveData();
+        });
+
+        // ===== CHỨC NĂNG CHÍNH =====
+        function replaceAll() {
+            const oldLink = document.getElementById('oldLink').value.trim();
+            const newLink = document.getElementById('newLink').value.trim();
+            const contentTextarea = document.getElementById('content');
+            let content = contentTextarea.value;
+
+            // Kiểm tra đầu vào
+            if (!oldLink) {
+                showToast('⚠️ Nhập link cũ cần tìm!', false);
+                document.getElementById('oldLink').focus();
+                return;
+            }
+
+            if (!content) {
+                showToast('⚠️ Dán nội dung vào ô bên dưới!', false);
+                contentTextarea.focus();
+                return;
+            }
+
+            if (!newLink) {
+                if (!confirm('Link mới đang trống, bạn có muốn thay bằng khoảng trống không?')) {
+                    document.getElementById('newLink').focus();
+                    return;
+                }
+            }
+
+            // Escape ký tự đặc biệt trong link
+            const escapedOldLink = oldLink.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const regex = new RegExp(escapedOldLink, 'gi');
+            
+            const matches = content.match(regex);
+            const count = matches ? matches.length : 0;
+
+            if (count === 0) {
+                showToast(`❌ Không tìm thấy "${oldLink}"`, false);
+                document.getElementById('stats').innerHTML = `
+                    <span>❌ Không tìm thấy link cũ</span>
+                    <span class="badge" style="background: #dc3545;">0</span>
+                `;
+                return;
+            }
+
+            // Thực hiện thay thế
+            const newContent = content.replace(regex, newLink);
+            contentTextarea.value = newContent;
+
+            // Lưu ngay lập tức
+            saveData();
+            
+            // Thông báo thành công
+            showToast(`✅ Đã thay ${count} link thành công!`);
+            
+            // Cập nhật thống kê
+            const newLines = newContent.split('\n').length;
+            const newLinkCount = (newContent.match(/https?:\/\//gi) || []).length;
+            
+            document.getElementById('stats').innerHTML = `
+                <span>✅ Đã thay ${count} link • Còn ${newLinkCount} link</span>
+                <span class="badge" style="background: #28a745;">Thành công</span>
+            `;
+
+            // Highlight ô nội dung
+            contentTextarea.style.borderColor = '#28a745';
+            setTimeout(() => {
+                contentTextarea.style.borderColor = '#e0e0e0';
+            }, 1000);
+        }
+
+        function clearAll() {
+            if (confirm('Xóa toàn bộ dữ liệu?')) {
+                document.getElementById('oldLink').value = '';
+                document.getElementById('newLink').value = '';
+                document.getElementById('content').value = '';
+                
+                // Xóa trong localStorage
+                localStorage.removeItem(STORAGE_KEYS.oldLink);
+                localStorage.removeItem(STORAGE_KEYS.newLink);
+                localStorage.removeItem(STORAGE_KEYS.content);
+                
+                document.getElementById('stats').innerHTML = `
+                    <span>📊 Đã xóa hết dữ liệu</span>
+                    <span class="badge">Sẵn sàng</span>
+                `;
+                
+                document.getElementById('oldLink').focus();
+                showToast('🗑️ Đã xóa toàn bộ');
+            }
+        }
+
+        // ===== PHÍM TẮT CHO PC =====
+        document.addEventListener('keydown', function(e) {
+            // Ctrl + Enter để thay thế
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                replaceAll();
+            }
+            
+            // Esc để xóa focus khỏi textarea
+            if (e.key === 'Escape') {
+                document.activeElement.blur();
+            }
+        });
+
+        // Enter để chuyển ô (cho PC)
+        document.getElementById('oldLink').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('newLink').focus();
+            }
+        });
+
+        document.getElementById('newLink').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('content').focus();
+            }
+        });
+    </script>
+</body>
+</html>
